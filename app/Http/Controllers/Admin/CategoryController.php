@@ -1,0 +1,63 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+
+use App\Models\Category;
+use Illuminate\Http\Request;
+
+class CategoryController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('permission:category-table')->only('index');
+        $this->middleware('permission:category-add')->only(['create','store']);
+        $this->middleware('permission:category-edit')->only(['edit','update']);
+        $this->middleware('permission:category-delete')->only('destroy');
+    }
+
+    public function index()
+    {
+        $categories = Category::orderBy('id','desc')->paginate(20);
+        return view('admin.categories.index',compact('categories'));
+    }
+
+    public function create()
+    {
+        return view('admin.categories.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name_en' => 'required',
+            'name_ar' => 'required',
+        ]);
+
+        Category::create($request->all());
+        return redirect()->route('categories.index')->with('success','Created successfully');
+    }
+
+    public function edit(Category $category)
+    {
+        return view('admin.categories.edit',compact('category'));
+    }
+
+    public function update(Request $request, Category $category)
+    {
+        $request->validate([
+            'name_en' => 'required',
+            'name_ar' => 'required',
+        ]);
+
+        $category->update($request->all());
+        return redirect()->route('categories.index')->with('success','Updated successfully');
+    }
+
+    public function destroy(Category $category)
+    {
+        $category->delete();
+        return back()->with('success','Deleted successfully');
+    }
+}

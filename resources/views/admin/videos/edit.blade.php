@@ -42,15 +42,42 @@
                         @error('title_en')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
-                    <div class="col-md-8">
-                        <label class="form-label fw-semibold">رابط اليوتيوب / الفيديو</label>
-                        <input type="url" name="video_url"
-                               class="form-control @error('video_url') is-invalid @enderror"
-                               value="{{ old('video_url', $video->video_url) }}"
-                               placeholder="https://www.youtube.com/watch?v=...">
-                        @error('video_url')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
+                   <div class="col-md-8">
+    <label class="form-label fw-semibold">الفيديو</label>
 
+    <input type="file" name="video_url" id="videoInput"
+           accept="video/*"
+           class="form-control @error('video_url') is-invalid @enderror">
+
+    <div class="form-text">اتركه فارغاً للإبقاء على الفيديو الحالي</div>
+
+    <div class="mt-3 d-flex gap-3 align-items-start">
+
+        @if($video->video_url)
+        <div>
+            <small class="text-muted d-block mb-1">الحالي</small>
+            <video width="220" controls
+                   style="border-radius:6px;border:1px solid #dee2e6">
+                <source src="{{ asset('assets/admin/uploads/'.$video->video_url) }}">
+            </video>
+        </div>
+        @endif
+
+        <div id="videoPreviewWrap" style="display:none">
+            <small class="text-muted d-block mb-1">الجديد</small>
+            <video id="videoPreview"
+                   width="220"
+                   controls
+                   style="border-radius:6px;border:1px solid #dee2e6">
+            </video>
+        </div>
+
+    </div>
+
+    @error('video_url')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
                     <div class="col-md-2">
                         <label class="form-label fw-semibold">المدة</label>
                         <input type="text" name="duration" class="form-control"
@@ -124,6 +151,17 @@ document.getElementById('thumbInput').addEventListener('change', function(e) {
         document.getElementById('previewWrap').style.display = 'block';
     };
     reader.readAsDataURL(file);
+});
+document.getElementById('videoInput').addEventListener('change', function(e) {
+
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const video = document.getElementById('videoPreview');
+
+    video.src = URL.createObjectURL(file);
+    document.getElementById('videoPreviewWrap').style.display = 'block';
+
 });
 </script>
 @endpush

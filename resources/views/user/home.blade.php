@@ -300,7 +300,8 @@
         @foreach($videos as $i => $video)
         <div class="video-card {{ $i === 0 ? 'video-main' : '' }}"
              @if($video->video_url)
-                 onclick="openVideo('{{ $video->video_url }}')"
+                onclick="openVideo('{{ asset('assets/admin/uploads/'.$video->video) }}')"
+
                  style="cursor:pointer"
              @endif>
             <div class="video-thumb">
@@ -390,8 +391,12 @@
     <button onclick="closeVideo()"
             style="position:absolute;top:22px;left:28px;background:none;border:none;
                    color:var(--gold);font-size:2.2rem;cursor:pointer;line-height:1;">✕</button>
-    <iframe id="videoFrame" width="900" height="506" frameborder="0" allowfullscreen
-            style="max-width:92vw;max-height:78vh;border:1px solid rgba(206,173,106,.25);"></iframe>
+     <iframe id="videoFrame" width="900" height="506" frameborder="0" allowfullscreen
+            style="max-width:92vw;max-height:78vh;border:1px solid rgba(206,173,106,.25);display:none;"></iframe>
+
+    <video id="videoPlayer" width="900" height="506" controls
+           style="max-width:92vw;max-height:78vh;border:1px solid rgba(206,173,106,.25);display:none;">
+    </video>
 </div>
 
 {{-- ══════════════════════════════════════════════════════════════
@@ -701,20 +706,25 @@ $(document).ready(function () {
 // ─────────────────────────────────────────────
 function openVideo(url) {
     var videoId = extractYoutubeId(url);
-    var embed;
 
     if (videoId) {
-        // ✅ رابط يوتيوب — بنبني embed URL نظيف
-        embed = 'https://www.youtube.com/embed/' + videoId
-              + '?autoplay=1&rel=0&modestbranding=1';
+        // YouTube link
+        var embed = 'https://www.youtube.com/embed/' + videoId
+                  + '?autoplay=1&rel=0&modestbranding=1';
+        document.getElementById('videoFrame').src = embed;
+        document.getElementById('videoFrame').style.display = 'block';
+        document.getElementById('videoPlayer').style.display = 'none';
     } else {
-        // رابط فيديو عادي (مش يوتيوب)
-        embed = url;
+        // Local uploaded video
+        document.getElementById('videoFrame').src = '';
+        document.getElementById('videoFrame').style.display = 'none';
+        var player = document.getElementById('videoPlayer');
+        player.src = url;
+        player.style.display = 'block';
+        player.play();
     }
 
-    document.getElementById('videoFrame').src = embed;
-    var modal = document.getElementById('videoModal');
-    modal.style.display = 'flex';
+    document.getElementById('videoModal').style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
 
@@ -739,6 +749,9 @@ function extractYoutubeId(url) {
 function closeVideo() {
     document.getElementById('videoFrame').src = '';
     document.getElementById('videoModal').style.display = 'none';
+    var player = document.getElementById('videoPlayer');
+    player.pause();
+    player.src = '';
     document.body.style.overflow = '';
 }
 

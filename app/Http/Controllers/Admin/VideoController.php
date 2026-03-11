@@ -33,18 +33,19 @@ class VideoController extends Controller
             'title_ar'   => 'required|string|max:255',
             'title_en'   => 'required|string|max:255',
             'thumbnail'  => 'required|image|mimes:jpg,jpeg,png,webp|max:4096',
-            'video_url'  => 'nullable|url|max:500',
+            'video_url'  => 'nullable',
             'duration'   => 'nullable|string|max:20',
             'sort_order' => 'nullable|integer|min:0',
         ]);
 
         $thumbnail = uploadImage('assets/admin/uploads', $request->thumbnail);
+        $video = uploadImage('assets/admin/uploads', $request->video_url);
 
         Video::create([
             'title_ar'   => $request->title_ar,
             'title_en'   => $request->title_en,
             'thumbnail'  => $thumbnail,
-            'video_url'  => $request->video_url,
+            'video_url'  => $video,
             'duration'   => $request->duration,
             'is_active'  => $request->has('is_active') ? 1 : 0,
             'sort_order' => $request->sort_order ?? 0,
@@ -64,7 +65,7 @@ class VideoController extends Controller
             'title_ar'   => 'required|string|max:255',
             'title_en'   => 'required|string|max:255',
             'thumbnail'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
-            'video_url'  => 'nullable|url|max:500',
+            'video_url'  => 'nullable',
             'duration'   => 'nullable|string|max:20',
             'sort_order' => 'nullable|integer|min:0',
         ]);
@@ -72,7 +73,6 @@ class VideoController extends Controller
         $data = [
             'title_ar'   => $request->title_ar,
             'title_en'   => $request->title_en,
-            'video_url'  => $request->video_url,
             'duration'   => $request->duration,
             'is_active'  => $request->has('is_active') ? 1 : 0,
             'sort_order' => $request->sort_order ?? 0,
@@ -81,6 +81,11 @@ class VideoController extends Controller
         if ($request->hasFile('thumbnail')) {
             $data['thumbnail'] = uploadImage('assets/admin/uploads', $request->thumbnail);
         }
+        if ($request->hasFile('video_url')) {
+            $data['video_url'] = uploadImage('assets/admin/uploads', $request->video_url);
+
+        }
+
 
         $video->update($data);
 

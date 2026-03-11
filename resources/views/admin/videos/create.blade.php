@@ -43,14 +43,25 @@
                     </div>
 
                     <div class="col-md-8">
-                        <label class="form-label fw-semibold">رابط اليوتيوب / الفيديو</label>
-                        <input type="url" name="video_url"
-                               class="form-control @error('video_url') is-invalid @enderror"
-                               value="{{ old('video_url') }}"
-                               placeholder="https://www.youtube.com/watch?v=...">
-                        <div class="form-text">اختياري — رابط يوتيوب أو أي رابط فيديو</div>
-                        @error('video_url')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
+    <label class="form-label fw-semibold">رفع الفيديو</label>
+
+    <input type="file" name="video_url" id="videoInput"
+           accept="video/*"
+           class="form-control @error('video_url') is-invalid @enderror">
+
+    <div class="form-text">يمكنك رفع فيديو من جهازك</div>
+
+    <div class="mt-2">
+        <video id="videoPreview"
+               controls
+               style="display:none;height:200px;border-radius:6px;border:1px solid #dee2e6">
+        </video>
+    </div>
+
+    @error('video_url')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
 
                     <div class="col-md-2">
                         <label class="form-label fw-semibold">المدة</label>
@@ -115,6 +126,17 @@ document.getElementById('thumbInput').addEventListener('change', function(e) {
         img.style.display = 'block';
     };
     reader.readAsDataURL(file);
+});
+document.getElementById('videoInput').addEventListener('change', function(e) {
+
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const video = document.getElementById('videoPreview');
+
+    video.src = URL.createObjectURL(file);
+    video.style.display = 'block';
+
 });
 </script>
 @endpush

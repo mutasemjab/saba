@@ -300,7 +300,7 @@
         @foreach($videos as $i => $video)
         <div class="video-card {{ $i === 0 ? 'video-main' : '' }}"
              @if($video->video_url)
-                onclick="openVideo('{{ asset('assets/admin/uploads/'.$video->video) }}')"
+               onclick="openVideo('{{ route('stream.video', $video->video_url) }}')"
 
                  style="cursor:pointer"
              @endif>

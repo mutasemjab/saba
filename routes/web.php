@@ -65,4 +65,17 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     }
     return view('user.page', compact('page'));
   })->name('front.page.privacy');
+
+  Route::get('/stream-video/{filename}', function ($filename) {
+    $path = base_path('assets/admin/uploads/' . $filename);
+    
+    if (!file_exists($path)) {
+        abort(404);
+    }
+    
+    return response()->file($path, [
+        'Content-Type' => 'video/mp4',
+    ]);
+})->name('stream.video');
+
 });

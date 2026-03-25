@@ -1,8 +1,6 @@
-@extends('layouts.front')
+<?php $__env->startSection('content'); ?>
 
-@section('content')
-
-    @php
+    <?php
         $settingNav = $setting ?? \App\Models\Setting::first();
         $current = LaravelLocalization::getCurrentLocale();
         $target = $current === 'ar' ? 'en' : 'ar';
@@ -10,20 +8,18 @@
         $targetName =
             $target === 'ar' ? $supported[$target]['native'] ?? 'العربية' : $supported[$target]['native'] ?? 'English';
         $targetUrl = LaravelLocalization::getLocalizedURL($target, null, [], true);
-    @endphp
+    ?>
 
 
 
-    {{-- ══════════════════════════════════════════════════════════════
-     HERO
-══════════════════════════════════════════════════════════════ --}}
-    @php
+    
+    <?php
         $banner = \App\Models\Banner::first();
         $bannerUrl = $banner ? asset('assets/admin/uploads/' . $banner->photo) : '';
-    @endphp
+    ?>
 
     <section id="hero">
-        <div class="hero-banner-img" style="background-image:url('{{ $bannerUrl }}');"></div>
+        <div class="hero-banner-img" style="background-image:url('<?php echo e($bannerUrl); ?>');"></div>
         <div class="hero-overlay"></div>
         <div class="hero-pattern"></div>
 
@@ -53,48 +49,46 @@
                 <div class="hero-gem"></div>
                 <div class="hdl hdl2"></div>
             </div>
-            <img src="{{ $settingNav && $settingNav->logo
+            <img src="<?php echo e($settingNav && $settingNav->logo
                 ? asset('assets/admin/uploads/' . $settingNav->logo)
-                : asset('assets_front/images/main_logo.png') }}"
+                : asset('assets_front/images/main_logo.png')); ?>"
                 alt="مطاعم سبأ" class="hero-logo-big">
-            <p class="hero-sub">{{ __('front.hero_sub') }}</p>
+            <p class="hero-sub"><?php echo e(__('front.hero_sub')); ?></p>
             <div class="hero-cta">
-                <a href="#menu" class="btn-primary"><span>{{ __('front.explore_menu') }}</span></a>
-                <a href="#contact" class="btn-outline">{{ __('front.book_table') }}</a>
+                <a href="#menu" class="btn-primary"><span><?php echo e(__('front.explore_menu')); ?></span></a>
+                <a href="#contact" class="btn-outline"><?php echo e(__('front.book_table')); ?></a>
             </div>
         </div>
 
         <div class="hero-ticker">
             <div class="ticker-inner">
-                <span class="ticker-item">{{ __('front.ticker_1') }}</span>
+                <span class="ticker-item"><?php echo e(__('front.ticker_1')); ?></span>
                 <span class="ticker-item">Authentic Yemeni Cuisine</span>
-                <span class="ticker-item">{{ __('front.ticker_2') }}</span>
+                <span class="ticker-item"><?php echo e(__('front.ticker_2')); ?></span>
                 <span class="ticker-item">Gulf Flavors</span>
                 <span class="ticker-item">الدار البيضاء · المغرب</span>
                 <span class="ticker-item">Casablanca · Morocco</span>
-                <span class="ticker-item">{{ __('front.ticker_3') }}</span>
+                <span class="ticker-item"><?php echo e(__('front.ticker_3')); ?></span>
                 <span class="ticker-item">Unforgettable Experience</span>
-                {{-- duplicate for infinite --}}
-                <span class="ticker-item">{{ __('front.ticker_1') }}</span>
+                
+                <span class="ticker-item"><?php echo e(__('front.ticker_1')); ?></span>
                 <span class="ticker-item">Authentic Yemeni Cuisine</span>
-                <span class="ticker-item">{{ __('front.ticker_2') }}</span>
+                <span class="ticker-item"><?php echo e(__('front.ticker_2')); ?></span>
                 <span class="ticker-item">Gulf Flavors</span>
                 <span class="ticker-item">الدار البيضاء · المغرب</span>
                 <span class="ticker-item">Casablanca · Morocco</span>
-                <span class="ticker-item">{{ __('front.ticker_3') }}</span>
+                <span class="ticker-item"><?php echo e(__('front.ticker_3')); ?></span>
                 <span class="ticker-item">Unforgettable Experience</span>
             </div>
         </div>
 
         <div class="hero-scroll">
-            <span>{{ __('front.explore') }}</span>
+            <span><?php echo e(__('front.explore')); ?></span>
             <div class="scroll-line"></div>
         </div>
     </section>
 
-    {{-- ══════════════════════════════════════════════════════════════
-     ABOUT
-══════════════════════════════════════════════════════════════ --}}
+    
     <section id="about">
         <div class="about-bg-text">SABA</div>
         <div class="about-inner">
@@ -102,64 +96,64 @@
             <div class="about-visual reveal-left">
                 <div class="about-img-frame">
                     <div class="about-img-main">
-                        <img src="{{ asset('assets/admin/uploads/' . ($about->photo ?? '')) }}"
+                        <img src="<?php echo e(asset('assets/admin/uploads/' . ($about->photo ?? ''))); ?>"
                             onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80'"
-                            alt="{{ __('front.about') }}">
+                            alt="<?php echo e(__('front.about')); ?>">
                     </div>
                     <div class="about-corner tl"></div>
                     <div class="about-corner br"></div>
                 </div>
                 <div class="about-accent-box">
                     <div class="about-accent-num">١٢+</div>
-                    <div class="about-accent-text">{{ __('front.years_excellence') }}</div>
+                    <div class="about-accent-text"><?php echo e(__('front.years_excellence')); ?></div>
                 </div>
             </div>
 
             <div class="about-text reveal-right">
                 <div class="section-header"
-                    style="text-align:{{ $locale == 'ar' ? 'right' : 'left' }};margin-bottom:26px;">
-                    <span class="section-label">{{ __('front.about') }}</span>
-                    @if ($about)
-                        <h2 class="section-title">{!! $locale == 'ar' ? $about->name_ar : $about->name_en !!}</h2>
-                    @else
-                        <h2 class="section-title">{{ __('front.about_title') }}</h2>
-                    @endif
+                    style="text-align:<?php echo e($locale == 'ar' ? 'right' : 'left'); ?>;margin-bottom:26px;">
+                    <span class="section-label"><?php echo e(__('front.about')); ?></span>
+                    <?php if($about): ?>
+                        <h2 class="section-title"><?php echo $locale == 'ar' ? $about->name_ar : $about->name_en; ?></h2>
+                    <?php else: ?>
+                        <h2 class="section-title"><?php echo e(__('front.about_title')); ?></h2>
+                    <?php endif; ?>
                     <div class="ornament-divider" style="justify-content:flex-start;">
                         <div class="ornament-divider-center"></div>
                     </div>
                 </div>
 
-                @if ($about)
-                    <p>{!! $locale == 'ar' ? $about->description_ar : $about->description_en !!}</p>
-                @endif
+                <?php if($about): ?>
+                    <p><?php echo $locale == 'ar' ? $about->description_ar : $about->description_en; ?></p>
+                <?php endif; ?>
 
                 <div class="about-features">
                     <div class="about-feat reveal reveal-delay-1">
                         <div class="about-feat-icon">🌿</div>
                         <div>
-                            <div class="about-feat-title">{{ __('front.feat_fresh') }}</div>
-                            <div class="about-feat-desc">{{ __('front.feat_fresh_desc') }}</div>
+                            <div class="about-feat-title"><?php echo e(__('front.feat_fresh')); ?></div>
+                            <div class="about-feat-desc"><?php echo e(__('front.feat_fresh_desc')); ?></div>
                         </div>
                     </div>
                     <div class="about-feat reveal reveal-delay-2">
                         <div class="about-feat-icon">👨‍🍳</div>
                         <div>
-                            <div class="about-feat-title">{{ __('front.feat_chefs') }}</div>
-                            <div class="about-feat-desc">{{ __('front.feat_chefs_desc') }}</div>
+                            <div class="about-feat-title"><?php echo e(__('front.feat_chefs')); ?></div>
+                            <div class="about-feat-desc"><?php echo e(__('front.feat_chefs_desc')); ?></div>
                         </div>
                     </div>
                     <div class="about-feat reveal reveal-delay-3">
                         <div class="about-feat-icon">🕌</div>
                         <div>
-                            <div class="about-feat-title">{{ __('front.feat_ambiance') }}</div>
-                            <div class="about-feat-desc">{{ __('front.feat_ambiance_desc') }}</div>
+                            <div class="about-feat-title"><?php echo e(__('front.feat_ambiance')); ?></div>
+                            <div class="about-feat-desc"><?php echo e(__('front.feat_ambiance_desc')); ?></div>
                         </div>
                     </div>
                     <div class="about-feat reveal reveal-delay-4">
                         <div class="about-feat-icon">🏆</div>
                         <div>
-                            <div class="about-feat-title">{{ __('front.feat_best') }}</div>
-                            <div class="about-feat-desc">{{ __('front.feat_best_desc') }}</div>
+                            <div class="about-feat-title"><?php echo e(__('front.feat_best')); ?></div>
+                            <div class="about-feat-desc"><?php echo e(__('front.feat_best_desc')); ?></div>
                         </div>
                     </div>
                 </div>
@@ -168,66 +162,66 @@
         </div>
     </section>
 
-    {{-- ══════════════════════════════════════════════════════════════
-     BEST — featured products slider
-══════════════════════════════════════════════════════════════ --}}
+    
     <section id="best">
         <div class="section-header reveal">
-            <span class="section-label">{{ __('front.most_ordered') }}</span>
+            <span class="section-label"><?php echo e(__('front.most_ordered')); ?></span>
             <h2 class="section-title">
-                {{ __('front.best_title') }} <span>{{ __('front.best_title_span') }}</span>
+                <?php echo e(__('front.best_title')); ?> <span><?php echo e(__('front.best_title_span')); ?></span>
             </h2>
             <div class="ornament-divider">
                 <div class="ornament-divider-center"></div>
             </div>
-            <p class="section-desc">{{ __('front.best_desc') }}</p>
+            <p class="section-desc"><?php echo e(__('front.best_desc')); ?></p>
         </div>
 
-        @if ($featuredProducts->isNotEmpty())
+        <?php if($featuredProducts->isNotEmpty()): ?>
             <div class="best-track-wrap">
                 <div class="best-track" id="bestTrack">
-                    @foreach ([$featuredProducts, $featuredProducts] as $group)
-                        @foreach ($group as $fp)
-                            <a href="{{ route('product.show', $fp->id) }}" class="best-card"
+                    <?php $__currentLoopData = [$featuredProducts, $featuredProducts]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php $__currentLoopData = $group; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fp): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <a href="<?php echo e(route('product.show', $fp->id)); ?>" class="best-card"
                                 style="text-decoration:none;">
                                 <div class="best-card-img">
-                                    <img src="{{ asset('assets/admin/uploads/' . $fp->photo) }}"
-                                        alt="{{ $locale == 'ar' ? $fp->name_ar : $fp->name_en }}">
-                                    <div class="best-badge">{{ __('front.most_ordered') }}</div>
+                                    <img src="<?php echo e(asset('assets/admin/uploads/' . $fp->photo)); ?>"
+                                        alt="<?php echo e($locale == 'ar' ? $fp->name_ar : $fp->name_en); ?>">
+                                    <div class="best-badge"><?php echo e(__('front.most_ordered')); ?></div>
                                 </div>
                                 <div class="best-card-body">
                                     <div class="best-card-name">
-                                        {{ $locale == 'ar' ? $fp->name_ar : $fp->name_en }}
+                                        <?php echo e($locale == 'ar' ? $fp->name_ar : $fp->name_en); ?>
+
                                     </div>
                                     <div class="best-card-desc">
-                                        {{ $locale == 'ar' ? \Str::limit($fp->description_ar, 80) : \Str::limit($fp->description_en, 80) }}
+                                        <?php echo e($locale == 'ar' ? \Str::limit($fp->description_ar, 80) : \Str::limit($fp->description_en, 80)); ?>
+
                                     </div>
                                     <div class="best-card-footer">
-                                        @if ($fp->price ?? false)
+                                        <?php if($fp->price ?? false): ?>
                                             <div class="best-card-price">
-                                                {{ $fp->price }}
-                                                {{ $locale == 'ar' ? $fp->price_unit_ar ?? 'درهم' : $fp->price_unit_en ?? 'MAD' }}
+                                                <?php echo e($fp->price); ?>
+
+                                                <?php echo e($locale == 'ar' ? $fp->price_unit_ar ?? 'درهم' : $fp->price_unit_en ?? 'MAD'); ?>
+
                                             </div>
-                                        @endif
+                                        <?php endif; ?>
                                         <div class="best-card-stars">★★★★★</div>
                                     </div>
                                 </div>
                             </a>
-                        @endforeach
-                    @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
             </div>
-        @endif
+        <?php endif; ?>
     </section>
 
-    {{-- ══════════════════════════════════════════════════════════════
-     MENU — AJAX filter
-══════════════════════════════════════════════════════════════ --}}
+    
     <section id="menu">
         <div class="section-header reveal">
-            <span class="section-label">{{ __('front.menu_label') }}</span>
+            <span class="section-label"><?php echo e(__('front.menu_label')); ?></span>
             <h2 class="section-title">
-                {{ __('front.menu_title') }} <span>{{ __('front.menu_title_span') }}</span>
+                <?php echo e(__('front.menu_title')); ?> <span><?php echo e(__('front.menu_title_span')); ?></span>
             </h2>
             <div class="ornament-divider">
                 <div class="ornament-divider-center"></div>
@@ -235,104 +229,107 @@
         </div>
 
         <div class="menu-tabs reveal" id="menuTabs">
-            @foreach ($categories as $i => $category)
-                <button class="menu-tab {{ $i === 0 ? 'active' : '' }}" data-category="{{ $category->id }}">
-                    {{ $locale == 'ar' ? $category->name_ar : $category->name_en }}
+            <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <button class="menu-tab <?php echo e($i === 0 ? 'active' : ''); ?>" data-category="<?php echo e($category->id); ?>">
+                    <?php echo e($locale == 'ar' ? $category->name_ar : $category->name_en); ?>
+
                 </button>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
 
         <div class="menu-panel active" id="menuPanel">
-            @forelse($products as $product)
-                <a href="{{ route('product.show', $product->id) }}" class="menu-item">
+            <?php $__empty_1 = true; $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                <a href="<?php echo e(route('product.show', $product->id)); ?>" class="menu-item">
                     <div class="menu-item-img">
-                        <img src="{{ asset('assets/admin/uploads/' . $product->photo) }}"
-                            alt="{{ $locale == 'ar' ? $product->name_ar : $product->name_en }}">
+                        <img src="<?php echo e(asset('assets/admin/uploads/' . $product->photo)); ?>"
+                            alt="<?php echo e($locale == 'ar' ? $product->name_ar : $product->name_en); ?>">
                     </div>
                     <div class="menu-item-info">
                         <div class="menu-item-name">
-                            {{ $locale == 'ar' ? $product->name_ar : $product->name_en }}
+                            <?php echo e($locale == 'ar' ? $product->name_ar : $product->name_en); ?>
+
                         </div>
                         <div class="menu-item-desc">
-                            {{ $locale == 'ar' ? \Str::limit($product->description_ar, 90) : \Str::limit($product->description_en, 90) }}
-                        </div>
-                        @if ($product->is_featured == 1)
-                            <span class="menu-item-tag">{{ __('front.featured_tag') }}</span>
-                        @endif
+                            <?php echo e($locale == 'ar' ? \Str::limit($product->description_ar, 90) : \Str::limit($product->description_en, 90)); ?>
 
-                        @if ($product->options->isNotEmpty())
+                        </div>
+                        <?php if($product->is_featured == 1): ?>
+                            <span class="menu-item-tag"><?php echo e(__('front.featured_tag')); ?></span>
+                        <?php endif; ?>
+
+                        <?php if($product->options->isNotEmpty()): ?>
                             <div class="menu-item-options">
-                                @foreach ($product->options as $opt)
+                                <?php $__currentLoopData = $product->options; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $opt): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <span class="menu-item-opt">
-                                        <span class="opt-label">{{ $locale == 'ar' ? $opt->name_ar : $opt->name_en }}</span>
-                                        @if ($opt->price)
+                                        <span class="opt-label"><?php echo e($locale == 'ar' ? $opt->name_ar : $opt->name_en); ?></span>
+                                        <?php if($opt->price): ?>
                                             <span class="opt-sep"></span>
-                                            <span class="opt-price">{{ number_format($opt->price, 0) }}
-                                                {{ $locale == 'ar' ? $opt->price_unit_ar ?? 'درهم' : $opt->price_unit_en ?? 'MAD' }}</span>
-                                        @endif
+                                            <span class="opt-price"><?php echo e(number_format($opt->price, 0)); ?>
+
+                                                <?php echo e($locale == 'ar' ? $opt->price_unit_ar ?? 'درهم' : $opt->price_unit_en ?? 'MAD'); ?></span>
+                                        <?php endif; ?>
                                     </span>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
-                        @elseif($product->price ?? false)
+                        <?php elseif($product->price ?? false): ?>
                             <div class="menu-item-price">
-                                {{ $product->price }}<br>
-                                <small>{{ $locale == 'ar' ? $product->price_unit_ar ?? 'درهم' : $product->price_unit_en ?? 'MAD' }}</small>
+                                <?php echo e($product->price); ?><br>
+                                <small><?php echo e($locale == 'ar' ? $product->price_unit_ar ?? 'درهم' : $product->price_unit_en ?? 'MAD'); ?></small>
                             </div>
-                        @endif
+                        <?php endif; ?>
                     </div>
                 </a>
-            @empty
-                <div class="menu-empty">{{ __('front.no_products') }}</div>
-            @endforelse
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                <div class="menu-empty"><?php echo e(__('front.no_products')); ?></div>
+            <?php endif; ?>
         </div>
 
         <div style="text-align:center;margin-top:50px;" class="reveal">
-            <a href="{{ route('menu') }}" class="btn-outline">{{ __('front.view_full_menu') }} ←</a>
+            <a href="<?php echo e(route('menu')); ?>" class="btn-outline"><?php echo e(__('front.view_full_menu')); ?> ←</a>
         </div>
     </section>
 
-    {{-- ══════════════════════════════════════════════════════════════
-     VIDEOS — dynamic from DB
-══════════════════════════════════════════════════════════════ --}}
+    
     <section id="videos">
         <div class="section-header reveal">
-            <span class="section-label">{{ __('front.videos_label') }}</span>
+            <span class="section-label"><?php echo e(__('front.videos_label')); ?></span>
             <h2 class="section-title">
-                {{ __('front.videos_title') }} <span>{{ __('front.videos_title_span') }}</span>
+                <?php echo e(__('front.videos_title')); ?> <span><?php echo e(__('front.videos_title_span')); ?></span>
             </h2>
             <div class="ornament-divider">
                 <div class="ornament-divider-center"></div>
             </div>
-            <p class="section-desc">{{ __('front.videos_desc') }}</p>
+            <p class="section-desc"><?php echo e(__('front.videos_desc')); ?></p>
         </div>
 
-        @if ($videos->isNotEmpty())
-            {{-- ✅ Dynamic from DB --}}
+        <?php if($videos->isNotEmpty()): ?>
+            
             <div class="videos-grid reveal">
-                @foreach ($videos as $i => $video)
-                    <div class="video-card {{ $i === 0 ? 'video-main' : '' }}"
-                        @if ($video->video_url) onclick="openVideo('{{ route('stream.video', $video->video_url) }}')"
+                <?php $__currentLoopData = $videos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $video): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="video-card <?php echo e($i === 0 ? 'video-main' : ''); ?>"
+                        <?php if($video->video_url): ?> onclick="openVideo('<?php echo e(route('stream.video', $video->video_url)); ?>')"
 
-                 style="cursor:pointer" @endif>
+                 style="cursor:pointer" <?php endif; ?>>
                         <div class="video-thumb">
-                            <img src="{{ asset('assets/admin/uploads/' . $video->thumbnail) }}"
-                                alt="{{ $locale == 'ar' ? $video->title_ar : $video->title_en }}">
+                            <img src="<?php echo e(asset('assets/admin/uploads/' . $video->thumbnail)); ?>"
+                                alt="<?php echo e($locale == 'ar' ? $video->title_ar : $video->title_en); ?>">
                             <div class="video-dim"></div>
                             <div class="video-play-btn"><i class="fas fa-play"></i></div>
                             <div class="video-overlay">
                                 <div class="video-title">
-                                    {{ $locale == 'ar' ? $video->title_ar : $video->title_en }}
+                                    <?php echo e($locale == 'ar' ? $video->title_ar : $video->title_en); ?>
+
                                 </div>
-                                @if ($video->duration)
-                                    <div class="video-duration">{{ $video->duration }}</div>
-                                @endif
+                                <?php if($video->duration): ?>
+                                    <div class="video-duration"><?php echo e($video->duration); ?></div>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
-        @else
-            {{-- 🔁 Fallback static — تشغل لو ما في فيديوهات في DB بعد --}}
+        <?php else: ?>
+            
             <div class="videos-grid reveal">
                 <div class="video-card">
                     <div class="video-thumb">
@@ -340,7 +337,7 @@
                         <div class="video-dim"></div>
                         <div class="video-play-btn"><i class="fas fa-play"></i></div>
                         <div class="video-overlay">
-                            <div class="video-title">{{ __('front.video_1_title') }}</div>
+                            <div class="video-title"><?php echo e(__('front.video_1_title')); ?></div>
                             <div class="video-duration">٨:٢٤</div>
                         </div>
                     </div>
@@ -351,7 +348,7 @@
                         <div class="video-dim"></div>
                         <div class="video-play-btn"><i class="fas fa-play"></i></div>
                         <div class="video-overlay">
-                            <div class="video-title">{{ __('front.video_2_title') }}</div>
+                            <div class="video-title"><?php echo e(__('front.video_2_title')); ?></div>
                             <div class="video-duration">٤:١٢</div>
                         </div>
                     </div>
@@ -362,7 +359,7 @@
                         <div class="video-dim"></div>
                         <div class="video-play-btn"><i class="fas fa-play"></i></div>
                         <div class="video-overlay">
-                            <div class="video-title">{{ __('front.video_3_title') }}</div>
+                            <div class="video-title"><?php echo e(__('front.video_3_title')); ?></div>
                             <div class="video-duration">٦:٥٠</div>
                         </div>
                     </div>
@@ -373,7 +370,7 @@
                         <div class="video-dim"></div>
                         <div class="video-play-btn"><i class="fas fa-play"></i></div>
                         <div class="video-overlay">
-                            <div class="video-title">{{ __('front.video_4_title') }}</div>
+                            <div class="video-title"><?php echo e(__('front.video_4_title')); ?></div>
                             <div class="video-duration">٣:٣٠</div>
                         </div>
                     </div>
@@ -384,16 +381,16 @@
                         <div class="video-dim"></div>
                         <div class="video-play-btn"><i class="fas fa-play"></i></div>
                         <div class="video-overlay">
-                            <div class="video-title">{{ __('front.video_5_title') }}</div>
+                            <div class="video-title"><?php echo e(__('front.video_5_title')); ?></div>
                             <div class="video-duration">٥:١٥</div>
                         </div>
                     </div>
                 </div>
             </div>
-        @endif
+        <?php endif; ?>
     </section>
 
-    {{-- Video Modal --}}
+    
     <div id="videoModal"
         style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9000;
             align-items:center;justify-content:center;flex-direction:column;gap:16px;">
@@ -408,17 +405,15 @@
         </video>
     </div>
 
-    {{-- ══════════════════════════════════════════════════════════════
-     WORKING HOURS — dynamic from DB
-══════════════════════════════════════════════════════════════ --}}
+    
     <section id="hours">
         <div class="hours-pattern"></div>
         <div class="hours-content">
 
             <div class="section-header reveal">
-                <span class="section-label">{{ __('front.hours_label') }}</span>
+                <span class="section-label"><?php echo e(__('front.hours_label')); ?></span>
                 <h2 class="section-title">
-                    {{ __('front.hours_title') }} <span>{{ __('front.hours_title_span') }}</span>
+                    <?php echo e(__('front.hours_title')); ?> <span><?php echo e(__('front.hours_title_span')); ?></span>
                 </h2>
                 <div class="ornament-divider">
                     <div class="ornament-divider-center"></div>
@@ -426,82 +421,84 @@
             </div>
 
             <div class="hours-grid">
-                @if ($workingHours->isNotEmpty())
-                    {{-- ✅ Dynamic from DB --}}
-                    @foreach ($workingHours as $wh)
-                        <div class="hour-card {{ $wh->is_ramadan ? 'hour-ramadan' : '' }}"
-                            data-day="{{ $wh->day_index }}"
-                            @if ($wh->is_ramadan) style="background:rgba(206,173,106,0.04);" @endif>
+                <?php if($workingHours->isNotEmpty()): ?>
+                    
+                    <?php $__currentLoopData = $workingHours; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $wh): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="hour-card <?php echo e($wh->is_ramadan ? 'hour-ramadan' : ''); ?>"
+                            data-day="<?php echo e($wh->day_index); ?>"
+                            <?php if($wh->is_ramadan): ?> style="background:rgba(206,173,106,0.04);" <?php endif; ?>>
                             <div class="hour-day">
-                                {{ $locale == 'ar' ? $wh->day_ar : $wh->day_en }}
+                                <?php echo e($locale == 'ar' ? $wh->day_ar : $wh->day_en); ?>
+
                             </div>
-                            @if ($wh->open_time && $wh->close_time)
-                                <div class="hour-time">{{ $wh->open_time }} – {{ $wh->close_time }}</div>
-                            @else
+                            <?php if($wh->open_time && $wh->close_time): ?>
+                                <div class="hour-time"><?php echo e($wh->open_time); ?> – <?php echo e($wh->close_time); ?></div>
+                            <?php else: ?>
                                 <div class="hour-time">
-                                    {{ $locale == 'ar' ? 'أوقات خاصة' : 'Special Hours' }}
+                                    <?php echo e($locale == 'ar' ? 'أوقات خاصة' : 'Special Hours'); ?>
+
                                 </div>
-                            @endif
-                            @if ($wh->note_ar || $wh->note_en)
+                            <?php endif; ?>
+                            <?php if($wh->note_ar || $wh->note_en): ?>
                                 <div class="hour-time-sub">
-                                    {{ $locale == 'ar' ? $wh->note_ar : $wh->note_en }}
+                                    <?php echo e($locale == 'ar' ? $wh->note_ar : $wh->note_en); ?>
+
                                 </div>
-                            @endif
+                            <?php endif; ?>
                         </div>
-                    @endforeach
-                @else
-                    {{-- 🔁 Fallback static --}}
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php else: ?>
+                    
                     <div class="hour-card" data-day="1">
-                        <div class="hour-day">{{ __('front.mon_tue') }}</div>
+                        <div class="hour-day"><?php echo e(__('front.mon_tue')); ?></div>
                         <div class="hour-time">11:00 – 23:00</div>
-                        <div class="hour-time-sub">{{ __('front.lunch_dinner') }}</div>
+                        <div class="hour-time-sub"><?php echo e(__('front.lunch_dinner')); ?></div>
                     </div>
                     <div class="hour-card" data-day="3">
-                        <div class="hour-day">{{ __('front.wed_thu') }}</div>
+                        <div class="hour-day"><?php echo e(__('front.wed_thu')); ?></div>
                         <div class="hour-time">11:00 – 00:00</div>
-                        <div class="hour-time-sub">{{ __('front.lunch_dinner') }}</div>
+                        <div class="hour-time-sub"><?php echo e(__('front.lunch_dinner')); ?></div>
                     </div>
                     <div class="hour-card" data-day="5">
-                        <div class="hour-day">{{ __('front.friday') }}</div>
+                        <div class="hour-day"><?php echo e(__('front.friday')); ?></div>
                         <div class="hour-time">09:00 – 01:00</div>
-                        <div class="hour-time-sub">{{ __('front.all_meals') }}</div>
+                        <div class="hour-time-sub"><?php echo e(__('front.all_meals')); ?></div>
                     </div>
                     <div class="hour-card" data-day="6">
-                        <div class="hour-day">{{ __('front.saturday') }}</div>
+                        <div class="hour-day"><?php echo e(__('front.saturday')); ?></div>
                         <div class="hour-time">09:00 – 01:00</div>
-                        <div class="hour-time-sub">{{ __('front.all_meals') }}</div>
+                        <div class="hour-time-sub"><?php echo e(__('front.all_meals')); ?></div>
                     </div>
                     <div class="hour-card" data-day="0">
-                        <div class="hour-day">{{ __('front.sunday') }}</div>
+                        <div class="hour-day"><?php echo e(__('front.sunday')); ?></div>
                         <div class="hour-time">11:00 – 23:00</div>
-                        <div class="hour-time-sub">{{ __('front.lunch_dinner') }}</div>
+                        <div class="hour-time-sub"><?php echo e(__('front.lunch_dinner')); ?></div>
                     </div>
                     <div class="hour-card" data-day="-1" style="background:rgba(206,173,106,0.04)">
-                        <div class="hour-day">{{ __('front.ramadan') }}</div>
-                        <div class="hour-time">{{ __('front.special_hours') }}</div>
-                        <div class="hour-time-sub">{{ __('front.follow_social') }}</div>
+                        <div class="hour-day"><?php echo e(__('front.ramadan')); ?></div>
+                        <div class="hour-time"><?php echo e(__('front.special_hours')); ?></div>
+                        <div class="hour-time-sub"><?php echo e(__('front.follow_social')); ?></div>
                     </div>
-                @endif
+                <?php endif; ?>
             </div>
 
             <div class="hours-note reveal">
                 <p>
-                    {{ __('front.reservations_note') }}
-                    <strong>{{ $settingNav->phone ?? '' }}</strong>
+                    <?php echo e(__('front.reservations_note')); ?>
+
+                    <strong><?php echo e($settingNav->phone ?? ''); ?></strong>
                 </p>
             </div>
 
         </div>
     </section>
 
-    {{-- ══════════════════════════════════════════════════════════════
-     CONTACT
-══════════════════════════════════════════════════════════════ --}}
+    
     <section id="contact">
         <div class="section-header reveal">
-            <span class="section-label">{{ __('front.contact') }}</span>
+            <span class="section-label"><?php echo e(__('front.contact')); ?></span>
             <h2 class="section-title">
-                {{ __('front.contact_title') }} <span>{{ __('front.contact_title_span') }}</span>
+                <?php echo e(__('front.contact_title')); ?> <span><?php echo e(__('front.contact_title_span')); ?></span>
             </h2>
             <div class="ornament-divider">
                 <div class="ornament-divider-center"></div>
@@ -511,23 +508,24 @@
         <div class="contact-inner">
 
             <div class="contact-info reveal-left">
-                <h3>{{ __('front.contact_heading') }}</h3>
+                <h3><?php echo e(__('front.contact_heading')); ?></h3>
 
                 <div class="contact-detail">
                     <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
                     <div>
-                        <div class="contact-detail-title">{{ __('front.location') }}</div>
-                        <div class="contact-detail-value">{{ $settingNav->address ?? '' }}</div>
+                        <div class="contact-detail-title"><?php echo e(__('front.location')); ?></div>
+                        <div class="contact-detail-value"><?php echo e($settingNav->address ?? ''); ?></div>
                     </div>
                 </div>
 
                 <div class="contact-detail">
                     <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
                     <div>
-                        <div class="contact-detail-title">{{ __('front.call') }}</div>
+                        <div class="contact-detail-title"><?php echo e(__('front.call')); ?></div>
                         <div class="contact-detail-value">
-                            <a href="tel:{{ $settingNav->phone ?? '' }}" style="color:inherit;text-decoration:none;">
-                                {{ $settingNav->phone ?? '' }}
+                            <a href="tel:<?php echo e($settingNav->phone ?? ''); ?>" style="color:inherit;text-decoration:none;">
+                                <?php echo e($settingNav->phone ?? ''); ?>
+
                             </a>
                         </div>
                     </div>
@@ -536,94 +534,123 @@
                 <div class="contact-detail">
                     <div class="contact-icon"><i class="fas fa-envelope"></i></div>
                     <div>
-                        <div class="contact-detail-title">{{ __('front.email') }}</div>
+                        <div class="contact-detail-title"><?php echo e(__('front.email')); ?></div>
                         <div class="contact-detail-value">
-                            <a href="mailto:{{ $settingNav->email ?? '' }}" style="color:inherit;text-decoration:none;">
-                                {{ $settingNav->email ?? '' }}
+                            <a href="mailto:<?php echo e($settingNav->email ?? ''); ?>" style="color:inherit;text-decoration:none;">
+                                <?php echo e($settingNav->email ?? ''); ?>
+
                             </a>
                         </div>
                     </div>
                 </div>
 
-                @if ($settingNav->google_map ?? false)
+                <?php if($settingNav->google_map ?? false): ?>
                     <div class="contact-detail">
                         <div class="contact-icon"><i class="fas fa-map"></i></div>
                         <div>
-                            <div class="contact-detail-title">{{ __('front.map') }}</div>
+                            <div class="contact-detail-title"><?php echo e(__('front.map')); ?></div>
                             <div class="contact-detail-value">
-                                <a href="{{ $settingNav->google_map }}" target="_blank"
+                                <a href="<?php echo e($settingNav->google_map); ?>" target="_blank"
                                     style="color:var(--gold);text-decoration:none;">
-                                    {{ __('front.open_map') }} ↗
+                                    <?php echo e(__('front.open_map')); ?> ↗
                                 </a>
                             </div>
                         </div>
                     </div>
-                @endif
+                <?php endif; ?>
 
                 <div class="contact-social">
-                    @if ($settingNav->instagram ?? false)
-                        <a href="{{ $settingNav->instagram }}" target="_blank" class="social-btn">
+                    <?php if($settingNav->instagram ?? false): ?>
+                        <a href="<?php echo e($settingNav->instagram); ?>" target="_blank" class="social-btn">
                             <i class="fab fa-instagram"></i>
                         </a>
-                    @endif
-                    @if ($settingNav->facebook ?? false)
-                        <a href="{{ $settingNav->facebook }}" target="_blank" class="social-btn">
+                    <?php endif; ?>
+                    <?php if($settingNav->facebook ?? false): ?>
+                        <a href="<?php echo e($settingNav->facebook); ?>" target="_blank" class="social-btn">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                    @endif
-                    @if ($settingNav->twitter ?? false)
-                        <a href="{{ $settingNav->twitter }}" target="_blank" class="social-btn">
+                    <?php endif; ?>
+                    <?php if($settingNav->twitter ?? false): ?>
+                        <a href="<?php echo e($settingNav->twitter); ?>" target="_blank" class="social-btn">
                             <i class="fab fa-x-twitter"></i>
                         </a>
-                    @endif
+                    <?php endif; ?>
                 </div>
             </div>
 
             <div class="contact-form-box reveal-right">
-                <span class="contact-form-title">{{ __('front.book_now') }}</span>
+                <span class="contact-form-title"><?php echo e(__('front.book_now')); ?></span>
 
-                @if (session('success'))
-                    <div class="alert-success-saba">✓ {{ session('success') }}</div>
-                @endif
+                <?php if(session('success')): ?>
+                    <div class="alert-success-saba">✓ <?php echo e(session('success')); ?></div>
+                <?php endif; ?>
 
-                <form method="POST" action="{{ route('contact.store') }}">
-                    @csrf
+                <form method="POST" action="<?php echo e(route('contact.store')); ?>">
+                    <?php echo csrf_field(); ?>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>{{ __('front.name') }}</label>
-                            <input type="text" name="name" value="{{ old('name') }}"
-                                placeholder="{{ __('front.name_placeholder') }}" required>
-                            @error('name')
-                                <span class="field-error">{{ $message }}</span>
-                            @enderror
+                            <label><?php echo e(__('front.name')); ?></label>
+                            <input type="text" name="name" value="<?php echo e(old('name')); ?>"
+                                placeholder="<?php echo e(__('front.name_placeholder')); ?>" required>
+                            <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="field-error"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                         <div class="form-group">
-                            <label>{{ __('front.phone') }}</label>
-                            <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="+212 ..."
+                            <label><?php echo e(__('front.phone')); ?></label>
+                            <input type="tel" name="phone" value="<?php echo e(old('phone')); ?>" placeholder="+212 ..."
                                 required>
-                            @error('phone')
-                                <span class="field-error">{{ $message }}</span>
-                            @enderror
+                            <?php $__errorArgs = ['phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="field-error"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>{{ __('front.subject') }}</label>
-                        <input type="text" name="subject" value="{{ old('subject') }}"
-                            placeholder="{{ __('front.subject_placeholder') }}" required>
-                        @error('subject')
-                            <span class="field-error">{{ $message }}</span>
-                        @enderror
+                        <label><?php echo e(__('front.subject')); ?></label>
+                        <input type="text" name="subject" value="<?php echo e(old('subject')); ?>"
+                            placeholder="<?php echo e(__('front.subject_placeholder')); ?>" required>
+                        <?php $__errorArgs = ['subject'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="field-error"><?php echo e($message); ?></span>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
                     <div class="form-group">
-                        <label>{{ __('front.message') }}</label>
-                        <textarea name="message" placeholder="{{ __('front.message_placeholder') }}" required>{{ old('message') }}</textarea>
-                        @error('message')
-                            <span class="field-error">{{ $message }}</span>
-                        @enderror
+                        <label><?php echo e(__('front.message')); ?></label>
+                        <textarea name="message" placeholder="<?php echo e(__('front.message_placeholder')); ?>" required><?php echo e(old('message')); ?></textarea>
+                        <?php $__errorArgs = ['message'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="field-error"><?php echo e($message); ?></span>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
                     <button type="submit" class="btn-primary"
                         style="width:100%;text-align:center;border:none;font-size:1rem;">
-                        <span>{{ __('front.send') }} ←</span>
+                        <span><?php echo e(__('front.send')); ?> ←</span>
                     </button>
                 </form>
             </div>
@@ -631,18 +658,16 @@
         </div>
     </section>
 
-    {{-- ══════════════════════════════════════════════════════════════
-     SCRIPTS
-══════════════════════════════════════════════════════════════ --}}
-    @push('scripts')
+    
+    <?php $__env->startPush('scripts'); ?>
         <script>
             $(document).ready(function() {
 
                 // ─── نمرر الـ route base من Laravel ───
                 // هكذا نتجنب hard-coded URLs وتعمل مع locale prefix
-                var productBaseUrl = '{{ url(app()->getLocale() . '/product') }}';
-                var filterUrl = '{{ route('filter.products') }}';
-                var locale = '{{ $locale }}';
+                var productBaseUrl = '<?php echo e(url(app()->getLocale() . '/product')); ?>';
+                var filterUrl = '<?php echo e(route('filter.products')); ?>';
+                var locale = '<?php echo e($locale); ?>';
 
                 // ─── Menu AJAX filter ───
                 $('#menuTabs').on('click', '.menu-tab', function() {
@@ -652,7 +677,7 @@
                     var catId = $(this).data('category');
                     var $panel = $('#menuPanel');
 
-                    $panel.html('<div class="menu-loading">{{ __('front.loading') }}</div>');
+                    $panel.html('<div class="menu-loading"><?php echo e(__('front.loading')); ?></div>');
 
                     $.ajax({
                         url: filterUrl,
@@ -663,7 +688,7 @@
                         success: function(res) {
                             if (!res.products || !res.products.length) {
                                 $panel.html(
-                                    '<div class="menu-empty">{{ __('front.no_products') }}</div>'
+                                    '<div class="menu-empty"><?php echo e(__('front.no_products')); ?></div>'
                                     );
                                 return;
                             }
@@ -677,7 +702,7 @@
                                 if (desc.length > 90) desc = desc.substring(0, 90) + '...';
 
                                 var tag = p.is_featured == 1 ?
-                                    '<span class="menu-item-tag">{{ __('front.featured_tag') }}</span>' :
+                                    '<span class="menu-item-tag"><?php echo e(__('front.featured_tag')); ?></span>' :
                                     '';
 
                                 // ─── Options badges ───
@@ -739,7 +764,7 @@
                         },
                         error: function() {
                             $panel.html(
-                                '<div class="menu-empty">{{ __('front.error_loading') }}</div>'
+                                '<div class="menu-empty"><?php echo e(__('front.error_loading')); ?></div>'
                                 );
                         }
                     });
@@ -833,6 +858,8 @@
                 if (e.target === this) closeVideo();
             });
         </script>
-    @endpush
+    <?php $__env->stopPush(); ?>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.front', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\saba\resources\views/user/home.blade.php ENDPATH**/ ?>

@@ -131,5 +131,7 @@ return [
     'similar_title'         => 'أصناف',
     'similar_title_span'    => 'مشابهة',
     'similar_desc'          => 'اكتشف المزيد من أطباقنا المميزة',
-
+'choose_size' => 'اختر الحجم',
+    'map' => 'الموقع',
+    'open_map' => 'فتح الموقع',
 ];

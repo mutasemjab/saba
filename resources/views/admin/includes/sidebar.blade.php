@@ -65,6 +65,15 @@
                         </a>
                     </li>
                 @endif
+              
+                @if ($user->can('product-index') || $user->can('product-create') || $user->can('product-edit') || $user->can('product-delete'))
+                    <li class="nav-item">
+                        <a href="{{ route('product_options.index') }}" class="nav-link">
+                            <i class="fas fa-tags nav-icon"></i>
+                            <p> {{ __('messages.product_options') }} </p>
+                        </a>
+                    </li>
+                @endif
 
                   <li class="nav-item">
                     <a href="{{ route('videos.index') }}" class="nav-link">

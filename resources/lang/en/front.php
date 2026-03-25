@@ -110,5 +110,8 @@ return [
     'delivery'          => 'Home Delivery',
     'events'            => 'Special Events',
     'catering'          => 'Catering',
+    'choose_size' => 'Choose size',
+    'map' => 'Map',
+    'open_map' => 'Open map',
 
 ];

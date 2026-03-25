@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductOptionController;
 use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\Admin\WorkingHourController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -66,6 +67,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('abouts', AboutController::class);
         Route::resource('categories', CategoryController::class);
         Route::resource('products', ProductController::class);
+        Route::resource('product_options', ProductOptionController::class);
     });
 });
 

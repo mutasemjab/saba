@@ -1,6 +1,4 @@
-@extends('layouts.front')
-
-@push('styles')
+<?php $__env->startPush('styles'); ?>
 <style>
 /* ── PRODUCT PAGE ── */
 .product-wrap{max-width:1280px;margin:0 auto;padding:120px 60px 90px}
@@ -81,10 +79,10 @@
     .similar-grid{grid-template-columns:1fr}
 }
 </style>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@section('content')
-@php
+<?php $__env->startSection('content'); ?>
+<?php
     $settingNav = $setting ?? \App\Models\Setting::first();
     $locale     = app()->getLocale();
     $current    = LaravelLocalization::getCurrentLocale();
@@ -92,221 +90,230 @@
     $supported  = LaravelLocalization::getSupportedLocales();
     $targetName = $target==='ar' ? ($supported[$target]['native']??'العربية') : ($supported[$target]['native']??'English');
     $targetUrl  = LaravelLocalization::getLocalizedURL($target, null, [], true);
-@endphp
+?>
 
-{{-- NAVBAR --}}
+
 <nav id="navbar" class="scrolled">
-    <a href="{{ route('home') }}" class="nav-logo">
-        <img src="{{ $settingNav&&$settingNav->logo ? asset('assets/admin/uploads/'.$settingNav->logo) : asset('assets_front/images/main_logo.png') }}" alt="سبأ">
+    <a href="<?php echo e(route('home')); ?>" class="nav-logo">
+        <img src="<?php echo e($settingNav&&$settingNav->logo ? asset('assets/admin/uploads/'.$settingNav->logo) : asset('assets_front/images/main_logo.png')); ?>" alt="سبأ">
     </a>
     <ul class="nav-links">
-        <li><a href="{{ route('home') }}">{{ __('front.home') }}</a></li>
-        <li><a href="{{ route('menu') }}">{{ __('front.menu') }}</a></li>
-        <li><a href="{{ route('home') }}#contact">{{ __('front.contact') }}</a></li>
-        <li><a class="nav-lang" hreflang="{{ $target }}" href="{{ $targetUrl }}">{{ $targetName }}</a></li>
+        <li><a href="<?php echo e(route('home')); ?>"><?php echo e(__('front.home')); ?></a></li>
+        <li><a href="<?php echo e(route('menu')); ?>"><?php echo e(__('front.menu')); ?></a></li>
+        <li><a href="<?php echo e(route('home')); ?>#contact"><?php echo e(__('front.contact')); ?></a></li>
+        <li><a class="nav-lang" hreflang="<?php echo e($target); ?>" href="<?php echo e($targetUrl); ?>"><?php echo e($targetName); ?></a></li>
     </ul>
-    <a href="{{ route('home') }}#contact" class="nav-reserve">{{ __('front.book_table') }}</a>
+    <a href="<?php echo e(route('home')); ?>#contact" class="nav-reserve"><?php echo e(__('front.book_table')); ?></a>
 </nav>
 
 <div class="product-wrap">
 
-    {{-- ════════════════════ PRODUCT HERO ════════════════════ --}}
+    
     <div class="product-hero">
 
-        {{-- Image --}}
+        
         <div class="product-img-box reveal-left">
-            <img src="{{ asset('assets/admin/uploads/'.$product->photo) }}"
-                 alt="{{ $locale==='ar' ? $product->name_ar : $product->name_en }}">
+            <img src="<?php echo e(asset('assets/admin/uploads/'.$product->photo)); ?>"
+                 alt="<?php echo e($locale==='ar' ? $product->name_ar : $product->name_en); ?>">
             <div class="pic-corner tl"></div>
             <div class="pic-corner br"></div>
-            @if($product->is_featured==1)
-                <div class="pic-badge">{{ __('front.featured_tag') }}</div>
-            @endif
+            <?php if($product->is_featured==1): ?>
+                <div class="pic-badge"><?php echo e(__('front.featured_tag')); ?></div>
+            <?php endif; ?>
         </div>
 
-        {{-- Info --}}
+        
         <div class="product-info reveal-right">
 
-            {{-- Breadcrumb --}}
+            
             <div class="product-bc">
-                <a href="{{ route('home') }}">{{ __('front.home') }}</a>
+                <a href="<?php echo e(route('home')); ?>"><?php echo e(__('front.home')); ?></a>
                 <span class="sep">›</span>
-                <a href="{{ route('menu') }}">{{ __('front.menu') }}</a>
-                @if($product->category)
+                <a href="<?php echo e(route('menu')); ?>"><?php echo e(__('front.menu')); ?></a>
+                <?php if($product->category): ?>
                 <span class="sep">›</span>
-                <a href="{{ route('menu', ['category_id'=>$product->category_id]) }}">
-                    {{ $locale==='ar' ? $product->category->name_ar : $product->category->name_en }}
+                <a href="<?php echo e(route('menu', ['category_id'=>$product->category_id])); ?>">
+                    <?php echo e($locale==='ar' ? $product->category->name_ar : $product->category->name_en); ?>
+
                 </a>
-                @endif
+                <?php endif; ?>
                 <span class="sep">›</span>
-                <span>{{ $locale==='ar' ? \Str::limit($product->name_ar,30) : \Str::limit($product->name_en,30) }}</span>
+                <span><?php echo e($locale==='ar' ? \Str::limit($product->name_ar,30) : \Str::limit($product->name_en,30)); ?></span>
             </div>
 
-            {{-- Category --}}
-            @if($product->category)
-            <span class="product-cat-label">{{ $locale==='ar' ? $product->category->name_ar : $product->category->name_en }}</span>
-            @endif
+            
+            <?php if($product->category): ?>
+            <span class="product-cat-label"><?php echo e($locale==='ar' ? $product->category->name_ar : $product->category->name_en); ?></span>
+            <?php endif; ?>
 
-            {{-- Name --}}
-            <h1 class="product-name">{{ $locale==='ar' ? $product->name_ar : $product->name_en }}</h1>
+            
+            <h1 class="product-name"><?php echo e($locale==='ar' ? $product->name_ar : $product->name_en); ?></h1>
 
             <div class="product-ornament"><div class="product-ornament-gem"></div></div>
 
-            {{-- Description --}}
-            <div class="product-desc">{!! $locale==='ar' ? $product->description_ar : $product->description_en !!}</div>
+            
+            <div class="product-desc"><?php echo $locale==='ar' ? $product->description_ar : $product->description_en; ?></div>
 
-            {{-- ✅ Options أو سعر عادي --}}
-            @if($product->options->isNotEmpty())
+            
+            <?php if($product->options->isNotEmpty()): ?>
                 <div class="product-options-wrap">
-                    <span class="product-options-label">{{ __('front.choose_size') }}</span>
+                    <span class="product-options-label"><?php echo e(__('front.choose_size')); ?></span>
                     <div class="product-options-list">
-                        @foreach($product->options as $i => $opt)
-                        <div class="product-option-row {{ $i === 0 ? 'selected' : '' }}"
+                        <?php $__currentLoopData = $product->options; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $opt): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="product-option-row <?php echo e($i === 0 ? 'selected' : ''); ?>"
                              onclick="selectOption(this)">
                             <div style="display:flex;align-items:center;gap:12px">
                                 <div class="product-option-radio">
                                     <div class="product-option-radio-dot"></div>
                                 </div>
                                 <div class="product-option-name">
-                                    {{ $locale==='ar' ? $opt->name_ar : $opt->name_en }}
+                                    <?php echo e($locale==='ar' ? $opt->name_ar : $opt->name_en); ?>
+
                                 </div>
                             </div>
-                            @if($opt->price)
+                            <?php if($opt->price): ?>
                             <div style="display:flex;align-items:baseline;gap:5px">
-                                <div class="product-option-price">{{ number_format($opt->price, 0) }}</div>
+                                <div class="product-option-price"><?php echo e(number_format($opt->price, 0)); ?></div>
                                 <div class="product-option-unit">
-                                    {{ $locale==='ar' ? ($opt->price_unit_ar ?? 'درهم') : ($opt->price_unit_en ?? 'MAD') }}
+                                    <?php echo e($locale==='ar' ? ($opt->price_unit_ar ?? 'درهم') : ($opt->price_unit_en ?? 'MAD')); ?>
+
                                 </div>
                             </div>
-                            @endif
+                            <?php endif; ?>
                         </div>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                 </div>
 
-            @elseif($product->price ?? false)
+            <?php elseif($product->price ?? false): ?>
                 <div class="product-price-box">
                     <div>
-                        <div class="price-label">{{ __('front.price') }}</div>
-                        <div class="price-val">{{ $product->price }}</div>
-                        <div class="price-unit">{{ $locale==='ar' ? ($product->price_unit_ar??'درهم') : ($product->price_unit_en??'MAD') }}</div>
+                        <div class="price-label"><?php echo e(__('front.price')); ?></div>
+                        <div class="price-val"><?php echo e($product->price); ?></div>
+                        <div class="price-unit"><?php echo e($locale==='ar' ? ($product->price_unit_ar??'درهم') : ($product->price_unit_en??'MAD')); ?></div>
                     </div>
                 </div>
-            @endif
+            <?php endif; ?>
 
-            {{-- Actions --}}
+            
             <div class="product-actions">
-                <a href="{{ route('home') }}#contact" class="btn-primary"><span>{{ __('front.order_now') }} ←</span></a>
-                <a href="{{ route('menu', ['category_id'=>$product->category_id]) }}" class="btn-outline">{{ __('front.more_from_category') }}</a>
+                <a href="<?php echo e(route('home')); ?>#contact" class="btn-primary"><span><?php echo e(__('front.order_now')); ?> ←</span></a>
+                <a href="<?php echo e(route('menu', ['category_id'=>$product->category_id])); ?>" class="btn-outline"><?php echo e(__('front.more_from_category')); ?></a>
             </div>
 
-            {{-- Meta --}}
+            
             <div class="product-meta">
-                @if($product->category)
+                <?php if($product->category): ?>
                 <div class="meta-row">
-                    <span class="lbl">{{ __('front.category') }}</span>
-                    <span class="val">{{ $locale==='ar' ? $product->category->name_ar : $product->category->name_en }}</span>
+                    <span class="lbl"><?php echo e(__('front.category')); ?></span>
+                    <span class="val"><?php echo e($locale==='ar' ? $product->category->name_ar : $product->category->name_en); ?></span>
                 </div>
-                @endif
-                @if($product->is_featured==1)
+                <?php endif; ?>
+                <?php if($product->is_featured==1): ?>
                 <div class="meta-row">
-                    <span class="lbl">{{ __('front.status') }}</span>
-                    <span class="val" style="color:var(--gold)">{{ __('front.featured_tag') }}</span>
+                    <span class="lbl"><?php echo e(__('front.status')); ?></span>
+                    <span class="val" style="color:var(--gold)"><?php echo e(__('front.featured_tag')); ?></span>
                 </div>
-                @endif
+                <?php endif; ?>
             </div>
 
         </div>
     </div>
 
-    {{-- ════════════════════ SIMILAR PRODUCTS ════════════════════ --}}
-    @if($similar->isNotEmpty())
+    
+    <?php if($similar->isNotEmpty()): ?>
     <div class="similar-wrap">
         <div class="section-header reveal" style="margin-bottom:0">
-            <span class="section-label">{{ __('front.similar_label') }}</span>
-            <h2 class="section-title">{{ __('front.similar_title') }} <span>{{ __('front.similar_title_span') }}</span></h2>
+            <span class="section-label"><?php echo e(__('front.similar_label')); ?></span>
+            <h2 class="section-title"><?php echo e(__('front.similar_title')); ?> <span><?php echo e(__('front.similar_title_span')); ?></span></h2>
             <div class="ornament-divider"><div class="ornament-divider-center"></div></div>
-            <p class="section-desc">{{ __('front.similar_desc') }}</p>
+            <p class="section-desc"><?php echo e(__('front.similar_desc')); ?></p>
         </div>
         <div class="similar-grid">
-            @foreach($similar as $item)
-            <a href="{{ route('product.show', $item->id) }}" class="sim-card reveal">
+            <?php $__currentLoopData = $similar; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <a href="<?php echo e(route('product.show', $item->id)); ?>" class="sim-card reveal">
                 <div class="sim-card-img">
-                    <img src="{{ asset('assets/admin/uploads/'.$item->photo) }}"
-                         alt="{{ $locale==='ar' ? $item->name_ar : $item->name_en }}">
+                    <img src="<?php echo e(asset('assets/admin/uploads/'.$item->photo)); ?>"
+                         alt="<?php echo e($locale==='ar' ? $item->name_ar : $item->name_en); ?>">
                 </div>
                 <div class="sim-card-body">
-                    <div class="sim-card-cat">{{ $locale==='ar' ? ($item->category->name_ar??'') : ($item->category->name_en??'') }}</div>
-                    <div class="sim-card-name">{{ $locale==='ar' ? $item->name_ar : $item->name_en }}</div>
+                    <div class="sim-card-cat"><?php echo e($locale==='ar' ? ($item->category->name_ar??'') : ($item->category->name_en??'')); ?></div>
+                    <div class="sim-card-name"><?php echo e($locale==='ar' ? $item->name_ar : $item->name_en); ?></div>
 
-                    {{-- ✅ options أو سعر عادي في الـ similar card --}}
-                    @if($item->options->isNotEmpty())
+                    
+                    <?php if($item->options->isNotEmpty()): ?>
                         <div class="sim-card-price">
-                            {{ __('front.from') }}
-                            {{ number_format($item->options->min('price'), 0) }}
-                            {{ $locale==='ar' ? ($item->options->first()->price_unit_ar ?? 'درهم') : ($item->options->first()->price_unit_en ?? 'MAD') }}
+                            <?php echo e(__('front.from')); ?>
+
+                            <?php echo e(number_format($item->options->min('price'), 0)); ?>
+
+                            <?php echo e($locale==='ar' ? ($item->options->first()->price_unit_ar ?? 'درهم') : ($item->options->first()->price_unit_en ?? 'MAD')); ?>
+
                         </div>
-                    @elseif($item->price ?? false)
+                    <?php elseif($item->price ?? false): ?>
                         <div class="sim-card-price">
-                            {{ $item->price }}
-                            {{ $locale==='ar' ? ($item->price_unit_ar??'درهم') : ($item->price_unit_en??'MAD') }}
+                            <?php echo e($item->price); ?>
+
+                            <?php echo e($locale==='ar' ? ($item->price_unit_ar??'درهم') : ($item->price_unit_en??'MAD')); ?>
+
                         </div>
-                    @endif
+                    <?php endif; ?>
                 </div>
             </a>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
         <div style="text-align:center;margin-top:44px;">
-            <a href="{{ route('menu') }}" class="btn-outline">{{ __('front.view_full_menu') }} ←</a>
+            <a href="<?php echo e(route('menu')); ?>" class="btn-outline"><?php echo e(__('front.view_full_menu')); ?> ←</a>
         </div>
     </div>
-    @endif
+    <?php endif; ?>
 
 </div>
 
-{{-- FOOTER --}}
+
 <footer>
     <div class="footer-top">
         <div class="footer-brand">
-            <img src="{{ $settingNav&&$settingNav->logo ? asset('assets/admin/uploads/'.$settingNav->logo) : asset('assets_front/images/main_logo.png') }}" alt="سبأ" class="footer-brand-logo">
-            <p>{{ __('front.footer_about') }}</p>
+            <img src="<?php echo e($settingNav&&$settingNav->logo ? asset('assets/admin/uploads/'.$settingNav->logo) : asset('assets_front/images/main_logo.png')); ?>" alt="سبأ" class="footer-brand-logo">
+            <p><?php echo e(__('front.footer_about')); ?></p>
             <div class="footer-social">
-                @if($settingNav->instagram??false)<a href="{{ $settingNav->instagram }}" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a>@endif
-                @if($settingNav->facebook??false)<a href="{{ $settingNav->facebook }}" target="_blank" class="social-btn"><i class="fab fa-facebook-f"></i></a>@endif
-                @if($settingNav->twitter??false)<a href="{{ $settingNav->twitter }}" target="_blank" class="social-btn"><i class="fab fa-x-twitter"></i></a>@endif
+                <?php if($settingNav->instagram??false): ?><a href="<?php echo e($settingNav->instagram); ?>" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a><?php endif; ?>
+                <?php if($settingNav->facebook??false): ?><a href="<?php echo e($settingNav->facebook); ?>" target="_blank" class="social-btn"><i class="fab fa-facebook-f"></i></a><?php endif; ?>
+                <?php if($settingNav->twitter??false): ?><a href="<?php echo e($settingNav->twitter); ?>" target="_blank" class="social-btn"><i class="fab fa-x-twitter"></i></a><?php endif; ?>
             </div>
         </div>
         <div class="footer-col">
-            <h4>{{ __('front.quick_links') }}</h4>
+            <h4><?php echo e(__('front.quick_links')); ?></h4>
             <ul>
-                <li><a href="{{ route('home') }}">{{ __('front.home') }}</a></li>
-                <li><a href="{{ route('menu') }}">{{ __('front.menu') }}</a></li>
-                <li><a href="{{ route('home') }}#about">{{ __('front.about') }}</a></li>
-                <li><a href="{{ route('home') }}#contact">{{ __('front.contact') }}</a></li>
+                <li><a href="<?php echo e(route('home')); ?>"><?php echo e(__('front.home')); ?></a></li>
+                <li><a href="<?php echo e(route('menu')); ?>"><?php echo e(__('front.menu')); ?></a></li>
+                <li><a href="<?php echo e(route('home')); ?>#about"><?php echo e(__('front.about')); ?></a></li>
+                <li><a href="<?php echo e(route('home')); ?>#contact"><?php echo e(__('front.contact')); ?></a></li>
             </ul>
         </div>
         <div class="footer-col">
-            <h4>{{ __('front.contact') }}</h4>
+            <h4><?php echo e(__('front.contact')); ?></h4>
             <ul>
-                <li><a href="#">{{ $settingNav->address??'' }}</a></li>
-                <li><a href="tel:{{ $settingNav->phone??'' }}">{{ $settingNav->phone??'' }}</a></li>
-                <li><a href="mailto:{{ $settingNav->email??'' }}">{{ $settingNav->email??'' }}</a></li>
+                <li><a href="#"><?php echo e($settingNav->address??''); ?></a></li>
+                <li><a href="tel:<?php echo e($settingNav->phone??''); ?>"><?php echo e($settingNav->phone??''); ?></a></li>
+                <li><a href="mailto:<?php echo e($settingNav->email??''); ?>"><?php echo e($settingNav->email??''); ?></a></li>
             </ul>
         </div>
     </div>
     <div class="footer-bottom">
-        <p class="footer-copy">© {{ date('Y') }} <span>{{ __('front.site_name') }}</span> · {{ __('front.all_rights') }}</p>
+        <p class="footer-copy">© <?php echo e(date('Y')); ?> <span><?php echo e(__('front.site_name')); ?></span> · <?php echo e(__('front.all_rights')); ?></p>
         <div class="footer-ornament">⬡ سبأ ⬡</div>
     </div>
 </footer>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
 <script>
 function selectOption(el) {
     document.querySelectorAll('.product-option-row').forEach(r => r.classList.remove('selected'));
     el.classList.add('selected');
 }
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.front', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\saba\resources\views/user/product.blade.php ENDPATH**/ ?>

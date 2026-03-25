@@ -197,5 +197,26 @@ return [
     'logo' => 'الشعار',
         'videos' => 'الفيديوهات',
     'Working-hours' => 'ساعات الدوام',
+    
+'product_options' => 'خيارات المنتج',
+    'add' => 'إضافة',
+    'add_edit' => 'إضافة / تعديل',
+    'name' => 'الاسم',
+    'name_ar' => 'الاسم بالعربي',
+    'name_en' => 'الاسم بالإنجليزي',
+    'price' => 'السعر',
+    'price_unit' => 'وحدة السعر',
+    'price_unit_ar' => 'وحدة السعر بالعربي',
+    'price_unit_en' => 'وحدة السعر بالإنجليزي',
+    'sort_order' => 'الترتيب',
+    'actions' => 'الإجراءات',
+    'edit' => 'تعديل',
+    'delete' => 'حذف',
+    'save' => 'حفظ',
 
+    'created_successfully' => 'تم الإنشاء بنجاح',
+    'updated_successfully' => 'تم التعديل بنجاح',
+    'deleted_successfully' => 'تم الحذف بنجاح',
+
+    'photo' => 'صورة',
 ];

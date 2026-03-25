@@ -18,18 +18,31 @@ class HomeController extends Controller
     {
         $locale           = app()->getLocale();
         $featuredProducts = Product::where('is_featured', 1)->get();
-        $categories       = Category::orderBy('name_ar')->get();
-        $products         = Product::with('category')->orderBy('category_id')->get();
-        $setting          = Setting::first();
-        $about            = About::where('type', 'company_profile')->first();
-        $vision           = About::where('type', 'vision')->first();
-        $videos           = Video::active()->get();
-        $workingHours     = WorkingHour::active()->get();
+        $categories       = Category::orderBy('created_at', 'desc')->get();
+
+        // أول كاتيجوري بشكل افتراضي
+        $firstCategory    = $categories->first();
+        $products         = Product::with(['category', 'options'])
+            ->when($firstCategory, fn($q) => $q->where('category_id', $firstCategory->id))
+            ->orderBy('category_id')->get();
+
+        $setting      = Setting::first();
+        $about        = About::where('type', 'company_profile')->first();
+        $vision       = About::where('type', 'vision')->first();
+        $videos       = Video::active()->get();
+        $workingHours = WorkingHour::active()->get();
 
         return view('user.home', compact(
-            'featuredProducts','categories','products',
-            'about','vision','locale','setting',
-            'videos','workingHours'
+            'featuredProducts',
+            'categories',
+            'products',
+            'about',
+            'vision',
+            'locale',
+            'setting',
+            'videos',
+            'workingHours',
+            'firstCategory'
         ));
     }
 
@@ -37,9 +50,24 @@ class HomeController extends Controller
     {
         $locale     = app()->getLocale();
         $categoryId = $request->get('category_id');
-        $products   = Product::when($categoryId, fn($q)=>$q->where('category_id',$categoryId))->get();
+        $products   = Product::with('options')
+            ->when($categoryId, fn($q) => $q->where('category_id', $categoryId))
+            ->get();
 
-        return response()->json(['success'=>true,'products'=>$products,'locale'=>$locale]);
+        // أضف الـ options في الـ JSON response
+        $products = $products->map(function ($p) {
+            $p->options_data = $p->options->map(fn($o) => [
+                'id'           => $o->id,
+                'name_ar'      => $o->name_ar,
+                'name_en'      => $o->name_en,
+                'price'        => $o->price,
+                'price_unit_ar' => $o->price_unit_ar,
+                'price_unit_en' => $o->price_unit_en,
+            ]);
+            return $p;
+        });
+
+        return response()->json(['success' => true, 'products' => $products, 'locale' => $locale]);
     }
 
     public function storeContact(Request $request)
@@ -51,7 +79,7 @@ class HomeController extends Controller
             'message' => 'required|string',
         ]);
 
-        Contact::create($request->only('name','phone','subject','message'));
+        Contact::create($request->only('name', 'phone', 'subject', 'message'));
 
         return back()->with('success', __('front.message_sent'));
     }

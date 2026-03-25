@@ -16,4 +16,8 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function options()
+    {
+        return $this->hasMany(ProductOption::class)->orderBy('sort_order');
+    }
 }

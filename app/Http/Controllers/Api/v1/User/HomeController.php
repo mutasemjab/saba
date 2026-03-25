@@ -12,7 +12,7 @@ class HomeController extends Controller
     public function categories()
     {
         $data = Category::withCount('products')
-            ->get()
+            ->orderBy('created_at', 'desc')->get()
             ->map(fn($c) => [
                 'id'             => $c->id,
                 'name_ar'        => $c->name_ar,
@@ -26,7 +26,7 @@ class HomeController extends Controller
     /** GET /api/v1/user/products */
     public function allProducts()
     {
-        $data = Product::with('category')
+        $data = Product::with(['category', 'options'])
             ->orderBy('category_id')
             ->get()
             ->map(fn($p) => $this->format($p));
@@ -37,7 +37,7 @@ class HomeController extends Controller
     /** GET /api/v1/user/products/{categoryId} */
     public function productsByCategory($categoryId)
     {
-        $data = Product::with('category')
+        $data = Product::with(['category', 'options'])
             ->where('category_id', $categoryId)
             ->get()
             ->map(fn($p) => $this->format($p));
@@ -55,14 +55,30 @@ class HomeController extends Controller
             'description_en'   => $p->description_en,
             'photo'            => $p->photo
                 ? url('assets/admin/uploads/' . $p->photo) : null,
-            'price'            => $p->price ? (float)$p->price : null,
-            'price_unit_ar'    => $p->price_unit_ar  ?? 'درهم',
-            'price_unit_en'    => $p->price_unit_en  ?? 'MAD',
+            'price'            => $p->price ? (float) $p->price : null,
+            'price_unit_ar'    => $p->price_unit_ar ?? 'درهم',
+            'price_unit_en'    => $p->price_unit_en ?? 'MAD',
             'is_featured'      => $p->is_featured == 1,
             'category_id'      => $p->category_id,
             'category_name_ar' => $p->category->name_ar ?? null,
             'category_name_en' => $p->category->name_en ?? null,
             'sort_order'       => $p->sort_order ?? 0,
+            'options'          => $p->options->isNotEmpty()
+                ? $p->options->map(fn($o) => $this->formatOption($o))->values()
+                : [],
+        ];
+    }
+
+    private function formatOption($o): array
+    {
+        return [
+            'id'             => $o->id,
+            'name_ar'        => $o->name_ar,
+            'name_en'        => $o->name_en,
+            'price'          => $o->price ? (float) $o->price : null,
+            'price_unit_ar'  => $o->price_unit_ar ?? 'درهم',
+            'price_unit_en'  => $o->price_unit_en ?? 'MAD',
+            'sort_order'     => $o->sort_order ?? 0,
         ];
     }
 }

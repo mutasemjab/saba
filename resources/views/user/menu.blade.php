@@ -47,6 +47,13 @@
 .prod-card:hover .prod-card-arrow{color:var(--gold)}
 .no-products{grid-column:1/-1;text-align:center;padding:80px;color:rgba(245,237,216,.3)}
 
+/* ── OPTIONS على الكارد ── */
+.prod-card-options{display:flex;flex-direction:column;gap:5px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(206,173,106,.08)}
+.prod-card-opt-row{display:flex;justify-content:space-between;align-items:center;padding:5px 8px;background:rgba(206,173,106,.04);border:1px solid rgba(206,173,106,.1);transition:border-color .2s}
+.prod-card:hover .prod-card-opt-row{border-color:rgba(206,173,106,.22)}
+.prod-card-opt-name{font-size:.72rem;color:rgba(245,237,216,.6)!important}
+.prod-card-opt-price{font-family:'Cinzel Decorative',serif;font-size:.68rem;color:var(--gold)!important}
+
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
     .menu-page{grid-template-columns:1fr;padding:50px 24px;gap:30px}
@@ -152,14 +159,39 @@
                     <div class="prod-card-cat">{{ $locale==='ar' ? ($p->category->name_ar??'') : ($p->category->name_en??'') }}</div>
                     <div class="prod-card-name">{{ $locale==='ar' ? $p->name_ar : $p->name_en }}</div>
                     <div class="prod-card-desc">{{ $locale==='ar' ? \Str::limit($p->description_ar,95) : \Str::limit($p->description_en,95) }}</div>
-                    <div class="prod-card-footer">
-                        @if($p->price??false)
-                            <div class="prod-card-price">{{ $p->price }} {{ $locale==='ar' ? ($p->price_unit_ar??'درهم') : ($p->price_unit_en??'MAD') }}</div>
-                        @else
-                            <div></div>
-                        @endif
-                        <div class="prod-card-arrow">{{ __('front.view_details') }} ←</div>
+
+                    {{-- ✅ Options أو سعر عادي --}}
+                    @if($p->options->isNotEmpty())
+                        <div class="prod-card-options">
+                            @foreach($p->options as $opt)
+                            <div class="prod-card-opt-row">
+                                <span class="prod-card-opt-name">{{ $locale==='ar' ? $opt->name_ar : $opt->name_en }}</span>
+                                @if($opt->price)
+                                <span class="prod-card-opt-price">
+                                    {{ number_format($opt->price, 0) }}
+                                    {{ $locale==='ar' ? ($opt->price_unit_ar ?? 'درهم') : ($opt->price_unit_en ?? 'MAD') }}
+                                </span>
+                                @endif
+                            </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="prod-card-footer">
+                            @if($p->price??false)
+                                <div class="prod-card-price">{{ $p->price }} {{ $locale==='ar' ? ($p->price_unit_ar??'درهم') : ($p->price_unit_en??'MAD') }}</div>
+                            @else
+                                <div></div>
+                            @endif
+                            <div class="prod-card-arrow">{{ __('front.view_details') }} ←</div>
+                        </div>
+                    @endif
+
+                    {{-- السهم دايماً ظاهر لما في options --}}
+                    @if($p->options->isNotEmpty())
+                    <div style="margin-top:10px;text-align:left">
+                        <span class="prod-card-arrow">{{ __('front.view_details') }} ←</span>
                     </div>
+                    @endif
                 </div>
             </a>
             @empty

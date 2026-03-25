@@ -197,6 +197,26 @@ return [
     'logo' => 'Logo',
     'videos' => 'videos',
     'Working-hours' => 'Working hours',
+  'product_options' => 'Product Options',
+    'add' => 'Add',
+    'add_edit' => 'Add / Edit',
+    'name' => 'Name',
+    'name_ar' => 'Name (Arabic)',
+    'name_en' => 'Name (English)',
+    'price' => 'Price',
+    'price_unit' => 'Price Unit',
+    'price_unit_ar' => 'Price Unit (Arabic)',
+    'price_unit_en' => 'Price Unit (English)',
+    'sort_order' => 'Sort Order',
+    'actions' => 'Actions',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
+    'save' => 'Save',
 
+    'created_successfully' => 'Created successfully',
+    'updated_successfully' => 'Updated successfully',
+    'deleted_successfully' => 'Deleted successfully',
+
+    'photo' => 'Photo',
 
 ];

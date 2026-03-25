@@ -68,7 +68,7 @@
               
                 @if ($user->can('product-index') || $user->can('product-create') || $user->can('product-edit') || $user->can('product-delete'))
                     <li class="nav-item">
-                        <a href="{{ route('product_options.index') }}" class="nav-link">
+                        <a href="{{ route('product-options.index') }}" class="nav-link">
                             <i class="fas fa-tags nav-icon"></i>
                             <p> {{ __('messages.product_options') }} </p>
                         </a>

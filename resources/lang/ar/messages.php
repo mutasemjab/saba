@@ -219,4 +219,6 @@ return [
     'deleted_successfully' => 'تم الحذف بنجاح',
 
     'photo' => 'صورة',
+    'product' => 'المنتج',
+'update' => 'تحديث',
 ];

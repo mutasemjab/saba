@@ -218,5 +218,7 @@ return [
     'deleted_successfully' => 'Deleted successfully',
 
     'photo' => 'Photo',
+    'product' => 'Product',
+'update' => 'Update',
 
 ];

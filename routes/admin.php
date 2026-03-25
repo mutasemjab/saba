@@ -67,7 +67,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('abouts', AboutController::class);
         Route::resource('categories', CategoryController::class);
         Route::resource('products', ProductController::class);
-        Route::resource('product_options', ProductOptionController::class);
+        Route::resource('product-options', ProductOptionController::class);
     });
 });
 

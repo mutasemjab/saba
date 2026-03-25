@@ -4,35 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ProductOption;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductOptionController extends Controller
 {
     public function index()
     {
-        return view('admin.product_options.index');
+        $items = ProductOption::with('product')->latest()->paginate(10);
+        return view('admin.product_options.index', compact('items'));
     }
 
-    public function getList(Request $request)
+    public function create()
     {
-        $data = ProductOption::with('product')->latest();
-
-        return datatables()->of($data)
-            ->addIndexColumn()
-            ->addColumn('name', function ($row) {
-                return app()->getLocale() == 'ar' ? $row->name_ar : $row->name_en;
-            })
-            ->addColumn('price_unit', function ($row) {
-                return app()->getLocale() == 'ar' ? $row->price_unit_ar : $row->price_unit_en;
-            })
-            ->addColumn('action', function ($row) {
-                return '
-                    <button class="btn btn-sm btn-primary editBtn" data-id="'.$row->id.'">'.__('messages.edit').'</button>
-                    <button class="btn btn-sm btn-danger deleteBtn" data-id="'.$row->id.'">'.__('messages.delete').'</button>
-                ';
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+        $products = Product::pluck('name_en', 'id');
+        return view('admin.product_options.create', compact('products'));
     }
 
     public function store(Request $request)
@@ -49,12 +35,16 @@ class ProductOptionController extends Controller
 
         ProductOption::create($data);
 
-        return response()->json(['success' => true, 'message' => __('messages.created_successfully')]);
+        return redirect()->route('product-options.index')
+            ->with('success', __('messages.created_successfully'));
     }
 
     public function edit($id)
     {
-        return ProductOption::findOrFail($id);
+        $item = ProductOption::findOrFail($id);
+        $products = Product::pluck('name_en', 'id');
+
+        return view('admin.product_options.edit', compact('item', 'products'));
     }
 
     public function update(Request $request, $id)
@@ -73,13 +63,15 @@ class ProductOptionController extends Controller
 
         $item->update($data);
 
-        return response()->json(['success' => true, 'message' => __('messages.updated_successfully')]);
+        return redirect()->route('product-options.index')
+            ->with('success', __('messages.updated_successfully'));
     }
 
     public function destroy($id)
     {
         ProductOption::findOrFail($id)->delete();
 
-        return response()->json(['success' => true, 'message' => __('messages.deleted_successfully')]);
+        return redirect()->back()
+            ->with('success', __('messages.deleted_successfully'));
     }
 }

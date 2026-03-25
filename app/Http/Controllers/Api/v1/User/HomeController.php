@@ -12,7 +12,7 @@ class HomeController extends Controller
     public function categories()
     {
         $data = Category::withCount('products')
-            ->orderBy('created_at', 'asc')->get()
+            ->orderBy('id', 'asc')->get()
             ->map(fn($c) => [
                 'id'             => $c->id,
                 'name_ar'        => $c->name_ar,

@@ -204,7 +204,7 @@
                                     </div>
                                     <div class="best-card-footer">
                                         @if ($fp->price ?? false)
-                                            <div class="best-card-price" style="color: inherit;text-decoration:none">
+                                            <div class="best-card-price" style="color: aliceblue;text-decoration:none">
                                                 {{ $fp->price }}
                                                 {{ $locale == 'ar' ? $fp->price_unit_ar ?? 'درهم' : $fp->price_unit_en ?? 'MAD' }}
                                             </div>

@@ -220,5 +220,6 @@ return [
 
     'photo' => 'صورة',
     'product' => 'المنتج',
-'update' => 'تحديث',
+    'update' => 'تحديث',
+    'view_full_menu' => 'عرض قائمة الطعام',
 ];

@@ -113,5 +113,6 @@ return [
     'choose_size' => 'Choose size',
     'map' => 'Map',
     'open_map' => 'Open map',
+    'view_full_menu' => 'View Menu',
 
 ];

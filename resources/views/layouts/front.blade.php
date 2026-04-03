@@ -31,8 +31,6 @@
         </div>
     </div>
 
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-ring" id="cursorRing"></div>
     @include('user.includes.navbar')
 
     @yield('content')
@@ -43,25 +41,6 @@
         // Preloader
         window.addEventListener('load', () => setTimeout(() => document.getElementById('preloader').classList.add('done'),
             2000));
-
-        // Cursor
-        const cursor = document.getElementById('cursor'),
-            ring = document.getElementById('cursorRing');
-        let mx = 0,
-            my = 0,
-            rx = 0,
-            ry = 0;
-        document.addEventListener('mousemove', e => {
-            mx = e.clientX;
-            my = e.clientY;
-            cursor.style.transform = `translate(${mx-6}px,${my-6}px)`;
-        });
-        (function animRing() {
-            rx += (mx - rx) * .12;
-            ry += (my - ry) * .12;
-            ring.style.transform = `translate(${rx-20}px,${ry-20}px)`;
-            requestAnimationFrame(animRing);
-        })();
 
         // Navbar
         window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', window

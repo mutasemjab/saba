@@ -198,7 +198,7 @@
                                     </div>
                                     <div class="best-card-footer">
                                         <?php if($fp->price ?? false): ?>
-                                            <div class="best-card-price">
+                                            <div class="best-card-price" style="color: inherit;text-decoration:none">
                                                 <?php echo e($fp->price); ?>
 
                                                 <?php echo e($locale == 'ar' ? $fp->price_unit_ar ?? 'درهم' : $fp->price_unit_en ?? 'MAD'); ?>
@@ -221,7 +221,7 @@
         <div class="section-header reveal">
             <span class="section-label"><?php echo e(__('front.menu_label')); ?></span>
             <h2 class="section-title">
-                <?php echo e(__('front.menu_title')); ?> <span><?php echo e(__('front.menu_title_span')); ?></span>
+               <span> <?php echo e(__('front.menu_title')); ?> <?php echo e(__('front.menu_title_span')); ?></span>
             </h2>
             <div class="ornament-divider">
                 <div class="ornament-divider-center"></div>
@@ -273,7 +273,8 @@
                             </div>
                         <?php elseif($product->price ?? false): ?>
                             <div class="menu-item-price">
-                                <?php echo e($product->price); ?><br>
+                                <?php echo e($product->price); ?>
+
                                 <small><?php echo e($locale == 'ar' ? $product->price_unit_ar ?? 'درهم' : $product->price_unit_en ?? 'MAD'); ?></small>
                             </div>
                         <?php endif; ?>

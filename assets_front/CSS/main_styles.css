@@ -24,34 +24,7 @@
       background: #060e0b;
       color: var(--text-light);
       overflow-x: hidden;
-      cursor: none
-    }
-
-    .cursor {
-      width: 12px;
-      height: 12px;
-      background: var(--gold);
-      border-radius: 50%;
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: 9999;
-      mix-blend-mode: difference
-    }
-
-    .cursor-ring {
-      width: 40px;
-      height: 40px;
-      border: 1.5px solid var(--gold);
-      border-radius: 50%;
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: 9998;
-      opacity: .6;
-      transition: opacity .2s
+      cursor: auto
     }
 
     ::-webkit-scrollbar {
@@ -408,8 +381,9 @@
     }
 
     .btn-outline {
-      background: transparent;
-      color: var(--gold);
+      background: var(--gold);
+      color: var(--dark-brown);
+      font-weight: bold;
       border: 1px solid var(--gold);
       padding: 15px 42px;
       font-family: 'Tajawal', sans-serif;
@@ -498,7 +472,7 @@
 
     .ticker-item {
       font-family: 'Cinzel Decorative', serif;
-      font-size: .62rem;
+      font-size: 1rem;
       color: var(--dark-brown);
       letter-spacing: 3px;
       text-transform: uppercase;
@@ -772,7 +746,7 @@
     .best-track {
       display: flex;
       gap: 26px;
-      animation: slide-track 38s linear infinite;
+      animation: slide-track 18s linear infinite;
       width: max-content;
       padding: 14px 0
     }
@@ -1180,7 +1154,7 @@
     }
 
     .hour-card.today::before {
-      content: 'اليوم';
+      content: 'Today';
       position: absolute;
       top: -1px;
       left: 50%;

@@ -110,7 +110,7 @@
                     <div class="about-corner br"></div>
                 </div>
                 <div class="about-accent-box">
-                    <div class="about-accent-num">١٢+</div>
+                    <div class="about-accent-num">{{ $locale == 'ar' ? '١٢+' : '12+' }}</div>
                     <div class="about-accent-text">{{ __('front.years_excellence') }}</div>
                 </div>
             </div>
@@ -204,7 +204,7 @@
                                     </div>
                                     <div class="best-card-footer">
                                         @if ($fp->price ?? false)
-                                            <div class="best-card-price">
+                                            <div class="best-card-price" style="color: inherit;text-decoration:none">
                                                 {{ $fp->price }}
                                                 {{ $locale == 'ar' ? $fp->price_unit_ar ?? 'درهم' : $fp->price_unit_en ?? 'MAD' }}
                                             </div>
@@ -227,7 +227,7 @@
         <div class="section-header reveal">
             <span class="section-label">{{ __('front.menu_label') }}</span>
             <h2 class="section-title">
-                {{ __('front.menu_title') }} <span>{{ __('front.menu_title_span') }}</span>
+               <span> {{ __('front.menu_title') }} {{ __('front.menu_title_span') }}</span>
             </h2>
             <div class="ornament-divider">
                 <div class="ornament-divider-center"></div>
@@ -275,7 +275,7 @@
                             </div>
                         @elseif($product->price ?? false)
                             <div class="menu-item-price">
-                                {{ $product->price }}<br>
+                                {{ $product->price }}
                                 <small>{{ $locale == 'ar' ? $product->price_unit_ar ?? 'درهم' : $product->price_unit_en ?? 'MAD' }}</small>
                             </div>
                         @endif

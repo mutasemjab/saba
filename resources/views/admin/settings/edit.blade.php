@@ -51,7 +51,7 @@
               <div class="mb-3">
                 <label for="twitter" class="form-label">{{ __('messages.twitter') }}</label>
                 <input type="text" class="form-control @error('twitter') is-invalid @enderror" 
-                       id="twitter" name="twitter" value="{{ old('twitter', $setting->twitter) }}" required>
+                       id="twitter" name="twitter" value="{{ old('twitter', $setting->twitter) }}">
                 @error('twitter')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror

@@ -306,91 +306,68 @@
             <p class="section-desc">{{ __('front.videos_desc') }}</p>
         </div>
 
-        @if ($videos->isNotEmpty())
-            {{-- ✅ Dynamic from DB --}}
-            <div class="videos-grid reveal">
-                @foreach ($videos as $i => $video)
-                    <div class="video-card {{ $i === 0 ? 'video-main' : '' }}"
-                        @if ($video->video_url) onclick="openVideo('{{ route('stream.video', $video->video_url) }}')"
+        @php $videoCount = $videos->isNotEmpty() ? $videos->count() : 5; @endphp
+        <div class="videos-slider-wrap reveal" id="videosSlider">
+            <button class="videos-slider-btn videos-slider-prev" onclick="videoSlide(-1)" aria-label="prev">
+                <i class="fas fa-chevron-{{ $locale == 'ar' ? 'right' : 'left' }}"></i>
+            </button>
+            <button class="videos-slider-btn videos-slider-next" onclick="videoSlide(1)" aria-label="next">
+                <i class="fas fa-chevron-{{ $locale == 'ar' ? 'left' : 'right' }}"></i>
+            </button>
 
-                 style="cursor:pointer" @endif>
-                        <div class="video-thumb">
-                            <img src="{{ asset('assets/admin/uploads/' . $video->thumbnail) }}"
-                                alt="{{ $locale == 'ar' ? $video->title_ar : $video->title_en }}">
-                            <div class="video-dim"></div>
-                            <div class="video-play-btn"><i class="fas fa-play"></i></div>
-                            <div class="video-overlay">
-                                <div class="video-title">
-                                    {{ $locale == 'ar' ? $video->title_ar : $video->title_en }}
+            <div class="videos-slider-track-outer">
+                <div class="videos-slider-track" id="videosTrack">
+                    @if ($videos->isNotEmpty())
+                        @foreach ($videos as $video)
+                            <div class="video-card"
+                                @if ($video->video_url) onclick="openVideo('{{ route('stream.video', $video->video_url) }}')" @endif>
+                                <div class="video-thumb">
+                                    <img src="{{ asset('assets/admin/uploads/' . $video->thumbnail) }}"
+                                        alt="{{ $locale == 'ar' ? $video->title_ar : $video->title_en }}">
+                                    <div class="video-dim"></div>
+                                    <div class="video-play-btn"><i class="fas fa-play"></i></div>
+                                    <div class="video-overlay">
+                                        <div class="video-title">
+                                            {{ $locale == 'ar' ? $video->title_ar : $video->title_en }}
+                                        </div>
+                                        @if ($video->duration)
+                                            <div class="video-duration">{{ $video->duration }}</div>
+                                        @endif
+                                    </div>
                                 </div>
-                                @if ($video->duration)
-                                    <div class="video-duration">{{ $video->duration }}</div>
-                                @endif
                             </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        @else
-            {{-- 🔁 Fallback static — تشغل لو ما في فيديوهات في DB بعد --}}
-            <div class="videos-grid reveal">
-                <div class="video-card">
-                    <div class="video-thumb">
-                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=80" alt="">
-                        <div class="video-dim"></div>
-                        <div class="video-play-btn"><i class="fas fa-play"></i></div>
-                        <div class="video-overlay">
-                            <div class="video-title">{{ __('front.video_1_title') }}</div>
-                            <div class="video-duration">٨:٢٤</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="video-card">
-                    <div class="video-thumb">
-                        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="">
-                        <div class="video-dim"></div>
-                        <div class="video-play-btn"><i class="fas fa-play"></i></div>
-                        <div class="video-overlay">
-                            <div class="video-title">{{ __('front.video_2_title') }}</div>
-                            <div class="video-duration">٤:١٢</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="video-card">
-                    <div class="video-thumb">
-                        <img src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=600&q=80" alt="">
-                        <div class="video-dim"></div>
-                        <div class="video-play-btn"><i class="fas fa-play"></i></div>
-                        <div class="video-overlay">
-                            <div class="video-title">{{ __('front.video_3_title') }}</div>
-                            <div class="video-duration">٦:٥٠</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="video-card">
-                    <div class="video-thumb">
-                        <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80" alt="">
-                        <div class="video-dim"></div>
-                        <div class="video-play-btn"><i class="fas fa-play"></i></div>
-                        <div class="video-overlay">
-                            <div class="video-title">{{ __('front.video_4_title') }}</div>
-                            <div class="video-duration">٣:٣٠</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="video-card">
-                    <div class="video-thumb">
-                        <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=600&q=80" alt="">
-                        <div class="video-dim"></div>
-                        <div class="video-play-btn"><i class="fas fa-play"></i></div>
-                        <div class="video-overlay">
-                            <div class="video-title">{{ __('front.video_5_title') }}</div>
-                            <div class="video-duration">٥:١٥</div>
-                        </div>
-                    </div>
+                        @endforeach
+                    @else
+                        {{-- Fallback static --}}
+                        @foreach ([
+                            ['img' => 'https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=80', 'title' => __('front.video_1_title'), 'dur' => '٨:٢٤'],
+                            ['img' => 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80', 'title' => __('front.video_2_title'), 'dur' => '٤:١٢'],
+                            ['img' => 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=600&q=80', 'title' => __('front.video_3_title'), 'dur' => '٦:٥٠'],
+                            ['img' => 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80', 'title' => __('front.video_4_title'), 'dur' => '٣:٣٠'],
+                            ['img' => 'https://images.unsplash.com/photo-1551218808-94e220e084d2?w=600&q=80', 'title' => __('front.video_5_title'), 'dur' => '٥:١٥'],
+                        ] as $v)
+                            <div class="video-card">
+                                <div class="video-thumb">
+                                    <img src="{{ $v['img'] }}" alt="">
+                                    <div class="video-dim"></div>
+                                    <div class="video-play-btn"><i class="fas fa-play"></i></div>
+                                    <div class="video-overlay">
+                                        <div class="video-title">{{ $v['title'] }}</div>
+                                        <div class="video-duration">{{ $v['dur'] }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
-        @endif
+
+            <div class="videos-slider-dots" id="videosDots">
+                @for ($d = 0; $d < $videoCount; $d++)
+                    <div class="videos-slider-dot {{ $d === 0 ? 'active' : '' }}" onclick="videoGoTo({{ $d }})"></div>
+                @endfor
+            </div>
+        </div>
     </section>
 
     {{-- Video Modal --}}
@@ -755,6 +732,34 @@
                     });
 
             });
+
+            // ─────────────────────────────────────────────
+            // Videos slider
+            // ─────────────────────────────────────────────
+            var videoIdx = 0;
+            var videoTotal = document.querySelectorAll('#videosTrack .video-card').length;
+
+            function videoGoTo(n) {
+                videoIdx = (n + videoTotal) % videoTotal;
+                document.getElementById('videosTrack').style.transform = 'translateX(' + (-videoIdx * 100) + '%)';
+                document.querySelectorAll('#videosDots .videos-slider-dot').forEach(function(d, i) {
+                    d.classList.toggle('active', i === videoIdx);
+                });
+            }
+
+            function videoSlide(dir) { videoGoTo(videoIdx + dir); }
+
+            // Touch/swipe support
+            (function() {
+                var track = document.getElementById('videosTrack');
+                if (!track) return;
+                var startX = 0;
+                track.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
+                track.addEventListener('touchend', function(e) {
+                    var diff = startX - e.changedTouches[0].clientX;
+                    if (Math.abs(diff) > 40) videoSlide(diff > 0 ? 1 : -1);
+                });
+            })();
 
             // ─────────────────────────────────────────────
             // Video modal — open / close

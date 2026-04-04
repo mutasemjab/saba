@@ -993,9 +993,10 @@
     }
 
     .videos-slider-track {
-      display: flex;
-      transition: transform .5s cubic-bezier(.4,0,.2,1)
-    }
+    display: flex;
+    transition: transform .5s cubic-bezier(.4,0,.2,1);
+    direction: ltr; /* ← ADD THIS — force LTR on the track itself */
+}
 
     .video-card {
   position: relative;

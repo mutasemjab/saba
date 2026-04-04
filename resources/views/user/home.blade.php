@@ -748,10 +748,10 @@
             
             function videoGoTo(n) {
                 videoIdx = (n + videoTotal) % videoTotal;
-                var outer = document.querySelector('.videos-slider-track-outer');
-                var w = outer ? outer.offsetWidth : 0;
-                if (w === 0) return; // bail if not rendered yet
-                document.getElementById('videosTrack').style.transform = 'translateX(' + (-videoIdx * w) + 'px)';
+                var w = videoSetWidths();
+                var isRtl = document.documentElement.dir === 'rtl' || document.body.dir === 'rtl';
+                var direction = isRtl ? 1 : -1;
+                document.getElementById('videosTrack').style.transform = 'translateX(' + (direction * videoIdx * w) + 'px)';
                 document.querySelectorAll('#videosDots .videos-slider-dot').forEach(function(d, i) {
                     d.classList.toggle('active', i === videoIdx);
                 });

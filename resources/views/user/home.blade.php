@@ -227,7 +227,7 @@
         <div class="section-header reveal">
             <span class="section-label">{{ __('front.menu_label') }}</span>
             <h2 class="section-title">
-               <span> {{ __('front.menu_title') }} {{ __('front.menu_title_span') }}</span>
+                <span> {{ __('front.menu_title') }} {{ __('front.menu_title_span') }}</span>
             </h2>
             <div class="ornament-divider">
                 <div class="ornament-divider-center"></div>
@@ -264,7 +264,8 @@
                             <div class="menu-item-options">
                                 @foreach ($product->options as $opt)
                                     <span class="menu-item-opt">
-                                        <span class="opt-label">{{ $locale == 'ar' ? $opt->name_ar : $opt->name_en }}</span>
+                                        <span
+                                            class="opt-label">{{ $locale == 'ar' ? $opt->name_ar : $opt->name_en }}</span>
                                         @if ($opt->price)
                                             <span class="opt-sep"></span>
                                             <span class="opt-price">{{ number_format($opt->price, 0) }}
@@ -339,13 +340,7 @@
                         @endforeach
                     @else
                         {{-- Fallback static --}}
-                        @foreach ([
-                            ['img' => 'https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=80', 'title' => __('front.video_1_title'), 'dur' => '٨:٢٤'],
-                            ['img' => 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80', 'title' => __('front.video_2_title'), 'dur' => '٤:١٢'],
-                            ['img' => 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=600&q=80', 'title' => __('front.video_3_title'), 'dur' => '٦:٥٠'],
-                            ['img' => 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80', 'title' => __('front.video_4_title'), 'dur' => '٣:٣٠'],
-                            ['img' => 'https://images.unsplash.com/photo-1551218808-94e220e084d2?w=600&q=80', 'title' => __('front.video_5_title'), 'dur' => '٥:١٥'],
-                        ] as $v)
+                        @foreach ([['img' => 'https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=80', 'title' => __('front.video_1_title'), 'dur' => '٨:٢٤'], ['img' => 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80', 'title' => __('front.video_2_title'), 'dur' => '٤:١٢'], ['img' => 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=600&q=80', 'title' => __('front.video_3_title'), 'dur' => '٦:٥٠'], ['img' => 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80', 'title' => __('front.video_4_title'), 'dur' => '٣:٣٠'], ['img' => 'https://images.unsplash.com/photo-1551218808-94e220e084d2?w=600&q=80', 'title' => __('front.video_5_title'), 'dur' => '٥:١٥']] as $v)
                             <div class="video-card">
                                 <div class="video-thumb">
                                     <img src="{{ $v['img'] }}" alt="">
@@ -364,7 +359,8 @@
 
             <div class="videos-slider-dots" id="videosDots">
                 @for ($d = 0; $d < $videoCount; $d++)
-                    <div class="videos-slider-dot {{ $d === 0 ? 'active' : '' }}" onclick="videoGoTo({{ $d }})"></div>
+                    <div class="videos-slider-dot {{ $d === 0 ? 'active' : '' }}"
+                        onclick="videoGoTo({{ $d }})"></div>
                 @endfor
             </div>
         </div>
@@ -623,7 +619,7 @@
                             if (!res.products || !res.products.length) {
                                 $panel.html(
                                     '<div class="menu-empty">{{ __('front.no_products') }}</div>'
-                                    );
+                                );
                                 return;
                             }
 
@@ -669,7 +665,7 @@
                                 // ─── سعر عادي لو ما في options ───
                                 var priceHtml = '';
                                 if (p.price && (!p.options_data || !p.options_data
-                                    .length)) {
+                                        .length)) {
                                     var unit = locale === 'ar' ?
                                         (p.price_unit_ar || 'درهم') :
                                         (p.price_unit_en || 'MAD');
@@ -699,7 +695,7 @@
                         error: function() {
                             $panel.html(
                                 '<div class="menu-empty">{{ __('front.error_loading') }}</div>'
-                                );
+                            );
                         }
                     });
                 });
@@ -739,40 +735,46 @@
             var videoIdx = 0;
             var videoTotal = document.querySelectorAll('#videosTrack .video-card').length;
 
-           function videoSetWidths() {
-                var w = document.querySelector('.videos-slider-track-outer').offsetWidth;
-                // No need to set card widths manually — CSS handles it
-                return w;
+            function videoSetWidths() {
+                var outer = document.querySelector('.videos-slider-track-outer');
+                return outer ? outer.offsetWidth : 0;
             }
 
-            
             function videoGoTo(n) {
-                videoIdx = (n + videoTotal) % videoTotal;
                 var w = videoSetWidths();
-                var isRtl = document.documentElement.dir === 'rtl' || document.body.dir === 'rtl';
-                var direction = isRtl ? 1 : -1;
-                document.getElementById('videosTrack').style.transform = 'translateX(' + (direction * videoIdx * w) + 'px)';
+                if (w === 0) {
+                    setTimeout(function() {
+                        videoGoTo(n);
+                    }, 50);
+                    return;
+                }
+                videoIdx = (n + videoTotal) % videoTotal;
+                document.getElementById('videosTrack').style.transform = 'translateX(' + (-videoIdx * w) + 'px)';
                 document.querySelectorAll('#videosDots .videos-slider-dot').forEach(function(d, i) {
                     d.classList.toggle('active', i === videoIdx);
                 });
             }
 
-            function videoSlide(dir) { videoGoTo(videoIdx + dir); }
+            function videoSlide(dir) {
+                videoGoTo(videoIdx + dir);
+            }
 
-           window.addEventListener('resize', function() { videoGoTo(videoIdx); });
-
-            // Run after layout is painted
-            requestAnimationFrame(function() {
-                requestAnimationFrame(function() {
-                    videoGoTo(0);
-                });
+            window.addEventListener('resize', function() {
+                videoGoTo(videoIdx);
             });
-            // Touch/swipe support
+            window.addEventListener('load', function() {
+                videoGoTo(0);
+            });
+
             (function() {
                 var track = document.getElementById('videosTrack');
                 if (!track) return;
                 var startX = 0;
-                track.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
+                track.addEventListener('touchstart', function(e) {
+                    startX = e.touches[0].clientX;
+                }, {
+                    passive: true
+                });
                 track.addEventListener('touchend', function(e) {
                     var diff = startX - e.changedTouches[0].clientX;
                     if (Math.abs(diff) > 40) videoSlide(diff > 0 ? 1 : -1);

@@ -1002,7 +1002,12 @@
       overflow: hidden;
       cursor: pointer;
       flex: 0 0 100%;
-      min-height: 500px
+      aspect-ratio: 16/9
+    }
+
+    .video-thumb {
+      position: absolute;
+      inset: 0
     }
 
     .videos-slider-btn {
@@ -1052,14 +1057,6 @@
     .videos-slider-dot.active {
       background: var(--gold);
       transform: scale(1.3)
-    }
-
-    .video-thumb {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      overflow: hidden;
-      display: block
     }
 
     .video-thumb img {
@@ -1660,7 +1657,7 @@
       .videos-slider-next { right: -10px }
 
       .video-card {
-        min-height: 300px
+        aspect-ratio: 16/9
       }
 
       .contact-inner {

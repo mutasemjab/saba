@@ -741,13 +741,16 @@
 
             function videoGoTo(n) {
                 videoIdx = (n + videoTotal) % videoTotal;
-                document.getElementById('videosTrack').style.transform = 'translateX(' + (-videoIdx * 100) + '%)';
+                var w = document.querySelector('.videos-slider-track-outer').offsetWidth;
+                document.getElementById('videosTrack').style.transform = 'translateX(' + (-videoIdx * w) + 'px)';
                 document.querySelectorAll('#videosDots .videos-slider-dot').forEach(function(d, i) {
                     d.classList.toggle('active', i === videoIdx);
                 });
             }
 
             function videoSlide(dir) { videoGoTo(videoIdx + dir); }
+
+            window.addEventListener('resize', function() { videoGoTo(videoIdx); });
 
             // Touch/swipe support
             (function() {

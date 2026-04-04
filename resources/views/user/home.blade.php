@@ -559,24 +559,6 @@
                         </div>
                     </div>
                 @endif
-
-                <div class="contact-social">
-                    @if ($settingNav->instagram ?? false)
-                        <a href="{{ $settingNav->instagram }}" target="_blank" class="social-btn">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    @endif
-                    @if ($settingNav->facebook ?? false)
-                        <a href="{{ $settingNav->facebook }}" target="_blank" class="social-btn">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                    @endif
-                    @if ($settingNav->twitter ?? false)
-                        <a href="{{ $settingNav->twitter }}" target="_blank" class="social-btn">
-                            <i class="fab fa-x-twitter"></i>
-                        </a>
-                    @endif
-                </div>
             </div>
 
             <div class="contact-form-box reveal-right">

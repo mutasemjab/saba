@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('email');
             $table->string('address');
             $table->text('google_map');
-            $table->text('twitter');
-            $table->text('instagram');
-            $table->text('facebook');
+            $table->text('twitter')->nullable();
+            $table->text('instagram')->nullable();
+            $table->text('facebook')->nullable();
             $table->timestamps();
         });
     }

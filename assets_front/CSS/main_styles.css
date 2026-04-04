@@ -998,12 +998,14 @@
     }
 
     .video-card {
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      flex-shrink: 0;
-      aspect-ratio: 16/9
-    }
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+  aspect-ratio: 16/9;
+  width: 100%;  /* ← ADD THIS */
+  min-width: 100%;  /* ← ADD THIS */
+}
 
     .video-thumb {
       position: absolute;

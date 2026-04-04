@@ -739,17 +739,18 @@
             var videoIdx = 0;
             var videoTotal = document.querySelectorAll('#videosTrack .video-card').length;
 
-            function videoSetWidths() {
+           function videoSetWidths() {
                 var w = document.querySelector('.videos-slider-track-outer').offsetWidth;
-                document.querySelectorAll('#videosTrack .video-card').forEach(function(c) {
-                    c.style.width = w + 'px';
-                });
+                // No need to set card widths manually — CSS handles it
                 return w;
             }
 
+            
             function videoGoTo(n) {
                 videoIdx = (n + videoTotal) % videoTotal;
-                var w = videoSetWidths();
+                var outer = document.querySelector('.videos-slider-track-outer');
+                var w = outer ? outer.offsetWidth : 0;
+                if (w === 0) return; // bail if not rendered yet
                 document.getElementById('videosTrack').style.transform = 'translateX(' + (-videoIdx * w) + 'px)';
                 document.querySelectorAll('#videosDots .videos-slider-dot').forEach(function(d, i) {
                     d.classList.toggle('active', i === videoIdx);
@@ -759,9 +760,13 @@
             function videoSlide(dir) { videoGoTo(videoIdx + dir); }
 
            window.addEventListener('resize', function() { videoGoTo(videoIdx); });
-            window.addEventListener('load', function() { videoGoTo(0); });
-            setTimeout(function() { videoGoTo(0); }, 100);
 
+            // Run after layout is painted
+            requestAnimationFrame(function() {
+                requestAnimationFrame(function() {
+                    videoGoTo(0);
+                });
+            });
             // Touch/swipe support
             (function() {
                 var track = document.getElementById('videosTrack');

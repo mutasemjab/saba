@@ -758,8 +758,9 @@
 
             function videoSlide(dir) { videoGoTo(videoIdx + dir); }
 
-            window.addEventListener('resize', function() { videoGoTo(videoIdx); });
-            videoGoTo(0);
+           window.addEventListener('resize', function() { videoGoTo(videoIdx); });
+            window.addEventListener('load', function() { videoGoTo(0); });
+            setTimeout(function() { videoGoTo(0); }, 100);
 
             // Touch/swipe support
             (function() {

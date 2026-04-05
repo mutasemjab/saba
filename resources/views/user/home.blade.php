@@ -310,10 +310,10 @@
         @php $videoCount = $videos->isNotEmpty() ? $videos->count() : 5; @endphp
         <div class="videos-slider-wrap reveal" id="videosSlider">
             <button class="videos-slider-btn videos-slider-prev" onclick="videoSlide(-1)" aria-label="prev">
-                <i class="fas fa-chevron-{{ $locale == 'ar' ? 'right' : 'left' }}"></i>
+                <i class="fas fa-chevron-left"></i>
             </button>
             <button class="videos-slider-btn videos-slider-next" onclick="videoSlide(1)" aria-label="next">
-                <i class="fas fa-chevron-{{ $locale == 'ar' ? 'left' : 'right' }}"></i>
+                <i class="fas fa-chevron-right"></i>
             </button>
 
             <div class="videos-slider-track-outer">

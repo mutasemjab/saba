@@ -57,12 +57,14 @@ class HomeController extends Controller
         // أضف الـ options في الـ JSON response
         $products = $products->map(function ($p) {
             $p->options_data = $p->options->map(fn($o) => [
-                'id'           => $o->id,
-                'name_ar'      => $o->name_ar,
-                'name_en'      => $o->name_en,
-                'price'        => $o->price,
+                'id'            => $o->id,
+                'name_ar'       => $o->name_ar,
+                'name_en'       => $o->name_en,
+                'name_fr'       => $o->name_fr,
+                'price'         => $o->price,
                 'price_unit_ar' => $o->price_unit_ar,
                 'price_unit_en' => $o->price_unit_en,
+                'price_unit_fr' => $o->price_unit_fr,
             ]);
             return $p;
         });

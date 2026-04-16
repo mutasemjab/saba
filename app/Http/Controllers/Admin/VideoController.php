@@ -32,6 +32,7 @@ class VideoController extends Controller
         $request->validate([
             'title_ar'   => 'required|string|max:255',
             'title_en'   => 'required|string|max:255',
+            'title_fr'   => 'nullable|string|max:255',
             'thumbnail'  => 'required|image|mimes:jpg,jpeg,png,webp|max:4096',
             'video_url'  => 'nullable',
             'duration'   => 'nullable|string|max:20',
@@ -44,6 +45,7 @@ class VideoController extends Controller
         Video::create([
             'title_ar'   => $request->title_ar,
             'title_en'   => $request->title_en,
+            'title_fr'   => $request->title_fr ?: $request->title_en,
             'thumbnail'  => $thumbnail,
             'video_url'  => $video,
             'duration'   => $request->duration,
@@ -64,6 +66,7 @@ class VideoController extends Controller
         $request->validate([
             'title_ar'   => 'required|string|max:255',
             'title_en'   => 'required|string|max:255',
+            'title_fr'   => 'nullable|string|max:255',
             'thumbnail'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
             'video_url'  => 'nullable',
             'duration'   => 'nullable|string|max:20',
@@ -73,6 +76,7 @@ class VideoController extends Controller
         $data = [
             'title_ar'   => $request->title_ar,
             'title_en'   => $request->title_en,
+            'title_fr'   => $request->title_fr ?: $request->title_en,
             'duration'   => $request->duration,
             'is_active'  => $request->has('is_active') ? 1 : 0,
             'sort_order' => $request->sort_order ?? 0,

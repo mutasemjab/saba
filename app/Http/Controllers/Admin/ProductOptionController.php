@@ -27,11 +27,16 @@ class ProductOptionController extends Controller
             'product_id'     => 'required|exists:products,id',
             'name_ar'        => 'required',
             'name_en'        => 'required',
+            'name_fr'        => 'nullable',
             'price'          => 'required|numeric',
             'price_unit_ar'  => 'nullable',
             'price_unit_en'  => 'nullable',
+            'price_unit_fr'  => 'nullable',
             'sort_order'     => 'nullable|integer',
         ]);
+
+        $data['name_fr']       = $request->name_fr ?: $request->name_en;
+        $data['price_unit_fr'] = $request->price_unit_fr ?: ($request->price_unit_en ?? 'MAD');
 
         ProductOption::create($data);
 
@@ -55,11 +60,16 @@ class ProductOptionController extends Controller
             'product_id'     => 'required|exists:products,id',
             'name_ar'        => 'required',
             'name_en'        => 'required',
+            'name_fr'        => 'nullable',
             'price'          => 'required|numeric',
             'price_unit_ar'  => 'nullable',
             'price_unit_en'  => 'nullable',
+            'price_unit_fr'  => 'nullable',
             'sort_order'     => 'nullable|integer',
         ]);
+
+        $data['name_fr']       = $request->name_fr ?: $request->name_en;
+        $data['price_unit_fr'] = $request->price_unit_fr ?: ($request->price_unit_en ?? 'MAD');
 
         $item->update($data);
 

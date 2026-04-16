@@ -32,8 +32,10 @@ class AboutController extends Controller
         $request->validate([
             'name_en' => 'required|string|max:255',
             'name_ar' => 'required|string|max:255',
+            'name_fr' => 'nullable|string|max:255',
             'description_en' => 'required',
             'description_ar' => 'required',
+            'description_fr' => 'nullable',
             'photo' => 'required|image',
         ]);
 
@@ -42,8 +44,10 @@ class AboutController extends Controller
         About::create([
             'name_en' => $request->name_en,
             'name_ar' => $request->name_ar,
+            'name_fr' => $request->name_fr ?: $request->name_en,
             'description_en' => $request->description_en,
             'description_ar' => $request->description_ar,
+            'description_fr' => $request->description_fr ?: $request->description_en,
             'photo' => $filename,
         ]);
 
@@ -61,8 +65,10 @@ class AboutController extends Controller
         $request->validate([
             'name_en' => 'required|string|max:255',
             'name_ar' => 'required|string|max:255',
+            'name_fr' => 'nullable|string|max:255',
             'description_en' => 'required',
             'description_ar' => 'required',
+            'description_fr' => 'nullable',
             'photo' => 'nullable|image',
         ]);
 
@@ -75,8 +81,10 @@ class AboutController extends Controller
         $about->update([
             'name_en' => $request->name_en,
             'name_ar' => $request->name_ar,
+            'name_fr' => $request->name_fr ?: $request->name_en,
             'description_en' => $request->description_en,
             'description_ar' => $request->description_ar,
+            'description_fr' => $request->description_fr ?: $request->description_en,
             'photo' => $filename,
         ]);
 

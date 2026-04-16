@@ -17,8 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('name_en');
             $table->string('name_ar');            
+            $table->string('name_fr');            
             $table->text('description_en');
             $table->text('description_ar');     
+            $table->text('description_fr');     
             $table->string('photo');            
             $table->tinyInteger('is_featured')->default(2); // 1 yes // 2 no            
             $table->unsignedBigInteger('category_id');

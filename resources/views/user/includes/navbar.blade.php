@@ -4,11 +4,9 @@
 @php
     $settingNav = $setting ?? \App\Models\Setting::first();
     $current    = LaravelLocalization::getCurrentLocale();
-    $target     = $current === 'ar' ? 'en' : 'ar';
+    $target     = $current === 'ar' ? 'en' : ($current === 'en' ? 'fr' : 'ar');
     $supported  = LaravelLocalization::getSupportedLocales();
-    $targetName = $target === 'ar'
-        ? ($supported[$target]['native'] ?? 'العربية')
-        : ($supported[$target]['native'] ?? 'English');
+    $targetName = $supported[$target]['native'] ?? $target;
     $targetUrl  = LaravelLocalization::getLocalizedURL($target, null, [], true);
 @endphp
 {{-- ══════════════════════════════ NAVBAR ══════════════════════════════ --}}

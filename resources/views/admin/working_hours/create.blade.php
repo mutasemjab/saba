@@ -43,6 +43,15 @@
                         @error('day_en')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
+                    <div class="col-md-5">
+                        <label class="form-label fw-semibold">Nom du jour (FR)</label>
+                        <input type="text" name="day_fr"
+                               class="form-control @error('day_fr') is-invalid @enderror"
+                               value="{{ old('day_fr') }}" placeholder="Lundi – Mardi">
+                        <div class="form-text">Optionnel</div>
+                        @error('day_fr')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+
                     {{-- Day index --}}
                     <div class="col-md-2">
                         <label class="form-label fw-semibold">Day Index <span class="text-danger">*</span></label>
@@ -86,6 +95,13 @@
                         <label class="form-label fw-semibold">Note (EN)</label>
                         <input type="text" name="note_en" class="form-control"
                                value="{{ old('note_en') }}" placeholder="Lunch · Dinner">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">Note (FR)</label>
+                        <input type="text" name="note_fr" class="form-control"
+                               value="{{ old('note_fr') }}" placeholder="Déjeuner · Dîner">
+                        <div class="form-text">Optionnel</div>
                     </div>
 
                     {{-- Sort order --}}

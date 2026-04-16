@@ -21,6 +21,11 @@
                     <input type="text" name="name_ar" class="form-control" required>
                 </div>
 
+                <div class="form-group">
+                    <label>{{ __('messages.category') }} (FR)</label>
+                    <input type="text" name="name_fr" class="form-control" placeholder="Optionnel — si vide, l'anglais sera utilisé">
+                </div>
+
                 <button class="btn btn-success mt-3">{{ __('messages.save') }}</button>
             </form>
 

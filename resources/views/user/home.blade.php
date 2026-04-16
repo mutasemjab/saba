@@ -5,10 +5,9 @@
     @php
         $settingNav = $setting ?? \App\Models\Setting::first();
         $current = LaravelLocalization::getCurrentLocale();
-        $target = $current === 'ar' ? 'en' : 'ar';
+        $target = $current === 'ar' ? 'en' : ($current === 'en' ? 'fr' : 'ar');
         $supported = LaravelLocalization::getSupportedLocales();
-        $targetName =
-            $target === 'ar' ? $supported[$target]['native'] ?? 'العربية' : $supported[$target]['native'] ?? 'English';
+        $targetName = $supported[$target]['native'] ?? $target;
         $targetUrl = LaravelLocalization::getLocalizedURL($target, null, [], true);
     @endphp
 
@@ -72,82 +71,6 @@
     </section>
 
     {{-- ══════════════════════════════════════════════════════════════
-     ABOUT
-══════════════════════════════════════════════════════════════ --}}
-    <section id="about">
-        <div class="about-bg-text">SABA</div>
-        <div class="about-inner">
-
-            <div class="about-visual reveal-left">
-                <div class="about-img-frame">
-                    <div class="about-img-main">
-                        <img src="{{ asset('assets/admin/uploads/' . ($about->photo ?? '')) }}"
-                            onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80'"
-                            alt="{{ __('front.about') }}">
-                    </div>
-                    <div class="about-corner tl"></div>
-                    <div class="about-corner br"></div>
-                </div>
-                <div class="about-accent-box">
-                    <div class="about-accent-num">{{ $locale == 'ar' ? '١٢+' : '12+' }}</div>
-                    <div class="about-accent-text">{{ __('front.years_excellence') }}</div>
-                </div>
-            </div>
-
-            <div class="about-text reveal-right">
-                <div class="section-header"
-                    style="text-align:{{ $locale == 'ar' ? 'right' : 'left' }};margin-bottom:26px;">
-                    <span class="section-label">{{ __('front.about') }}</span>
-                    @if ($about)
-                        <h2 class="section-title">{!! $locale == 'ar' ? $about->name_ar : $about->name_en !!}</h2>
-                    @else
-                        <h2 class="section-title">{{ __('front.about_title') }}</h2>
-                    @endif
-                    <div class="ornament-divider" style="justify-content:flex-start;">
-                        <div class="ornament-divider-center"></div>
-                    </div>
-                </div>
-
-                @if ($about)
-                    <p>{!! $locale == 'ar' ? $about->description_ar : $about->description_en !!}</p>
-                @endif
-
-                <div class="about-features">
-                    <div class="about-feat reveal reveal-delay-1">
-                        <div class="about-feat-icon">🌿</div>
-                        <div>
-                            <div class="about-feat-title">{{ __('front.feat_fresh') }}</div>
-                            <div class="about-feat-desc">{{ __('front.feat_fresh_desc') }}</div>
-                        </div>
-                    </div>
-                    <div class="about-feat reveal reveal-delay-2">
-                        <div class="about-feat-icon">👨‍🍳</div>
-                        <div>
-                            <div class="about-feat-title">{{ __('front.feat_chefs') }}</div>
-                            <div class="about-feat-desc">{{ __('front.feat_chefs_desc') }}</div>
-                        </div>
-                    </div>
-                    <div class="about-feat reveal reveal-delay-3">
-                        <div class="about-feat-icon">🕌</div>
-                        <div>
-                            <div class="about-feat-title">{{ __('front.feat_ambiance') }}</div>
-                            <div class="about-feat-desc">{{ __('front.feat_ambiance_desc') }}</div>
-                        </div>
-                    </div>
-                    <div class="about-feat reveal reveal-delay-4">
-                        <div class="about-feat-icon">🏆</div>
-                        <div>
-                            <div class="about-feat-title">{{ __('front.feat_best') }}</div>
-                            <div class="about-feat-desc">{{ __('front.feat_best_desc') }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    {{-- ══════════════════════════════════════════════════════════════
      BEST — featured products slider
 ══════════════════════════════════════════════════════════════ --}}
     <section id="best">
@@ -171,21 +94,21 @@
                                 style="text-decoration:none;">
                                 <div class="best-card-img">
                                     <img src="{{ asset('assets/admin/uploads/' . $fp->photo) }}"
-                                        alt="{{ $locale == 'ar' ? $fp->name_ar : $fp->name_en }}">
+                                        alt="{{ $locale == 'ar' ? $fp->name_ar : ($locale == 'fr' ? $fp->name_fr : $fp->name_en) }}">
                                     <div class="best-badge">{{ __('front.most_ordered') }}</div>
                                 </div>
                                 <div class="best-card-body">
                                     <div class="best-card-name">
-                                        {{ $locale == 'ar' ? $fp->name_ar : $fp->name_en }}
+                                        {{ $locale == 'ar' ? $fp->name_ar : ($locale == 'fr' ? $fp->name_fr : $fp->name_en) }}
                                     </div>
                                     <div class="best-card-desc">
-                                        {{ $locale == 'ar' ? \Str::limit($fp->description_ar, 80) : \Str::limit($fp->description_en, 80) }}
+                                        {{ $locale == 'ar' ? \Str::limit($fp->description_ar, 80) : ($locale == 'fr' ? \Str::limit($fp->description_fr, 80) : \Str::limit($fp->description_en, 80)) }}
                                     </div>
                                     <div class="best-card-footer">
                                         @if ($fp->price ?? false)
                                             <div class="best-card-price" style="color: aliceblue;text-decoration:none">
                                                 {{ $fp->price }}
-                                                {{ $locale == 'ar' ? $fp->price_unit_ar ?? 'درهم' : $fp->price_unit_en ?? 'MAD' }}
+                                                {{ $locale == 'ar' ? ($fp->price_unit_ar ?? 'درهم') : ($locale == 'fr' ? ($fp->price_unit_fr ?? 'MAD') : ($fp->price_unit_en ?? 'MAD')) }}
                                             </div>
                                         @endif
                                         <div class="best-card-stars">★★★★★</div>
@@ -216,7 +139,7 @@
         <div class="menu-tabs reveal" id="menuTabs">
             @foreach ($categories as $i => $category)
                 <button class="menu-tab {{ $i === 0 ? 'active' : '' }}" data-category="{{ $category->id }}">
-                    {{ $locale == 'ar' ? $category->name_ar : $category->name_en }}
+                    {{ $locale == 'ar' ? $category->name_ar : ($locale == 'fr' ? $category->name_fr : $category->name_en) }}
                 </button>
             @endforeach
         </div>
@@ -226,14 +149,14 @@
                 <a href="{{ route('product.show', $product->id) }}" class="menu-item">
                     <div class="menu-item-img">
                         <img src="{{ asset('assets/admin/uploads/' . $product->photo) }}"
-                            alt="{{ $locale == 'ar' ? $product->name_ar : $product->name_en }}">
+                            alt="{{ $locale == 'ar' ? $product->name_ar : ($locale == 'fr' ? $product->name_fr : $product->name_en) }}">
                     </div>
                     <div class="menu-item-info">
                         <div class="menu-item-name">
-                            {{ $locale == 'ar' ? $product->name_ar : $product->name_en }}
+                            {{ $locale == 'ar' ? $product->name_ar : ($locale == 'fr' ? $product->name_fr : $product->name_en) }}
                         </div>
                         <div class="menu-item-desc">
-                            {{ $locale == 'ar' ? \Str::limit($product->description_ar, 90) : \Str::limit($product->description_en, 90) }}
+                            {{ $locale == 'ar' ? \Str::limit($product->description_ar, 90) : ($locale == 'fr' ? \Str::limit($product->description_fr, 90) : \Str::limit($product->description_en, 90)) }}
                         </div>
                         @if ($product->is_featured == 1)
                             <span class="menu-item-tag">{{ __('front.featured_tag') }}</span>
@@ -244,11 +167,11 @@
                                 @foreach ($product->options as $opt)
                                     <span class="menu-item-opt">
                                         <span
-                                            class="opt-label">{{ $locale == 'ar' ? $opt->name_ar : $opt->name_en }}</span>
+                                            class="opt-label">{{ $locale == 'ar' ? $opt->name_ar : ($locale == 'fr' ? $opt->name_fr : $opt->name_en) }}</span>
                                         @if ($opt->price)
                                             <span class="opt-sep"></span>
                                             <span class="opt-price">{{ number_format($opt->price, 0) }}
-                                                {{ $locale == 'ar' ? $opt->price_unit_ar ?? 'درهم' : $opt->price_unit_en ?? 'MAD' }}</span>
+                                                {{ $locale == 'ar' ? ($opt->price_unit_ar ?? 'درهم') : ($locale == 'fr' ? ($opt->price_unit_fr ?? 'MAD') : ($opt->price_unit_en ?? 'MAD')) }}</span>
                                         @endif
                                     </span>
                                 @endforeach
@@ -256,7 +179,7 @@
                         @elseif($product->price ?? false)
                             <div class="menu-item-price">
                                 {{ $product->price }}
-                                <small>{{ $locale == 'ar' ? $product->price_unit_ar ?? 'درهم' : $product->price_unit_en ?? 'MAD' }}</small>
+                                <small>{{ $locale == 'ar' ? ($product->price_unit_ar ?? 'درهم') : ($locale == 'fr' ? ($product->price_unit_fr ?? 'MAD') : ($product->price_unit_en ?? 'MAD')) }}</small>
                             </div>
                         @endif
                     </div>
@@ -303,12 +226,12 @@
                                 @if ($video->video_url) onclick="openVideo('{{ route('stream.video', $video->video_url) }}')" @endif>
                                 <div class="video-thumb">
                                     <img src="{{ asset('assets/admin/uploads/' . $video->thumbnail) }}"
-                                        alt="{{ $locale == 'ar' ? $video->title_ar : $video->title_en }}">
+                                        alt="{{ $locale == 'ar' ? $video->title_ar : ($locale == 'fr' ? $video->title_fr : $video->title_en) }}">
                                     <div class="video-dim"></div>
                                     <div class="video-play-btn"><i class="fas fa-play"></i></div>
                                     <div class="video-overlay">
                                         <div class="video-title">
-                                            {{ $locale == 'ar' ? $video->title_ar : $video->title_en }}
+                                            {{ $locale == 'ar' ? $video->title_ar : ($locale == 'fr' ? $video->title_fr : $video->title_en) }}
                                         </div>
                                         @if ($video->duration)
                                             <div class="video-duration">{{ $video->duration }}</div>
@@ -385,18 +308,18 @@
                             data-day="{{ $wh->day_index }}"
                             @if ($wh->is_ramadan) style="background:rgba(206,173,106,0.04);" @endif>
                             <div class="hour-day">
-                                {{ $locale == 'ar' ? $wh->day_ar : $wh->day_en }}
+                                {{ $locale == 'ar' ? $wh->day_ar : ($locale == 'fr' ? $wh->day_fr : $wh->day_en) }}
                             </div>
                             @if ($wh->open_time && $wh->close_time)
                                 <div class="hour-time">{{ $wh->open_time }} – {{ $wh->close_time }}</div>
                             @else
                                 <div class="hour-time">
-                                    {{ $locale == 'ar' ? 'أوقات خاصة' : 'Special Hours' }}
+                                    {{ $locale == 'ar' ? 'أوقات خاصة' : ($locale == 'fr' ? 'Heures spéciales' : 'Special Hours') }}
                                 </div>
                             @endif
                             @if ($wh->note_ar || $wh->note_en)
                                 <div class="hour-time-sub">
-                                    {{ $locale == 'ar' ? $wh->note_ar : $wh->note_en }}
+                                    {{ $locale == 'ar' ? $wh->note_ar : ($locale == 'fr' ? $wh->note_fr : $wh->note_en) }}
                                 </div>
                             @endif
                         </div>
@@ -445,6 +368,54 @@
 
         </div>
     </section>
+
+    
+    {{-- ══════════════════════════════════════════════════════════════
+     ABOUT
+══════════════════════════════════════════════════════════════ --}}
+    <section id="about">
+        <div class="about-bg-text">SABA</div>
+        <div class="about-inner">
+
+            <div class="about-visual reveal-left">
+                <div class="about-img-frame">
+                    <div class="about-img-main">
+                        <img src="{{ asset('assets/admin/uploads/' . ($about->photo ?? '')) }}"
+                            onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80'"
+                            alt="{{ __('front.about') }}">
+                    </div>
+                    <div class="about-corner tl"></div>
+                    <div class="about-corner br"></div>
+                </div>
+                <div class="about-accent-box">
+                    <div class="about-accent-num">{{ $locale == 'ar' ? '١٢+' : '12+' }}</div>
+                    <div class="about-accent-text">{{ __('front.years_excellence') }}</div>
+                </div>
+            </div>
+
+            <div class="about-text reveal-right">
+                <div class="section-header"
+                    style="text-align:{{ $locale == 'ar' ? 'right' : 'left' }};margin-bottom:26px;">
+                    <span class="section-label">{{ __('front.about') }}</span>
+                    @if ($about)
+                        <h2 class="section-title">{!! $locale == 'ar' ? $about->name_ar : ($locale == 'fr' ? $about->name_fr : $about->name_en) !!}</h2>
+                    @else
+                        <h2 class="section-title">{{ __('front.about_title') }}</h2>
+                    @endif
+                    <div class="ornament-divider" style="justify-content:flex-start;">
+                        <div class="ornament-divider-center"></div>
+                    </div>
+                </div>
+
+                @if ($about)
+                    <p>{!! $locale == 'ar' ? $about->description_ar : ($locale == 'fr' ? $about->description_fr : $about->description_en) !!}</p>
+                @endif
+
+            </div>
+
+        </div>
+    </section>
+
 
     {{-- ══════════════════════════════════════════════════════════════
      CONTACT
@@ -604,10 +575,8 @@
 
                             var html = '';
                             res.products.forEach(function(p) {
-                                var name = locale === 'ar' ? (p.name_ar || '') : (p
-                                    .name_en || '');
-                                var desc = locale === 'ar' ? (p.description_ar || '') : (p
-                                    .description_en || '');
+                                var name = locale === 'ar' ? (p.name_ar || '') : (locale === 'fr' ? (p.name_fr || '') : (p.name_en || ''));
+                                var desc = locale === 'ar' ? (p.description_ar || '') : (locale === 'fr' ? (p.description_fr || '') : (p.description_en || ''));
                                 if (desc.length > 90) desc = desc.substring(0, 90) + '...';
 
                                 var tag = p.is_featured == 1 ?
@@ -619,12 +588,8 @@
                                 if (p.options_data && p.options_data.length) {
                                     optionsHtml = '<div class="menu-item-options">';
                                     p.options_data.forEach(function(opt) {
-                                        var optName = locale === 'ar' ? (opt
-                                            .name_ar || '') : (opt.name_en ||
-                                            '');
-                                        var optUnit = locale === 'ar' ?
-                                            (opt.price_unit_ar || 'درهم') :
-                                            (opt.price_unit_en || 'MAD');
+                                        var optName = locale === 'ar' ? (opt.name_ar || '') : (locale === 'fr' ? (opt.name_fr || '') : (opt.name_en || ''));
+                                        var optUnit = locale === 'ar' ? (opt.price_unit_ar || 'درهم') : (locale === 'fr' ? (opt.price_unit_fr || 'MAD') : (opt.price_unit_en || 'MAD'));
                                         // سعر بدون كسور عشرية
                                         var optPrice = opt.price ?
                                             '<span class="opt-sep"></span><span class="opt-price">' +
@@ -645,9 +610,7 @@
                                 var priceHtml = '';
                                 if (p.price && (!p.options_data || !p.options_data
                                         .length)) {
-                                    var unit = locale === 'ar' ?
-                                        (p.price_unit_ar || 'درهم') :
-                                        (p.price_unit_en || 'MAD');
+                                    var unit = locale === 'ar' ? (p.price_unit_ar || 'درهم') : (locale === 'fr' ? (p.price_unit_fr || 'MAD') : (p.price_unit_en || 'MAD'));
                                     priceHtml = '<div class="menu-item-price">' + p.price +
                                         '<br><small>' + unit + '</small></div>';
                                 }

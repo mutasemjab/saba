@@ -22,6 +22,11 @@
                     <input type="text" name="name_ar" class="form-control" value="{{ $category->name_ar }}" required>
                 </div>
 
+                <div class="form-group">
+                    <label>{{ __('messages.category') }} (FR)</label>
+                    <input type="text" name="name_fr" class="form-control" value="{{ $category->name_fr }}" placeholder="Optionnel">
+                </div>
+
                 <button class="btn btn-primary mt-3">{{ __('messages.update') }}</button>
             </form>
 

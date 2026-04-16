@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('title_ar');
             $table->string('title_en');
+            $table->string('title_fr');
             $table->string('thumbnail');           // مسار الصورة في uploads
             $table->string('video_url')->nullable(); // رابط يوتيوب / فيميو
             $table->string('duration')->nullable();  // مثال: ٨:٢٤

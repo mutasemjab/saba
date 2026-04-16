@@ -42,6 +42,15 @@
                         @error('title_en')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Titre (FR)</label>
+                        <input type="text" name="title_fr"
+                               class="form-control @error('title_fr') is-invalid @enderror"
+                               value="{{ old('title_fr', $video->title_fr) }}" placeholder="Titre en français">
+                        <div class="form-text">Optionnel — si vide, l'anglais sera utilisé</div>
+                        @error('title_fr')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+
                    <div class="col-md-8">
     <label class="form-label fw-semibold">الفيديو</label>
 

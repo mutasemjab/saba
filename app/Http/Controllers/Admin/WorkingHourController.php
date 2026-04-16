@@ -32,22 +32,26 @@ class WorkingHourController extends Controller
         $request->validate([
             'day_ar'      => 'required|string|max:100',
             'day_en'      => 'required|string|max:100',
+            'day_fr'      => 'nullable|string|max:100',
             'day_index'   => 'required|integer|min:-1|max:6',
             'open_time'   => 'nullable|string|max:10',
             'close_time'  => 'nullable|string|max:10',
             'note_ar'     => 'nullable|string|max:255',
             'note_en'     => 'nullable|string|max:255',
+            'note_fr'     => 'nullable|string|max:255',
             'sort_order'  => 'nullable|integer|min:0',
         ]);
 
         WorkingHour::create([
             'day_ar'     => $request->day_ar,
             'day_en'     => $request->day_en,
+            'day_fr'     => $request->day_fr ?: $request->day_en,
             'day_index'  => $request->day_index,
             'open_time'  => $request->open_time,
             'close_time' => $request->close_time,
             'note_ar'    => $request->note_ar,
             'note_en'    => $request->note_en,
+            'note_fr'    => $request->note_fr ?: $request->note_en,
             'is_ramadan' => $request->has('is_ramadan') ? 1 : 0,
             'is_active'  => $request->has('is_active') ? 1 : 0,
             'sort_order' => $request->sort_order ?? 0,
@@ -66,22 +70,26 @@ class WorkingHourController extends Controller
         $request->validate([
             'day_ar'      => 'required|string|max:100',
             'day_en'      => 'required|string|max:100',
+            'day_fr'      => 'nullable|string|max:100',
             'day_index'   => 'required|integer|min:-1|max:6',
             'open_time'   => 'nullable|string|max:10',
             'close_time'  => 'nullable|string|max:10',
             'note_ar'     => 'nullable|string|max:255',
             'note_en'     => 'nullable|string|max:255',
+            'note_fr'     => 'nullable|string|max:255',
             'sort_order'  => 'nullable|integer|min:0',
         ]);
 
         $workingHour->update([
             'day_ar'     => $request->day_ar,
             'day_en'     => $request->day_en,
+            'day_fr'     => $request->day_fr ?: $request->day_en,
             'day_index'  => $request->day_index,
             'open_time'  => $request->open_time,
             'close_time' => $request->close_time,
             'note_ar'    => $request->note_ar,
             'note_en'    => $request->note_en,
+            'note_fr'    => $request->note_fr ?: $request->note_en,
             'is_ramadan' => $request->has('is_ramadan') ? 1 : 0,
             'is_active'  => $request->has('is_active') ? 1 : 0,
             'sort_order' => $request->sort_order ?? 0,

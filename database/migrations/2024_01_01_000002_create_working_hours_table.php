@@ -12,11 +12,13 @@ return new class extends Migration
             $table->id();
             $table->string('day_ar');          // الاثنين – الثلاثاء
             $table->string('day_en');          // Monday – Tuesday
+            $table->string('day_fr');          
             $table->tinyInteger('day_index');  // 0=أحد ... 6=سبت (أدنى قيمة للمجموعة)
             $table->string('open_time')->nullable();   // 11:00
             $table->string('close_time')->nullable();  // 23:00
             $table->string('note_ar')->nullable();  // الغداء · العشاء
             $table->string('note_en')->nullable();  // Lunch · Dinner
+            $table->string('note_fr')->nullable();  // Lunch · Dinner
             $table->tinyInteger('is_ramadan')->default(0); // صف رمضان الخاص
             $table->tinyInteger('is_active')->default(1);
             $table->integer('sort_order')->default(0);

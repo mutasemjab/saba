@@ -69,9 +69,9 @@
     $settingNav = $setting ?? \App\Models\Setting::first();
     $locale     = app()->getLocale();
     $current    = LaravelLocalization::getCurrentLocale();
-    $target     = $current==='ar' ? 'en' : 'ar';
+    $target     = $current==='ar' ? 'en' : ($current==='en' ? 'fr' : 'ar');
     $supported  = LaravelLocalization::getSupportedLocales();
-    $targetName = $target==='ar' ? ($supported[$target]['native']??'العربية') : ($supported[$target]['native']??'English');
+    $targetName = $supported[$target]['native'] ?? $target;
     $targetUrl  = LaravelLocalization::getLocalizedURL($target, null, [], true);
 @endphp
 
@@ -102,7 +102,7 @@
             <span>{{ __('front.menu') }}</span>
             @if($activeCategory)
                 <span class="sep">›</span>
-                <span>{{ $locale==='ar' ? $activeCategory->name_ar : $activeCategory->name_en }}</span>
+                <span>{{ $locale==='ar' ? $activeCategory->name_ar : ($locale==='fr' ? $activeCategory->name_fr : $activeCategory->name_en) }}</span>
             @endif
         </div>
     </div>
@@ -124,7 +124,7 @@
             @foreach($categories as $cat)
             <li>
                 <a href="{{ route('menu', ['category_id'=>$cat->id]) }}" class="{{ $categoryId==$cat->id ? 'active' : '' }}">
-                    {{ $locale==='ar' ? $cat->name_ar : $cat->name_en }}
+                    {{ $locale==='ar' ? $cat->name_ar : ($locale==='fr' ? $cat->name_fr : $cat->name_en) }}
                     <span class="cat-count">{{ $cat->products_count }}</span>
                 </a>
             </li>
@@ -137,7 +137,7 @@
         <div class="products-top">
             <div class="products-title">
                 @if($activeCategory)
-                    {{ $locale==='ar' ? $activeCategory->name_ar : $activeCategory->name_en }}
+                    {{ $locale==='ar' ? $activeCategory->name_ar : ($locale==='fr' ? $activeCategory->name_fr : $activeCategory->name_en) }}
                 @else
                     {{ __('front.all') }} <span>{{ __('front.dishes') }}</span>
                 @endif
@@ -150,26 +150,26 @@
             <a href="{{ route('product.show', $p->id) }}" class="prod-card">
                 <div class="prod-card-img">
                     <img src="{{ asset('assets/admin/uploads/'.$p->photo) }}"
-                         alt="{{ $locale==='ar' ? $p->name_ar : $p->name_en }}">
+                         alt="{{ $locale==='ar' ? $p->name_ar : ($locale==='fr' ? $p->name_fr : $p->name_en) }}">
                     @if($p->is_featured==1)
                         <div class="prod-card-badge">{{ __('front.featured_tag') }}</div>
                     @endif
                 </div>
                 <div class="prod-card-body">
-                    <div class="prod-card-cat">{{ $locale==='ar' ? ($p->category->name_ar??'') : ($p->category->name_en??'') }}</div>
-                    <div class="prod-card-name">{{ $locale==='ar' ? $p->name_ar : $p->name_en }}</div>
-                    <div class="prod-card-desc">{{ $locale==='ar' ? \Str::limit($p->description_ar,95) : \Str::limit($p->description_en,95) }}</div>
+                    <div class="prod-card-cat">{{ $locale==='ar' ? ($p->category->name_ar??'') : ($locale==='fr' ? ($p->category->name_fr??'') : ($p->category->name_en??'')) }}</div>
+                    <div class="prod-card-name">{{ $locale==='ar' ? $p->name_ar : ($locale==='fr' ? $p->name_fr : $p->name_en) }}</div>
+                    <div class="prod-card-desc">{{ $locale==='ar' ? \Str::limit($p->description_ar,95) : ($locale==='fr' ? \Str::limit($p->description_fr,95) : \Str::limit($p->description_en,95)) }}</div>
 
                     {{-- ✅ Options أو سعر عادي --}}
                     @if($p->options->isNotEmpty())
                         <div class="prod-card-options">
                             @foreach($p->options as $opt)
                             <div class="prod-card-opt-row">
-                                <span class="prod-card-opt-name">{{ $locale==='ar' ? $opt->name_ar : $opt->name_en }}</span>
+                                <span class="prod-card-opt-name">{{ $locale==='ar' ? $opt->name_ar : ($locale==='fr' ? $opt->name_fr : $opt->name_en) }}</span>
                                 @if($opt->price)
                                 <span class="prod-card-opt-price">
                                     {{ number_format($opt->price, 0) }}
-                                    {{ $locale==='ar' ? ($opt->price_unit_ar ?? 'درهم') : ($opt->price_unit_en ?? 'MAD') }}
+                                    {{ $locale==='ar' ? ($opt->price_unit_ar ?? 'درهم') : ($locale==='fr' ? ($opt->price_unit_fr ?? 'MAD') : ($opt->price_unit_en ?? 'MAD')) }}
                                 </span>
                                 @endif
                             </div>
@@ -178,7 +178,7 @@
                     @else
                         <div class="prod-card-footer">
                             @if($p->price??false)
-                                <div class="prod-card-price">{{ $p->price }} {{ $locale==='ar' ? ($p->price_unit_ar??'درهم') : ($p->price_unit_en??'MAD') }}</div>
+                                <div class="prod-card-price">{{ $p->price }} {{ $locale==='ar' ? ($p->price_unit_ar??'درهم') : ($locale==='fr' ? ($p->price_unit_fr??'MAD') : ($p->price_unit_en??'MAD')) }}</div>
                             @else
                                 <div></div>
                             @endif

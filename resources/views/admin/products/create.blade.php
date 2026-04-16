@@ -42,6 +42,15 @@
                         @error('name_ar')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
+                    {{-- FR Name --}}
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">{{ __('messages.product') }} (FR)</label>
+                        <input type="text" name="name_fr" class="form-control @error('name_fr') is-invalid @enderror"
+                               value="{{ old('name_fr') }}" placeholder="Nom du produit en français">
+                        <div class="form-text">Optionnel — si vide, l'anglais sera utilisé</div>
+                        @error('name_fr')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+
                     {{-- Description --}}
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Description (EN) <span class="text-danger">*</span></label>
@@ -57,6 +66,14 @@
                                   class="form-control @error('description_ar') is-invalid @enderror"
                                   placeholder="وصف المنتج بالعربي" required>{{ old('description_ar') }}</textarea>
                         @error('description_ar')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Description (FR)</label>
+                        <textarea name="description_fr" rows="4"
+                                  class="form-control @error('description_fr') is-invalid @enderror"
+                                  placeholder="Optionnel">{{ old('description_fr') }}</textarea>
+                        @error('description_fr')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
                     {{-- Category --}}
@@ -105,7 +122,12 @@
                                value="{{ old('price_unit_en','MAD') }}">
                     </div>
 
-                 
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Unité prix (FR)</label>
+                        <input type="text" name="price_unit_fr" class="form-control"
+                               value="{{ old('price_unit_fr','MAD') }}">
+                    </div>
+
                     {{-- Photo --}}
                     <div class="col-md-8">
                         <label class="form-label fw-semibold">{{ __('messages.photo') }} <span class="text-danger">*</span></label>

@@ -33,9 +33,14 @@ class CategoryController extends Controller
         $request->validate([
             'name_en' => 'required',
             'name_ar' => 'required',
+            'name_fr' => 'nullable',
         ]);
 
-        Category::create($request->all());
+        Category::create([
+            'name_en' => $request->name_en,
+            'name_ar' => $request->name_ar,
+            'name_fr' => $request->name_fr ?: $request->name_en,
+        ]);
         return redirect()->route('categories.index')->with('success','Created successfully');
     }
 
@@ -49,9 +54,14 @@ class CategoryController extends Controller
         $request->validate([
             'name_en' => 'required',
             'name_ar' => 'required',
+            'name_fr' => 'nullable',
         ]);
 
-        $category->update($request->all());
+        $category->update([
+            'name_en' => $request->name_en,
+            'name_ar' => $request->name_ar,
+            'name_fr' => $request->name_fr ?: $request->name_en,
+        ]);
         return redirect()->route('categories.index')->with('success','Updated successfully');
     }
 

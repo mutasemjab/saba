@@ -748,7 +748,8 @@
       gap: 26px;
       animation: slide-track 18s linear infinite;
       width: max-content;
-      padding: 14px 0
+      padding: 14px 0;
+      direction: ltr
     }
 
     .best-track:hover {

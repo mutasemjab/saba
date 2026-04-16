@@ -47,7 +47,7 @@
         <div class="particles" id="particles"></div>
 
         <div class="hero-content">
-            <p class="hero-tagline">المغرب · الدار البيضاء</p>
+            <p class="hero-tagline">المغرب · الرباط </p>
             <div class="hero-divider">
                 <div class="hdl hdl1"></div>
                 <div class="hero-gem"></div>
@@ -64,28 +64,7 @@
             </div>
         </div>
 
-        <div class="hero-ticker">
-            <div class="ticker-inner">
-                <span class="ticker-item">{{ __('front.ticker_1') }}</span>
-                <span class="ticker-item">Authentic Yemeni Cuisine</span>
-                <span class="ticker-item">{{ __('front.ticker_2') }}</span>
-                <span class="ticker-item">Gulf Flavors</span>
-                <span class="ticker-item">الدار البيضاء · المغرب</span>
-                <span class="ticker-item">Casablanca · Morocco</span>
-                <span class="ticker-item">{{ __('front.ticker_3') }}</span>
-                <span class="ticker-item">Unforgettable Experience</span>
-                {{-- duplicate for infinite --}}
-                <span class="ticker-item">{{ __('front.ticker_1') }}</span>
-                <span class="ticker-item">Authentic Yemeni Cuisine</span>
-                <span class="ticker-item">{{ __('front.ticker_2') }}</span>
-                <span class="ticker-item">Gulf Flavors</span>
-                <span class="ticker-item">الدار البيضاء · المغرب</span>
-                <span class="ticker-item">Casablanca · Morocco</span>
-                <span class="ticker-item">{{ __('front.ticker_3') }}</span>
-                <span class="ticker-item">Unforgettable Experience</span>
-            </div>
-        </div>
-
+      
         <div class="hero-scroll">
             <span>{{ __('front.explore') }}</span>
             <div class="scroll-line"></div>

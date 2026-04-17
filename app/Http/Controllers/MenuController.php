@@ -12,9 +12,13 @@ class MenuController extends Controller
     public function index(Request $request)
     {
         $locale         = app()->getLocale();
-        $categoryId     = $request->get('category_id');
         $categories     = Category::withCount('products')->orderBy('created_at','desc')->get();
-        $products       = Product::with(['category', 'options'])   // ← أضفنا options
+        $firstCategory  = $categories->first();
+
+        // Default to first category when none is selected
+        $categoryId     = $request->get('category_id') ?? ($firstCategory ? $firstCategory->id : null);
+
+        $products       = Product::with(['category', 'options'])
                             ->when($categoryId, fn($q) => $q->where('category_id', $categoryId))
                             ->orderBy('category_id')->get();
         $activeCategory = $categoryId ? Category::find($categoryId) : null;

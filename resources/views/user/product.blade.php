@@ -1,5 +1,19 @@
 @extends('layouts.front')
 
+@push('styles')
+<style>
+  /* Force dark navbar on this light-background page */
+  #navbar {
+    background: rgba(4,20,13,.97) !important;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(206,173,106,.18) !important;
+    box-shadow: 0 4px 30px rgba(0,0,0,.4);
+    padding: 10px 60px !important;
+  }
+  #navbar .nav-logo img { height: 42px; }
+</style>
+@endpush
+
 @section('content')
 @php
     $settingNav = $setting ?? \App\Models\Setting::first();

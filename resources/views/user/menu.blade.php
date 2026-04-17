@@ -38,12 +38,6 @@
     <aside>
         <div class="sidebar-title">{{ __('front.categories') }}</div>
         <ul class="sidebar-list">
-            <li>
-                <a href="{{ route('menu') }}" class="{{ !$categoryId ? 'active' : '' }}">
-                    {{ __('front.all') }}
-                    <span class="cat-count">{{ \App\Models\Product::count() }}</span>
-                </a>
-            </li>
             @foreach($categories as $cat)
             <li>
                 <a href="{{ route('menu', ['category_id'=>$cat->id]) }}" class="{{ $categoryId==$cat->id ? 'active' : '' }}">

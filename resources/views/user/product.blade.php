@@ -94,19 +94,7 @@
     $targetUrl  = LaravelLocalization::getLocalizedURL($target, null, [], true);
 @endphp
 
-{{-- NAVBAR --}}
-<nav id="navbar" class="scrolled">
-    <a href="{{ route('home') }}" class="nav-logo">
-        <img src="{{ $settingNav&&$settingNav->logo ? asset('assets/admin/uploads/'.$settingNav->logo) : asset('assets_front/images/main_logo.png') }}" alt="سبأ">
-    </a>
-    <ul class="nav-links">
-        <li><a href="{{ route('home') }}">{{ __('front.home') }}</a></li>
-        <li><a href="{{ route('menu') }}">{{ __('front.menu') }}</a></li>
-        <li><a href="{{ route('home') }}#contact">{{ __('front.contact') }}</a></li>
-        <li><a class="nav-lang" hreflang="{{ $target }}" href="{{ $targetUrl }}">{{ $targetName }}</a></li>
-    </ul>
-    <a href="{{ route('home') }}#contact" class="nav-reserve">{{ __('front.book_table') }}</a>
-</nav>
+
 
 <div class="product-wrap">
 
@@ -264,41 +252,7 @@
 
 </div>
 
-{{-- FOOTER --}}
-<footer>
-    <div class="footer-top">
-        <div class="footer-brand">
-            <img src="{{ $settingNav&&$settingNav->logo ? asset('assets/admin/uploads/'.$settingNav->logo) : asset('assets_front/images/main_logo.png') }}" alt="سبأ" class="footer-brand-logo">
-            <p>{{ __('front.footer_about') }}</p>
-            <div class="footer-social">
-                @if($settingNav->instagram??false)<a href="{{ $settingNav->instagram }}" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a>@endif
-                @if($settingNav->facebook??false)<a href="{{ $settingNav->facebook }}" target="_blank" class="social-btn"><i class="fab fa-facebook-f"></i></a>@endif
-                @if($settingNav->twitter??false)<a href="{{ $settingNav->twitter }}" target="_blank" class="social-btn"><i class="fab fa-x-twitter"></i></a>@endif
-            </div>
-        </div>
-        <div class="footer-col">
-            <h4>{{ __('front.quick_links') }}</h4>
-            <ul>
-                <li><a href="{{ route('home') }}">{{ __('front.home') }}</a></li>
-                <li><a href="{{ route('menu') }}">{{ __('front.menu') }}</a></li>
-                <li><a href="{{ route('home') }}#about">{{ __('front.about') }}</a></li>
-                <li><a href="{{ route('home') }}#contact">{{ __('front.contact') }}</a></li>
-            </ul>
-        </div>
-        <div class="footer-col">
-            <h4>{{ __('front.contact') }}</h4>
-            <ul>
-                <li><a href="#">{{ $settingNav->address??'' }}</a></li>
-                <li><a href="tel:{{ $settingNav->phone??'' }}">{{ $settingNav->phone??'' }}</a></li>
-                <li><a href="mailto:{{ $settingNav->email??'' }}">{{ $settingNav->email??'' }}</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p class="footer-copy">© {{ date('Y') }} <span>{{ __('front.site_name') }}</span> · {{ __('front.all_rights') }}</p>
-        <div class="footer-ornament">⬡ سبأ ⬡</div>
-    </div>
-</footer>
+
 
 @push('scripts')
 <script>

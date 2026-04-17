@@ -740,7 +740,8 @@
     .best-track-wrap {
       overflow: hidden;
       margin: 0 -60px;
-      padding: 0 60px
+      padding: 0 60px;
+      direction: ltr
     }
 
     .best-track {

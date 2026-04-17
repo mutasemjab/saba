@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -17,8 +18,10 @@ class MenuController extends Controller
                             ->when($categoryId, fn($q) => $q->where('category_id', $categoryId))
                             ->orderBy('category_id')->get();
         $activeCategory = $categoryId ? Category::find($categoryId) : null;
+        $banner         = Banner::first();
+        $bannerUrl      = $banner ? asset('assets/admin/uploads/' . $banner->photo) : '';
 
-        return view('user.menu', compact('categories','products','activeCategory','locale','categoryId'));
+        return view('user.menu', compact('categories','products','activeCategory','locale','categoryId','bannerUrl'));
     }
 
     public function show($id)

@@ -59,15 +59,10 @@
             <p class="hero-sub">{{ __('front.hero_sub') }}</p>
             <div class="hero-cta">
                 <a href="#menu" class="btn-primary"><span>{{ __('front.explore_menu') }}</span></a>
-                <a href="#contact" class="btn-outline">{{ __('front.book_table') }}</a>
             </div>
         </div>
 
       
-        <div class="hero-scroll">
-            <span>{{ __('front.explore') }}</span>
-            <div class="scroll-line"></div>
-        </div>
     </section>
 
     {{-- ══════════════════════════════════════════════════════════════

@@ -20,7 +20,7 @@ return [
     'book_table'        => 'Réserver une table',
 
     // ── Hero
-    'hero_sub'          => 'Cuisine yéménite & du Golfe authentique',
+    'hero_sub' => 'Saveur authentique du Yémen',
     'explore_menu'      => 'Explorer le menu',
     'explore'           => 'Explorer',
     'ticker_1'          => 'Cuisine yéménite authentique',

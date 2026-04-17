@@ -20,7 +20,7 @@ return [
     'book_table'        => 'Book a Table',
 
     // ── Hero
-    'hero_sub'          => 'Authentic Yemeni & Gulf Cuisine',
+    'hero_sub' => 'Authentic Yemeni Flavor',
     'explore_menu'      => 'Explore Menu',
     'explore'           => 'Explore',
     'ticker_1'          => 'Authentic Yemeni Kitchen',

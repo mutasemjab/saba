@@ -47,7 +47,7 @@
     @yield('content')
     <!-- Footer -->
     @include('user.includes.footer')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         // Preloader — hide once page fully loads (max 400ms extra)
         window.addEventListener('load', () => setTimeout(() => document.getElementById('preloader').classList.add('done'),

@@ -195,18 +195,28 @@
     </section>
 
     {{-- Video Modal --}}
-    <div id="videoModal"
-        style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9000;
-            align-items:center;justify-content:center;flex-direction:column;gap:16px;">
-        <button onclick="closeVideo()"
-            style="position:absolute;top:22px;left:28px;background:none;border:none;
-                   color:var(--gold);font-size:2.2rem;cursor:pointer;line-height:1;">✕</button>
-        <iframe id="videoFrame" width="900" height="506" frameborder="0" allowfullscreen
-            style="max-width:92vw;max-height:78vh;border:1px solid rgba(206,173,106,.25);display:none;"></iframe>
+    <div id="videoModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:9000;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
 
+        {{-- Close --}}
+        <button onclick="closeVideo()" style="position:absolute;top:18px;right:22px;background:none;border:1px solid rgba(206,173,106,.4);color:var(--gold);font-size:1.4rem;width:38px;height:38px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;border-radius:2px;">✕</button>
+
+        {{-- Prev --}}
+        <button id="modalPrev" onclick="modalNav(-1)" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);background:rgba(255,251,240,.1);border:1.5px solid rgba(206,173,106,.5);color:var(--gold);width:46px;height:46px;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;z-index:10;">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+        {{-- Next --}}
+        <button id="modalNext" onclick="modalNav(1)" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:rgba(255,251,240,.1);border:1.5px solid rgba(206,173,106,.5);color:var(--gold);width:46px;height:46px;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;z-index:10;">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <iframe id="videoFrame" width="900" height="506" frameborder="0" allowfullscreen
+            style="max-width:88vw;max-height:75vh;border:1px solid rgba(206,173,106,.25);display:none;"></iframe>
         <video id="videoPlayer" width="900" height="506" controls
-            style="max-width:92vw;max-height:78vh;border:1px solid rgba(206,173,106,.25);display:none;">
-        </video>
+            style="max-width:88vw;max-height:75vh;border:1px solid rgba(206,173,106,.25);display:none;"></video>
+
+        {{-- Dots --}}
+        <div id="modalDots" style="display:flex;gap:8px;margin-top:4px;"></div>
     </div>
 
     {{-- ══════════════════════════════════════════════════════════════
@@ -468,155 +478,169 @@
 ══════════════════════════════════════════════════════════════ --}}
     @push('scripts')
         <script>
-            $(document).ready(function() {
-
-                // ─── نمرر الـ route base من Laravel ───
-                // هكذا نتجنب hard-coded URLs وتعمل مع locale prefix
-                var productBaseUrl = '{{ url(app()->getLocale() . '/product') }}';
-                var filterUrl = '{{ route('filter.products') }}';
-                var locale = '{{ $locale }}';
-
-                
-
-                // ─────────────────────────────────────────────
-                // Working Hours — highlight today's card
-                // ─────────────────────────────────────────────
-                var today = new Date().getDay(); // 0=Sun … 6=Sat
-                document.querySelectorAll('.hour-card[data-day]').forEach(function(card) {
-                    var idx = parseInt(card.getAttribute('data-day'));
-                    var match = false;
-                    // grouped Mon–Tue  → day_index = 1
-                    if (idx === 1 && (today === 1 || today === 2)) match = true;
-                    // grouped Wed–Thu  → day_index = 3
-                    else if (idx === 3 && (today === 3 || today === 4)) match = true;
-                    // single days (Fri=5, Sat=6, Sun=0)
-                    else if (idx >= 0 && idx === today) match = true;
-                    if (match) card.classList.add('today');
-                });
-
-                // ─────────────────────────────────────────────
-                // Best-products slider — pause on touch
-                // ─────────────────────────────────────────────
-                $('#bestTrack')
-                    .on('touchstart', function() {
-                        $(this).css('animation-play-state', 'paused');
-                    })
-                    .on('touchend', function() {
-                        $(this).css('animation-play-state', 'running');
-                    });
-
+        // ── Working Hours: highlight today ──────────────────────────
+        (function() {
+            var today = new Date().getDay();
+            document.querySelectorAll('.hour-card[data-day]').forEach(function(card) {
+                var idx = parseInt(card.getAttribute('data-day'));
+                var match = false;
+                if (idx === 1 && (today === 1 || today === 2)) match = true;
+                else if (idx === 3 && (today === 3 || today === 4)) match = true;
+                else if (idx >= 0 && idx === today) match = true;
+                if (match) card.classList.add('today');
             });
+        })();
 
-            // ─────────────────────────────────────────────
-            // Videos slider
-            // ─────────────────────────────────────────────
-            var videoIdx = 0;
-            var videoTotal = document.querySelectorAll('#videosTrack .video-card').length;
+        // ── Best-track: pause on touch ──────────────────────────────
+        (function() {
+            var t = document.getElementById('bestTrack');
+            if (!t) return;
+            t.addEventListener('touchstart', function() { t.style.animationPlayState = 'paused'; }, {passive:true});
+            t.addEventListener('touchend',   function() { t.style.animationPlayState = 'running'; }, {passive:true});
+        })();
 
-            function videoSetWidths() {
-                var outer = document.querySelector('.videos-slider-track-outer');
-                return outer ? outer.offsetWidth : 0;
-            }
+        // ── Videos slider ───────────────────────────────────────────
+        var videoIdx   = 0;
+        var videoTotal = document.querySelectorAll('#videosTrack .video-card').length;
 
-            function videoGoTo(n) {
-                var w = videoSetWidths();
-                if (w === 0) {
-                    setTimeout(function() {
-                        videoGoTo(n);
-                    }, 50);
-                    return;
-                }
-                videoIdx = (n + videoTotal) % videoTotal;
-                document.getElementById('videosTrack').style.transform = 'translateX(' + (-videoIdx * w) + 'px)';
-                document.querySelectorAll('#videosDots .videos-slider-dot').forEach(function(d, i) {
-                    d.classList.toggle('active', i === videoIdx);
-                });
-            }
-
-            function videoSlide(dir) {
-                videoGoTo(videoIdx + dir);
-            }
-
-            window.addEventListener('resize', function() {
-                videoGoTo(videoIdx);
+        function videoGoTo(n) {
+            var outer = document.querySelector('.videos-slider-track-outer');
+            if (!outer) return;
+            var w = outer.offsetWidth;
+            if (w === 0) { setTimeout(function(){ videoGoTo(n); }, 50); return; }
+            videoIdx = (n + videoTotal) % videoTotal;
+            document.getElementById('videosTrack').style.transform = 'translateX(' + (-videoIdx * w) + 'px)';
+            document.querySelectorAll('#videosDots .videos-slider-dot').forEach(function(d, i) {
+                d.classList.toggle('active', i === videoIdx);
             });
-            window.addEventListener('load', function() {
-                videoGoTo(0);
+        }
+        function videoSlide(dir) { videoGoTo(videoIdx + dir); }
+        window.addEventListener('resize', function() { videoGoTo(videoIdx); });
+        window.addEventListener('load',   function() { videoGoTo(0); });
+
+        // slider swipe
+        (function() {
+            var track = document.getElementById('videosTrack'), sx = 0;
+            if (!track) return;
+            track.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; }, {passive:true});
+            track.addEventListener('touchend',   function(e){
+                var diff = sx - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 40) videoSlide(diff > 0 ? 1 : -1);
             });
+        })();
 
-            (function() {
-                var track = document.getElementById('videosTrack');
-                if (!track) return;
-                var startX = 0;
-                track.addEventListener('touchstart', function(e) {
-                    startX = e.touches[0].clientX;
-                }, {
-                    passive: true
-                });
-                track.addEventListener('touchend', function(e) {
-                    var diff = startX - e.changedTouches[0].clientX;
-                    if (Math.abs(diff) > 40) videoSlide(diff > 0 ? 1 : -1);
-                });
-            })();
+        // ── Video modal ─────────────────────────────────────────────
+        var modalUrls  = [];   // filled when videos are opened
+        var modalIdx   = 0;
 
-            // ─────────────────────────────────────────────
-            // Video modal — open / close
-            // ─────────────────────────────────────────────
-            function openVideo(url) {
-                var videoId = extractYoutubeId(url);
-
-                if (videoId) {
-                    // YouTube link
-                    var embed = 'https://www.youtube.com/embed/' + videoId +
-                        '?autoplay=1&rel=0&modestbranding=1';
-                    document.getElementById('videoFrame').src = embed;
-                    document.getElementById('videoFrame').style.display = 'block';
-                    document.getElementById('videoPlayer').style.display = 'none';
-                } else {
-                    // Local uploaded video
-                    document.getElementById('videoFrame').src = '';
-                    document.getElementById('videoFrame').style.display = 'none';
-                    var player = document.getElementById('videoPlayer');
-                    player.src = url;
-                    player.style.display = 'block';
-                    player.play();
-                }
-
-                document.getElementById('videoModal').style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            }
-
-            function extractYoutubeId(url) {
-                // يشتغل مع كل أنواع روابط يوتيوب:
-                // https://www.youtube.com/watch?v=VIDEO_ID
-                // https://youtu.be/VIDEO_ID
-                // https://www.youtube.com/embed/VIDEO_ID
-                // https://youtube.com/shorts/VIDEO_ID
-                // https://www.youtube.com/watch?v=VIDEO_ID&t=30s
-                var patterns = [
-                    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
-                    /[?&]v=([a-zA-Z0-9_-]{11})/
-                ];
-                for (var i = 0; i < patterns.length; i++) {
-                    var match = url.match(patterns[i]);
-                    if (match && match[1]) return match[1];
-                }
-                return null;
-            }
-
-            function closeVideo() {
-                document.getElementById('videoFrame').src = '';
-                document.getElementById('videoModal').style.display = 'none';
-                var player = document.getElementById('videoPlayer');
-                player.pause();
-                player.src = '';
-                document.body.style.overflow = '';
-            }
-
-            // close modal on backdrop click
-            document.getElementById('videoModal').addEventListener('click', function(e) {
-                if (e.target === this) closeVideo();
+        // Collect all video URLs from cards on page load
+        window.addEventListener('load', function() {
+            document.querySelectorAll('#videosTrack .video-card[onclick]').forEach(function(card) {
+                var m = card.getAttribute('onclick').match(/openVideo\('([^']+)'\)/);
+                if (m) modalUrls.push(m[1]);
             });
+            buildModalDots();
+        });
+
+        function buildModalDots() {
+            var dotsEl = document.getElementById('modalDots');
+            if (!dotsEl) return;
+            dotsEl.innerHTML = '';
+            modalUrls.forEach(function(_, i) {
+                var d = document.createElement('div');
+                d.style.cssText = 'width:8px;height:8px;border-radius:50%;background:rgba(206,173,106,.3);border:1px solid rgba(206,173,106,.5);cursor:pointer;transition:all .3s;';
+                d.onclick = function(){ modalGoTo(i); };
+                dotsEl.appendChild(d);
+            });
+        }
+
+        function updateModalDots() {
+            var dots = document.querySelectorAll('#modalDots div');
+            dots.forEach(function(d, i) {
+                d.style.background = i === modalIdx ? 'var(--gold)' : 'rgba(206,173,106,.3)';
+                d.style.transform  = i === modalIdx ? 'scale(1.3)' : 'scale(1)';
+            });
+            // hide prev/next if only 1 video
+            var show = modalUrls.length > 1 ? 'flex' : 'none';
+            document.getElementById('modalPrev').style.display = show;
+            document.getElementById('modalNext').style.display = show;
+        }
+
+        function extractYoutubeId(url) {
+            var patterns = [
+                /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
+                /[?&]v=([a-zA-Z0-9_-]{11})/
+            ];
+            for (var i = 0; i < patterns.length; i++) {
+                var m = url.match(patterns[i]);
+                if (m && m[1]) return m[1];
+            }
+            return null;
+        }
+
+        function loadVideoInModal(url) {
+            var videoId = extractYoutubeId(url);
+            var frame   = document.getElementById('videoFrame');
+            var player  = document.getElementById('videoPlayer');
+            if (videoId) {
+                frame.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&modestbranding=1';
+                frame.style.display  = 'block';
+                player.style.display = 'none';
+                player.pause(); player.src = '';
+            } else {
+                frame.src = ''; frame.style.display = 'none';
+                player.src = url; player.style.display = 'block'; player.play();
+            }
+        }
+
+        function openVideo(url) {
+            // find index in collected urls
+            var idx = modalUrls.indexOf(url);
+            if (idx !== -1) modalIdx = idx;
+            loadVideoInModal(url);
+            updateModalDots();
+            document.getElementById('videoModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function modalGoTo(n) {
+            if (!modalUrls.length) return;
+            modalIdx = (n + modalUrls.length) % modalUrls.length;
+            loadVideoInModal(modalUrls[modalIdx]);
+            updateModalDots();
+        }
+        function modalNav(dir) { modalGoTo(modalIdx + dir); }
+
+        function closeVideo() {
+            document.getElementById('videoFrame').src = '';
+            document.getElementById('videoModal').style.display = 'none';
+            var player = document.getElementById('videoPlayer');
+            player.pause(); player.src = '';
+            document.body.style.overflow = '';
+        }
+
+        // backdrop click closes
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) closeVideo();
+        });
+
+        // keyboard: arrows + Escape
+        document.addEventListener('keydown', function(e) {
+            if (document.getElementById('videoModal').style.display !== 'flex') return;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown')  modalNav(1);
+            if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')    modalNav(-1);
+            if (e.key === 'Escape') closeVideo();
+        });
+
+        // modal swipe on mobile
+        (function() {
+            var modal = document.getElementById('videoModal'), sx = 0;
+            modal.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; }, {passive:true});
+            modal.addEventListener('touchend',   function(e){
+                var diff = sx - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 50) modalNav(diff > 0 ? 1 : -1);
+            });
+        })();
         </script>
     @endpush
 

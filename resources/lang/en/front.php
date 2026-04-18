@@ -46,10 +46,12 @@ return [
     'best_desc'         => 'Irresistible picks from our signature menu',
 
     // ── Menu
-    'menu_label'        => 'Our Menu',
-    'menu_title'        => 'All',
-    'menu_title_span'   => 'Flavors in One Place',
-    'all'               => 'All',
+    'menu_label'         => 'Our Menu',
+    'menu_title'         => 'All',
+    'menu_title_span'    => 'Flavors in One Place',
+    'menu_page_title'    => 'Our',
+    'menu_page_title_span' => 'Menu',
+    'all'                => 'All',
     'featured_tag'      => 'Most Ordered',
     'no_products'       => 'No products found in this category.',
     'loading'           => 'Loading',

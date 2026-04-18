@@ -76,16 +76,18 @@
         });
         document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => obs.observe(el));
 
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(a => {
+        // Smooth scroll — works for both "#section" and "url#section"
+        document.querySelectorAll('a[href*="#"]').forEach(a => {
             a.addEventListener('click', e => {
-                const t = document.querySelector(a.getAttribute('href'));
+                const href  = a.getAttribute('href');
+                const hash  = href.includes('#') ? '#' + href.split('#')[1] : null;
+                if (!hash || hash === '#') return;
+                const t = document.querySelector(hash);
                 if (t) {
                     e.preventDefault();
-                    t.scrollIntoView({
-                        behavior: 'smooth'
-                    });
+                    t.scrollIntoView({ behavior: 'smooth' });
                 }
+                // if t is null (section not on this page), let the browser navigate normally
             });
         });
     </script>

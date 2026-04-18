@@ -17,7 +17,7 @@
     <ul class="nav-links">
         <li><a href="#about">{{ __('front.about') }}</a></li>
         <li><a href="#best">{{ __('front.featured') }}</a></li>
-        <li><a href="#menu">{{ __('front.menu') }}</a></li>
+        <li><a href="{{route('menu')}}">{{ __('front.menu') }}</a></li>
         <li><a href="#videos">{{ __('front.videos') }}</a></li>
         <li><a href="#hours">{{ __('front.hours') }}</a></li>
         <li><a href="#contact">{{ __('front.contact') }}</a></li>
@@ -39,7 +39,7 @@
     <ul class="nav-drawer-links">
         <li><a href="#about"   onclick="toggleDrawer()">{{ __('front.about') }}</a></li>
         <li><a href="#best"    onclick="toggleDrawer()">{{ __('front.featured') }}</a></li>
-        <li><a href="#menu"    onclick="toggleDrawer()">{{ __('front.menu') }}</a></li>
+        <li><a href="{{route('menu')}}"    onclick="toggleDrawer()">{{ __('front.menu') }}</a></li>
         <li><a href="#videos"  onclick="toggleDrawer()">{{ __('front.videos') }}</a></li>
         <li><a href="#hours"   onclick="toggleDrawer()">{{ __('front.hours') }}</a></li>
         <li><a href="#contact" onclick="toggleDrawer()">{{ __('front.contact') }}</a></li>

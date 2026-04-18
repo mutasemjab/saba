@@ -101,7 +101,7 @@
                                     </div>
                                     <div class="best-card-footer">
                                         @if ($fp->price ?? false)
-                                            <div class="best-card-price" style="color: aliceblue;text-decoration:none">
+                                            <div class="best-card-price">
                                                 {{ $fp->price }}
                                                 {{ $locale == 'ar' ? ($fp->price_unit_ar ?? 'درهم') : ($locale == 'fr' ? ($fp->price_unit_fr ?? 'MAD') : ($fp->price_unit_en ?? 'MAD')) }}
                                             </div>
@@ -117,78 +117,7 @@
         @endif
     </section>
 
-    {{-- ══════════════════════════════════════════════════════════════
-     MENU — AJAX filter
-══════════════════════════════════════════════════════════════ --}}
-    <section id="menu">
-        <div class="section-header reveal">
-            <span class="section-label">{{ __('front.menu_label') }}</span>
-            <h2 class="section-title">
-                <span> {{ __('front.menu_title') }} {{ __('front.menu_title_span') }}</span>
-            </h2>
-            <div class="ornament-divider">
-                <div class="ornament-divider-center"></div>
-            </div>
-        </div>
-
-        <div class="menu-tabs reveal" id="menuTabs">
-            @foreach ($categories as $i => $category)
-                <button class="menu-tab {{ $i === 0 ? 'active' : '' }}" data-category="{{ $category->id }}">
-                    {{ $locale == 'ar' ? $category->name_ar : ($locale == 'fr' ? $category->name_fr : $category->name_en) }}
-                </button>
-            @endforeach
-        </div>
-
-        <div class="menu-panel active" id="menuPanel">
-            @forelse($products as $product)
-                <a href="{{ route('product.show', $product->id) }}" class="menu-item">
-                    <div class="menu-item-img">
-                        <img src="{{ asset('assets/admin/uploads/' . $product->photo) }}"
-                            alt="{{ $locale == 'ar' ? $product->name_ar : ($locale == 'fr' ? $product->name_fr : $product->name_en) }}">
-                    </div>
-                    <div class="menu-item-info">
-                        <div class="menu-item-name">
-                            {{ $locale == 'ar' ? $product->name_ar : ($locale == 'fr' ? $product->name_fr : $product->name_en) }}
-                        </div>
-                        <div class="menu-item-desc">
-                            {{ $locale == 'ar' ? \Str::limit($product->description_ar, 90) : ($locale == 'fr' ? \Str::limit($product->description_fr, 90) : \Str::limit($product->description_en, 90)) }}
-                        </div>
-                        @if ($product->is_featured == 1)
-                            <span class="menu-item-tag">{{ __('front.featured_tag') }}</span>
-                        @endif
-
-                        @if ($product->options->isNotEmpty())
-                            <div class="menu-item-options">
-                                @foreach ($product->options as $opt)
-                                    <span class="menu-item-opt">
-                                        <span
-                                            class="opt-label">{{ $locale == 'ar' ? $opt->name_ar : ($locale == 'fr' ? $opt->name_fr : $opt->name_en) }}</span>
-                                        @if ($opt->price)
-                                            <span class="opt-sep"></span>
-                                            <span class="opt-price">{{ number_format($opt->price, 0) }}
-                                                {{ $locale == 'ar' ? ($opt->price_unit_ar ?? 'درهم') : ($locale == 'fr' ? ($opt->price_unit_fr ?? 'MAD') : ($opt->price_unit_en ?? 'MAD')) }}</span>
-                                        @endif
-                                    </span>
-                                @endforeach
-                            </div>
-                        @elseif($product->price ?? false)
-                            <div class="menu-item-price">
-                                {{ $product->price }}
-                                <small>{{ $locale == 'ar' ? ($product->price_unit_ar ?? 'درهم') : ($locale == 'fr' ? ($product->price_unit_fr ?? 'MAD') : ($product->price_unit_en ?? 'MAD')) }}</small>
-                            </div>
-                        @endif
-                    </div>
-                </a>
-            @empty
-                <div class="menu-empty">{{ __('front.no_products') }}</div>
-            @endforelse
-        </div>
-
-        <div style="text-align:center;margin-top:50px;" class="reveal">
-            <a href="{{ route('menu') }}" class="btn-outline">{{ __('front.view_full_menu') }} ←</a>
-        </div>
-    </section>
-
+  
     {{-- ══════════════════════════════════════════════════════════════
      VIDEOS — dynamic from DB
 ══════════════════════════════════════════════════════════════ --}}
@@ -544,98 +473,7 @@
                 var filterUrl = '{{ route('filter.products') }}';
                 var locale = '{{ $locale }}';
 
-                // ─── Menu AJAX filter ───
-                $('#menuTabs').on('click', '.menu-tab', function() {
-                    $('#menuTabs .menu-tab').removeClass('active');
-                    $(this).addClass('active');
-
-                    var catId = $(this).data('category');
-                    var $panel = $('#menuPanel');
-
-                    $panel.html('<div class="menu-loading">{{ __('front.loading') }}</div>');
-
-                    $.ajax({
-                        url: filterUrl,
-                        type: 'GET',
-                        data: {
-                            category_id: catId
-                        },
-                        success: function(res) {
-                            if (!res.products || !res.products.length) {
-                                $panel.html(
-                                    '<div class="menu-empty">{{ __('front.no_products') }}</div>'
-                                );
-                                return;
-                            }
-
-                            var html = '';
-                            res.products.forEach(function(p) {
-                                var name = locale === 'ar' ? (p.name_ar || '') : (locale === 'fr' ? (p.name_fr || '') : (p.name_en || ''));
-                                var desc = locale === 'ar' ? (p.description_ar || '') : (locale === 'fr' ? (p.description_fr || '') : (p.description_en || ''));
-                                if (desc.length > 90) desc = desc.substring(0, 90) + '...';
-
-                                var tag = p.is_featured == 1 ?
-                                    '<span class="menu-item-tag">{{ __('front.featured_tag') }}</span>' :
-                                    '';
-
-                                // ─── Options badges ───
-                                var optionsHtml = '';
-                                if (p.options_data && p.options_data.length) {
-                                    optionsHtml = '<div class="menu-item-options">';
-                                    p.options_data.forEach(function(opt) {
-                                        var optName = locale === 'ar' ? (opt.name_ar || '') : (locale === 'fr' ? (opt.name_fr || '') : (opt.name_en || ''));
-                                        var optUnit = locale === 'ar' ? (opt.price_unit_ar || 'درهم') : (locale === 'fr' ? (opt.price_unit_fr || 'MAD') : (opt.price_unit_en || 'MAD'));
-                                        // سعر بدون كسور عشرية
-                                        var optPrice = opt.price ?
-                                            '<span class="opt-sep"></span><span class="opt-price">' +
-                                            Math.round(opt.price) + ' ' + optUnit +
-                                            '</span>' :
-                                            '';
-                                        optionsHtml +=
-                                            '<span class="menu-item-opt">' +
-                                            '<span class="opt-label">' + optName +
-                                            '</span>' +
-                                            optPrice +
-                                            '</span>';
-                                    });
-                                    optionsHtml += '</div>';
-                                }
-
-                                // ─── سعر عادي لو ما في options ───
-                                var priceHtml = '';
-                                if (p.price && (!p.options_data || !p.options_data
-                                        .length)) {
-                                    var unit = locale === 'ar' ? (p.price_unit_ar || 'درهم') : (locale === 'fr' ? (p.price_unit_fr || 'MAD') : (p.price_unit_en || 'MAD'));
-                                    priceHtml = '<div class="menu-item-price">' + p.price +
-                                        '<br><small>' + unit + '</small></div>';
-                                }
-
-                                // ─── productBaseUrl يضمن الـ locale prefix ───
-                                html += '<a href="' + productBaseUrl + '/' + p.id +
-                                    '" class="menu-item">' +
-                                    '<div class="menu-item-img">' +
-                                    '<img src="/assets/admin/uploads/' + p.photo +
-                                    '" alt="' + name + '">' +
-                                    '</div>' +
-                                    '<div class="menu-item-info">' +
-                                    '<div class="menu-item-name">' + name + '</div>' +
-                                    '<div class="menu-item-desc">' + desc + '</div>' +
-                                    tag +
-                                    optionsHtml +
-                                    '</div>' +
-                                    priceHtml +
-                                    '</a>';
-                            });
-
-                            $panel.html(html);
-                        },
-                        error: function() {
-                            $panel.html(
-                                '<div class="menu-empty">{{ __('front.error_loading') }}</div>'
-                            );
-                        }
-                    });
-                });
+                
 
                 // ─────────────────────────────────────────────
                 // Working Hours — highlight today's card

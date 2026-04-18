@@ -625,7 +625,7 @@
     .section-title {
       font-family: 'Amiri', serif;
       font-size: clamp(2.3rem, 4.5vw, 3.6rem);
-      color: var(--cream);
+      color: #2c1f0e;
       line-height: 1.2;
       margin-bottom: 16px
     }
@@ -636,11 +636,11 @@
 
     .section-desc {
       font-size: 1rem;
-      color: rgba(245, 237, 216, .6);
+      color: #7a6a55;
       max-width: 560px;
       margin: 0 auto;
       line-height: 1.9;
-      font-weight: 300
+      font-weight: 400
     }
 
     .ornament-divider {
@@ -675,7 +675,7 @@
 
     /* ABOUT */
     #about {
-      background: linear-gradient(180deg, #060e0b 0%, #081910 50%, #060e0b 100%);
+      background: #fff;
       position: relative;
       overflow: hidden
     }
@@ -684,7 +684,7 @@
       position: absolute;
       font-family: 'Cinzel Decorative', serif;
       font-size: 20vw;
-      color: rgba(206, 173, 106, .02);
+      color: rgba(206, 173, 106, .06);
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -757,25 +757,26 @@
       left: -28px;
       width: 135px;
       height: 135px;
-      background: var(--dark-brown);
-      border: 1px solid var(--gold-dark);
+      background: linear-gradient(135deg, #7a5c1e, #a08040);
+      border: 1px solid var(--gold);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 4px
+      gap: 4px;
+      box-shadow: 0 8px 32px rgba(150,120,60,.3)
     }
 
     .about-accent-num {
       font-family: 'Cinzel Decorative', serif;
       font-size: 2.4rem;
-      color: var(--gold);
+      color: #fff;
       line-height: 1
     }
 
     .about-accent-text {
       font-size: .78rem;
-      color: var(--cream-dark);
+      color: rgba(255,255,255,.85);
       text-align: center;
       letter-spacing: 1px
     }
@@ -783,7 +784,7 @@
     .about-text h3 {
       font-family: 'Amiri', serif;
       font-size: 2.3rem;
-      color: var(--gold);
+      color: #7a5c1e;
       margin-bottom: 18px;
       line-height: 1.3
     }
@@ -791,9 +792,9 @@
     .about-text p {
       font-size: 1rem;
       line-height: 2;
-      color: rgba(245, 237, 216, .72);
+      color: #6a5840;
       margin-bottom: 18px;
-      font-weight: 300
+      font-weight: 400
     }
 
     .about-features {
@@ -808,15 +809,17 @@
       align-items: flex-start;
       gap: 14px;
       padding: 18px;
-      border: 1px solid rgba(206, 173, 106, .14);
-      background: rgba(7, 76, 58, .1);
-      transition: all .3s
+      border: 1px solid rgba(206, 173, 106, .25);
+      background: #fffbf0;
+      transition: all .3s;
+      border-radius: 4px
     }
 
     .about-feat:hover {
-      border-color: rgba(206, 173, 106, .38);
-      background: rgba(7, 76, 58, .2);
-      transform: translateY(-3px)
+      border-color: rgba(206, 173, 106, .55);
+      background: #fdf3d0;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(206,173,106,.15)
     }
 
     .about-feat-icon {
@@ -826,20 +829,20 @@
 
     .about-feat-title {
       font-weight: 700;
-      color: var(--gold-light);
+      color: #7a5c1e;
       font-size: .9rem;
       margin-bottom: 3px
     }
 
     .about-feat-desc {
       font-size: .78rem;
-      color: rgba(245, 237, 216, .5);
+      color: #7a6a55;
       line-height: 1.6
     }
 
     /* BEST */
     #best {
-      background: linear-gradient(180deg, #040c08 0%, #060e0b 100%);
+      background: #f9f6f0;
       overflow: hidden
     }
 
@@ -876,18 +879,20 @@
     .best-card {
       width: 290px;
       flex-shrink: 0;
-      background: linear-gradient(135deg, rgba(7, 76, 58, .14) 0%, rgba(4, 12, 8, .8) 100%);
-      border: 1px solid rgba(206, 173, 106, .14);
+      background: #fff;
+      border: 1px solid rgba(206, 173, 106, .22);
+      border-radius: 6px;
       position: relative;
       overflow: hidden;
       transition: all .4s;
-      cursor: pointer
+      cursor: pointer;
+      box-shadow: 0 2px 12px rgba(150,120,60,.08)
     }
 
     .best-card:hover {
-      border-color: rgba(206, 173, 106, .5);
+      border-color: rgba(206, 173, 106, .6);
       transform: translateY(-8px);
-      box-shadow: 0 20px 60px rgba(206, 173, 106, .13)
+      box-shadow: 0 20px 50px rgba(206, 173, 106, .2)
     }
 
     .best-card-img {
@@ -927,13 +932,14 @@
     .best-card-name {
       font-family: 'Amiri', serif;
       font-size: 1.22rem;
-      color: var(--cream);
-      margin-bottom: 5px
+      color: #2c1f0e;
+      margin-bottom: 5px;
+      font-weight: 700
     }
 
     .best-card-desc {
       font-size: .78rem;
-      color: rgba(245, 237, 216, .5);
+      color: #7a6a55;
       line-height: 1.7;
       margin-bottom: 14px
     }
@@ -942,6 +948,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center
+    }
+
+    .best-card-price {
+      font-family: 'Cinzel Decorative', serif;
+      color: #7a5c1e;
+      font-size: .85rem;
+      font-weight: 700
     }
 
     .best-card-stars {
@@ -1084,7 +1097,7 @@
 
     /* VIDEOS */
     #videos {
-      background: #040c08;
+      background: #fff;
       position: relative;
       overflow: hidden
     }
@@ -1128,16 +1141,16 @@
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      background: rgba(4,12,8,.7);
+      background: rgba(255,251,240,.92);
       border: 1.5px solid var(--gold);
-      color: var(--gold);
+      color: #7a5c1e;
       font-size: 1.1rem;
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 10;
       transition: all .3s;
-      backdrop-filter: blur(6px)
+      box-shadow: 0 4px 16px rgba(150,120,60,.2)
     }
 
     .videos-slider-btn:hover {
@@ -1257,22 +1270,19 @@
 
     /* HOURS */
     #hours {
-      background: linear-gradient(135deg, var(--dark-green) 0%, #051f14 50%, var(--dark-brown) 100%);
+      background: #f9f6f0;
       position: relative;
       overflow: hidden
     }
 
     #hours::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(4, 12, 8, .72)
+      content: none
     }
 
     .hours-pattern {
       position: absolute;
       inset: 0;
-      background-image: repeating-linear-gradient(60deg, transparent, transparent 20px, rgba(206, 173, 106, .04) 20px, rgba(206, 173, 106, .04) 21px), repeating-linear-gradient(-60deg, transparent, transparent 20px, rgba(206, 173, 106, .04) 20px, rgba(206, 173, 106, .04) 21px)
+      background-image: repeating-linear-gradient(60deg, transparent, transparent 20px, rgba(206, 173, 106, .06) 20px, rgba(206, 173, 106, .06) 21px), repeating-linear-gradient(-60deg, transparent, transparent 20px, rgba(206, 173, 106, .06) 20px, rgba(206, 173, 106, .06) 21px)
     }
 
     .hours-content {
@@ -1285,24 +1295,25 @@
     .hours-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      margin-top: 52px;
-      border: 1px solid rgba(206, 173, 106, .18)
+      gap: 16px;
+      margin-top: 52px
     }
 
     .hour-card {
       padding: 36px 26px;
       text-align: center;
-      border: 1px solid rgba(206, 173, 106, .08);
-      background: rgba(4, 12, 8, .5);
-      backdrop-filter: blur(10px);
+      border: 1px solid rgba(206, 173, 106, .25);
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 2px 12px rgba(150,120,60,.07);
       transition: all .3s;
       position: relative
     }
 
     .hour-card.today {
-      background: rgba(206, 173, 106, .1);
-      border-color: rgba(206, 173, 106, .38)
+      background: linear-gradient(135deg, #fffbf0, #fdf3d0);
+      border-color: rgba(206, 173, 106, .6);
+      box-shadow: 0 6px 24px rgba(206,173,106,.2)
     }
 
     .hour-card.today::before {
@@ -1312,34 +1323,38 @@
       left: 50%;
       transform: translateX(-50%);
       background: var(--gold);
-      color: var(--dark-brown);
+      color: #fff;
       font-size: .62rem;
       font-weight: 700;
       padding: 3px 12px;
-      letter-spacing: 2px
+      letter-spacing: 2px;
+      border-radius: 0 0 4px 4px
     }
 
     .hour-card:hover {
-      background: rgba(7, 76, 58, .18)
+      border-color: rgba(206,173,106,.5);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(206,173,106,.15)
     }
 
     .hour-day {
       font-family: 'Amiri', serif;
       font-size: 1.12rem;
-      color: var(--gold);
-      margin-bottom: 8px
+      color: #7a5c1e;
+      margin-bottom: 8px;
+      font-weight: 700
     }
 
     .hour-time {
       font-family: 'Cinzel Decorative', serif;
       font-size: .86rem;
-      color: var(--cream);
+      color: #2c1f0e;
       letter-spacing: 1px
     }
 
     .hour-time-sub {
       font-size: .7rem;
-      color: rgba(245, 237, 216, .38);
+      color: #a08050;
       margin-top: 4px;
       letter-spacing: 1px
     }
@@ -1348,22 +1363,24 @@
       text-align: center;
       margin-top: 36px;
       padding: 20px;
-      border: 1px solid rgba(206, 173, 106, .14);
-      background: rgba(4, 12, 8, .4)
+      border: 1px solid rgba(206, 173, 106, .3);
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(150,120,60,.06)
     }
 
     .hours-note p {
-      color: rgba(245, 237, 216, .6);
+      color: #6a5840;
       font-size: .9rem
     }
 
     .hours-note strong {
-      color: var(--gold)
+      color: #7a5c1e
     }
 
     /* CONTACT */
     #contact {
-      background: #060e0b;
+      background: #f9f6f0;
       overflow: hidden
     }
 
@@ -1379,7 +1396,7 @@
     .contact-info h3 {
       font-family: 'Amiri', serif;
       font-size: 1.85rem;
-      color: var(--gold);
+      color: #2c1f0e;
       margin-bottom: 28px;
       line-height: 1.5
     }
@@ -1390,7 +1407,7 @@
       gap: 15px;
       margin-bottom: 24px;
       padding-bottom: 24px;
-      border-bottom: 1px solid rgba(206, 173, 106, .1)
+      border-bottom: 1px solid rgba(206, 173, 106, .25)
     }
 
     .contact-detail:last-of-type {
@@ -1400,14 +1417,15 @@
     .contact-icon {
       width: 48px;
       height: 48px;
-      border: 1px solid rgba(206, 173, 106, .28);
+      border: 1px solid rgba(206, 173, 106, .4);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      background: rgba(7, 76, 58, .1);
-      color: var(--gold);
-      font-size: 1.05rem
+      background: #fffbf0;
+      color: #7a5c1e;
+      font-size: 1.05rem;
+      border-radius: 4px
     }
 
     .contact-detail-title {
@@ -1415,13 +1433,14 @@
       letter-spacing: 3px;
       color: var(--gold);
       text-transform: uppercase;
-      margin-bottom: 5px
+      margin-bottom: 5px;
+      font-weight: 700
     }
 
     .contact-detail-value {
       font-size: .95rem;
-      color: var(--cream);
-      font-weight: 300;
+      color: #4a3b28;
+      font-weight: 400;
       line-height: 1.7
     }
 
@@ -1451,9 +1470,11 @@
     }
 
     .contact-form-box {
-      background: rgba(7, 76, 58, .06);
-      border: 1px solid rgba(206, 173, 106, .11);
-      padding: 44px
+      background: #fff;
+      border: 1px solid rgba(206, 173, 106, .28);
+      padding: 44px;
+      border-radius: 6px;
+      box-shadow: 0 4px 24px rgba(150,120,60,.1)
     }
 
     .contact-form-title {
@@ -1483,22 +1504,23 @@
     .form-group select,
     .form-group textarea {
       width: 100%;
-      background: rgba(4, 12, 8, .6);
-      border: 1px solid rgba(206, 173, 106, .14);
-      color: var(--cream);
+      background: #faf8f4;
+      border: 1px solid rgba(206, 173, 106, .3);
+      color: #2c1f0e;
       padding: 13px 17px;
       font-family: 'Tajawal', sans-serif;
       font-size: .93rem;
       outline: none;
-      transition: border-color .3s;
-      direction: rtl
+      transition: border-color .3s, background .3s;
+      direction: rtl;
+      border-radius: 3px
     }
 
     .form-group input:focus,
     .form-group select:focus,
     .form-group textarea:focus {
       border-color: var(--gold);
-      background: rgba(7, 76, 58, .12)
+      background: #fffbf0
     }
 
     .form-group textarea {
@@ -1520,12 +1542,13 @@
     }
 
     .alert-success-saba {
-      background: rgba(7, 76, 58, .3);
-      border: 1px solid rgba(206, 173, 106, .4);
-      color: var(--gold);
+      background: #fffbf0;
+      border: 1px solid rgba(206, 173, 106, .5);
+      color: #7a5c1e;
       padding: 14px 20px;
       margin-bottom: 22px;
-      font-size: .9rem
+      font-size: .9rem;
+      border-radius: 4px
     }
 
     /* ── MENU PAGE HERO ── */

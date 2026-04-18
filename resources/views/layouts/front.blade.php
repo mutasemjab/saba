@@ -6,13 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>مطاعم سبأ | Sab'a Restaurants</title>
+    {{-- Critical CSS first --}}
+    <link rel="stylesheet" href="{{ asset('assets_front/CSS/main_styles.css') }}">
+
+    {{-- Fonts: async, non-blocking --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel+Decorative:wght@400;700;900&family=Tajawal:wght@300;400;500;700;900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('assets_front/CSS/main_styles.css') }}">
+    <link rel="preload" as="style" onload="this.rel='stylesheet'"
+        href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel+Decorative:wght@400;700;900&family=Tajawal:wght@300;400;500;700;900&display=swap">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel+Decorative:wght@400;700;900&family=Tajawal:wght@300;400;500;700;900&display=swap">
+    </noscript>
+
+    {{-- Font Awesome: async, non-blocking --}}
+    <link rel="preload" as="style" onload="this.rel='stylesheet'"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    </noscript>
 
     @stack('styles')
 </head>
@@ -21,7 +32,7 @@
 
     {{-- PRELOADER --}}
     <div id="preloader">
-        @php $settingGlobal = $setting ?? \App\Models\Setting::first(); @endphp
+        @php $settingGlobal = $setting ?? cache()->remember('site_setting', 3600, fn() => \App\Models\Setting::first()); @endphp
         <img src="{{ $settingGlobal && $settingGlobal->logo
             ? asset('assets/admin/uploads/' . $settingGlobal->logo)
             : asset('assets_front/images/main_logo.png') }}"
@@ -36,11 +47,11 @@
     @yield('content')
     <!-- Footer -->
     @include('user.includes.footer')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
     <script>
-        // Preloader
+        // Preloader — hide once page fully loads (max 400ms extra)
         window.addEventListener('load', () => setTimeout(() => document.getElementById('preloader').classList.add('done'),
-            2000));
+            400));
 
         // Navbar
         window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', window

@@ -2,7 +2,7 @@
     NAVBAR
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --}}
 @php
-    $settingNav = $setting ?? \App\Models\Setting::first();
+    $settingNav = $setting ?? cache()->remember('site_setting', 3600, fn() => \App\Models\Setting::first());
     $current    = LaravelLocalization::getCurrentLocale();
     $target     = $current === 'ar' ? 'en' : ($current === 'en' ? 'fr' : 'ar');
     $supported  = LaravelLocalization::getSupportedLocales();

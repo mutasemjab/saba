@@ -66,7 +66,8 @@
             <a href="{{ route('product.show', $p->id) }}" class="prod-card">
                 <div class="prod-card-img">
                     <img src="{{ asset('assets/admin/uploads/'.$p->photo) }}"
-                         alt="{{ $locale==='ar' ? $p->name_ar : ($locale==='fr' ? $p->name_fr : $p->name_en) }}">
+                         alt="{{ $locale==='ar' ? $p->name_ar : ($locale==='fr' ? $p->name_fr : $p->name_en) }}"
+                         loading="lazy">
                     @if($p->is_featured==1)
                         <div class="prod-card-badge">{{ __('front.featured_tag') }}</div>
                     @endif

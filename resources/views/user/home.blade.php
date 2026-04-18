@@ -89,7 +89,8 @@
                                 style="text-decoration:none;">
                                 <div class="best-card-img">
                                     <img src="{{ asset('assets/admin/uploads/' . $fp->photo) }}"
-                                        alt="{{ $locale == 'ar' ? $fp->name_ar : ($locale == 'fr' ? $fp->name_fr : $fp->name_en) }}">
+                                        alt="{{ $locale == 'ar' ? $fp->name_ar : ($locale == 'fr' ? $fp->name_fr : $fp->name_en) }}"
+                                        loading="lazy">
                                     <div class="best-badge">{{ __('front.most_ordered') }}</div>
                                 </div>
                                 <div class="best-card-body">
@@ -150,7 +151,8 @@
                                 @if ($video->video_url) onclick="openVideo('{{ route('stream.video', $video->video_url) }}')" @endif>
                                 <div class="video-thumb">
                                     <img src="{{ asset('assets/admin/uploads/' . $video->thumbnail) }}"
-                                        alt="{{ $locale == 'ar' ? $video->title_ar : ($locale == 'fr' ? $video->title_fr : $video->title_en) }}">
+                                        alt="{{ $locale == 'ar' ? $video->title_ar : ($locale == 'fr' ? $video->title_fr : $video->title_en) }}"
+                                        loading="lazy">
                                     <div class="video-dim"></div>
                                     <div class="video-play-btn"><i class="fas fa-play"></i></div>
                                     <div class="video-overlay">
@@ -306,7 +308,8 @@
                     <div class="about-img-main">
                         <img src="{{ asset('assets/admin/uploads/' . ($about->photo ?? '')) }}"
                             onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80'"
-                            alt="{{ __('front.about') }}">
+                            alt="{{ __('front.about') }}"
+                            loading="lazy">
                     </div>
                     <div class="about-corner tl"></div>
                     <div class="about-corner br"></div>

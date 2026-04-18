@@ -35,7 +35,7 @@ return [
     'feat_chefs'        => 'Expert Chefs',
     'feat_chefs_desc'   => 'The finest Yemeni & Gulf culinary talent',
     'feat_ambiance'     => 'Authentic Ambiance',
-    'feat_ambiance_desc'=> 'Elegant Arabic heritage décor',
+    'feat_ambiance_desc' => 'Elegant Arabic heritage décor',
     'feat_best'         => 'Best in Morocco',
     'feat_best_desc'    => 'Award-winning Arabic cuisine',
 
@@ -87,7 +87,7 @@ return [
 
     // ── Contact
     'contact_title'     => 'We\'re',
-    'contact_title_span'=> 'Here for You',
+    'contact_title_span' => 'Here for You',
     'contact_heading'   => 'Looking for an unforgettable dining experience?',
     'location'          => 'Location',
     'call'              => 'Phone',
@@ -97,9 +97,9 @@ return [
     'name_placeholder'  => 'Enter your name',
     'phone'             => 'Phone Number',
     'subject'           => 'Subject',
-    'subject_placeholder'=> 'Subject of your message',
+    'subject_placeholder' => 'Subject of your message',
     'message'           => 'Message',
-    'message_placeholder'=> 'Any details or special requests...',
+    'message_placeholder' => 'Any details or special requests...',
     'send'              => 'Send',
     'message_sent'      => 'Your message was sent! We\'ll get back to you soon.',
     'contact_us'        => 'Contact Us',
@@ -116,5 +116,27 @@ return [
     'map' => 'Map',
     'open_map' => 'Open map',
     'view_full_menu' => 'View Menu',
+
+    // ── Menu page
+    'view_details'          => 'Details',
+    'menu_page_title'       => 'Menu',
+    'menu_page_title_span'  => 'full',
+    'categories'            => 'Categories',
+    'dishes'                => 'Dishes',
+    'item'                  => 'Item',
+
+    // ── Product page
+    'price'                 => 'Price',
+    'category'              => 'Category',
+    'status'                => 'Status',
+    'order_now'             => 'Order Now',
+    'more_from_category'    => 'More from this category',
+    'from'                  => 'Starting from',
+
+    // ── Similar
+    'similar_label'         => 'You may also like',
+    'similar_title'         => 'Similar',
+    'similar_title_span'    => 'Dishes',
+    'similar_desc'          => 'Discover more dishes from our menu',
 
 ];

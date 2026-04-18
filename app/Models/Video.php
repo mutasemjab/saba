@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Video extends Model
 {
-    protected $fillable = ['title_ar','title_en','thumbnail','video_url','duration','is_active','sort_order'];
+    protected $fillable = ['title_ar','title_en','title_fr','thumbnail','video_url','duration','is_active','sort_order'];
 
     public function scopeActive($q)
     {

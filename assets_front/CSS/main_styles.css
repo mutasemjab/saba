@@ -1894,7 +1894,8 @@
 
       .menu-page{grid-template-columns:1fr;padding:40px 20px;gap:24px}
       .sidebar-list{flex-direction:row;flex-wrap:wrap;gap:6px}
-      .sidebar-list a{padding:8px 14px;font-size:.8rem}
+      .sidebar-list li{flex:1 1 calc(33.333% - 6px);min-width:80px}
+      .sidebar-list a{padding:9px 8px;font-size:.8rem;justify-content:center;text-align:center;width:100%}
       .sidebar-title{display:none}
 
       .product-wrap{padding:90px 24px 60px}

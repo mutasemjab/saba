@@ -42,7 +42,6 @@
             <li>
                 <a href="{{ route('menu', ['category_id'=>$cat->id]) }}" class="{{ $categoryId==$cat->id ? 'active' : '' }}">
                     {{ $locale==='ar' ? $cat->name_ar : ($locale==='fr' ? $cat->name_fr : $cat->name_en) }}
-                    <span class="cat-count">{{ $cat->products_count }}</span>
                 </a>
             </li>
             @endforeach

@@ -212,7 +212,7 @@
 
         <iframe id="videoFrame" width="900" height="506" frameborder="0" allowfullscreen
             style="max-width:88vw;max-height:75vh;border:1px solid rgba(206,173,106,.25);display:none;"></iframe>
-        <video id="videoPlayer" width="900" height="506" controls
+        <video id="videoPlayer" width="900" height="506" controls playsinline webkit-playsinline
             style="max-width:88vw;max-height:75vh;border:1px solid rgba(206,173,106,.25);display:none;"></video>
 
         {{-- Dots --}}
@@ -621,7 +621,11 @@
                 player.pause(); player.src = '';
             } else {
                 frame.src = ''; frame.style.display = 'none';
-                player.src = url; player.style.display = 'block'; player.play();
+                player.style.display = 'block';
+                player.src = url;
+                player.load();
+                var p = player.play();
+                if (p && typeof p.catch === 'function') p.catch(function() {});
             }
         }
 

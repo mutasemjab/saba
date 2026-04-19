@@ -617,13 +617,13 @@
         }
 
         function openVideo(url) {
-            // find index in collected urls
             var idx = modalUrls.indexOf(url);
             if (idx !== -1) modalIdx = idx;
-            loadVideoInModal(url);
-            updateModalDots();
+            // Show modal BEFORE play() — iOS WebKit refuses to play hidden elements
             document.getElementById('videoModal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
+            updateModalDots();
+            loadVideoInModal(url);
         }
 
         function modalGoTo(n) {

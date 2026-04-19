@@ -148,7 +148,14 @@
                     @if ($videos->isNotEmpty())
                         @foreach ($videos as $video)
                             <div class="video-card"
-                                @if ($video->video_url) onclick="openVideo('{{ route('stream.video', $video->video_url) }}')" @endif>
+                                @if ($video->video_url)
+                                    @php
+                                        $vUrl = \Str::startsWith($video->video_url, 'http')
+                                            ? $video->video_url
+                                            : asset('assets/admin/uploads/' . $video->video_url);
+                                    @endphp
+                                    onclick="openVideo('{{ $vUrl }}')"
+                                @endif>
                                 <div class="video-thumb">
                                     <img src="{{ asset('assets/admin/uploads/' . $video->thumbnail) }}"
                                         alt="{{ $locale == 'ar' ? $video->title_ar : ($locale == 'fr' ? $video->title_fr : $video->title_en) }}"

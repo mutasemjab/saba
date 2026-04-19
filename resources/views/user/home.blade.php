@@ -152,7 +152,7 @@
                                     @php
                                         $vUrl = \Str::startsWith($video->video_url, 'http')
                                             ? $video->video_url
-                                            : asset('assets/admin/uploads/' . $video->video_url);
+                                            : '/assets/admin/uploads/' . $video->video_url;
                                     @endphp
                                     onclick="openVideo('{{ $vUrl }}')"
                                 @endif>
@@ -218,6 +218,7 @@
         </button>
 
         <iframe id="videoFrame" width="900" height="506" frameborder="0" allowfullscreen
+            allow="autoplay; encrypted-media; picture-in-picture"
             style="max-width:88vw;max-height:75vh;border:1px solid rgba(206,173,106,.25);display:none;"></iframe>
         <video id="videoPlayer" width="900" height="506" controls playsinline webkit-playsinline
             style="max-width:88vw;max-height:75vh;border:1px solid rgba(206,173,106,.25);display:none;"></video>
@@ -630,7 +631,6 @@
                 frame.src = ''; frame.style.display = 'none';
                 player.style.display = 'block';
                 player.src = url;
-                player.load();
                 var p = player.play();
                 if (p && typeof p.catch === 'function') p.catch(function() {});
             }

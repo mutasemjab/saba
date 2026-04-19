@@ -236,13 +236,20 @@
                 </div>
             </div>
 
-            <div class="hours-grid">
+            <div class="hours-grid{{ $workingHours->count() === 1 ? ' hours-grid--single' : '' }}">
                 @if ($workingHours->isNotEmpty())
                     {{-- ✅ Dynamic from DB --}}
+                    @php $isSingle = $workingHours->count() === 1; @endphp
                     @foreach ($workingHours as $wh)
                         <div class="hour-card {{ $wh->is_ramadan ? 'hour-ramadan' : '' }}"
                             data-day="{{ $wh->day_index }}"
-                            @if ($wh->is_ramadan) style="background:rgba(206,173,106,0.04);" @endif>
+                            @if ($wh->is_ramadan && !$isSingle) style="background:rgba(206,173,106,0.04);" @endif>
+                            @if ($isSingle)
+                                <div class="hour-card-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="hour-card-body">
+                            @endif
                             <div class="hour-day">
                                 {{ $locale == 'ar' ? $wh->day_ar : ($locale == 'fr' ? $wh->day_fr : $wh->day_en) }}
                             </div>
@@ -256,6 +263,9 @@
                             @if ($wh->note_ar || $wh->note_en)
                                 <div class="hour-time-sub">
                                     {{ $locale == 'ar' ? $wh->note_ar : ($locale == 'fr' ? $wh->note_fr : $wh->note_en) }}
+                                </div>
+                            @endif
+                            @if ($isSingle)
                                 </div>
                             @endif
                         </div>
@@ -518,14 +528,36 @@
         window.addEventListener('resize', function() { videoGoTo(videoIdx); });
         window.addEventListener('load',   function() { videoGoTo(0); });
 
-        // slider swipe
+        // slider swipe + card tap fix
         (function() {
-            var track = document.getElementById('videosTrack'), sx = 0;
+            var track = document.getElementById('videosTrack'), sx = 0, sy = 0;
             if (!track) return;
-            track.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; }, {passive:true});
+            track.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, {passive:true});
             track.addEventListener('touchend',   function(e){
                 var diff = sx - e.changedTouches[0].clientX;
                 if (Math.abs(diff) > 40) videoSlide(diff > 0 ? 1 : -1);
+            });
+        })();
+
+        // Mobile tap fix: fire openVideo on short tap on video cards
+        (function() {
+            var tapX, tapY;
+            document.querySelectorAll('#videosTrack .video-card').forEach(function(card) {
+                card.addEventListener('touchstart', function(e) {
+                    tapX = e.touches[0].clientX;
+                    tapY = e.touches[0].clientY;
+                }, {passive: true});
+                card.addEventListener('touchend', function(e) {
+                    var dx = Math.abs(e.changedTouches[0].clientX - tapX);
+                    var dy = Math.abs(e.changedTouches[0].clientY - tapY);
+                    if (dx < 12 && dy < 12) {
+                        var attr = card.getAttribute('onclick');
+                        if (attr) {
+                            var m = attr.match(/openVideo\('([^']+)'\)/);
+                            if (m) { e.preventDefault(); openVideo(m[1]); }
+                        }
+                    }
+                });
             });
         })();
 

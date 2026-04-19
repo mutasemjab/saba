@@ -1124,8 +1124,9 @@
   cursor: pointer;
   flex-shrink: 0;
   aspect-ratio: 16/9;
-  width: 100%;  /* ← ADD THIS */
-  min-width: 100%;  /* ← ADD THIS */
+  width: 100%;
+  min-width: 100%;
+  touch-action: manipulation;
 }
 
     .video-thumb {
@@ -1296,6 +1297,103 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 16px;
       margin-top: 52px
+    }
+
+    /* ── Single-record layout ── */
+    .hours-grid--single {
+      grid-template-columns: 1fr;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto
+    }
+
+    .hours-grid--single .hour-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 0 40px;
+      padding: 0;
+      text-align: left;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #fffdf7 0%, #fff9ec 100%);
+      box-shadow: 0 8px 40px rgba(150,120,60,.13);
+      overflow: hidden;
+      position: relative
+    }
+
+    [dir="rtl"] .hours-grid--single .hour-card {
+      text-align: right
+    }
+
+    .hours-grid--single .hour-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      border: 1.5px solid rgba(206,173,106,.4);
+      pointer-events: none
+    }
+
+    /* gold accent stripe on the left */
+    .hours-grid--single .hour-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 5px;
+      background: linear-gradient(180deg, #c9a84c, #e8c96a, #c9a84c);
+      border-radius: 16px 0 0 16px
+    }
+
+    [dir="rtl"] .hours-grid--single .hour-card::before {
+      left: auto; right: 0;
+      border-radius: 0 16px 16px 0
+    }
+
+    /* clock icon column */
+    .hours-grid--single .hour-card-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 130px;
+      align-self: stretch;
+      background: linear-gradient(160deg, #f5e9c8 0%, #ead99a 100%);
+      font-size: 2.6rem;
+      color: #7a5c1e;
+      flex-shrink: 0
+    }
+
+    /* text column */
+    .hours-grid--single .hour-card-body {
+      padding: 36px 40px 36px 0
+    }
+
+    [dir="rtl"] .hours-grid--single .hour-card-body {
+      padding: 36px 0 36px 40px
+    }
+
+    .hours-grid--single .hour-day {
+      font-size: 1.45rem;
+      margin-bottom: 10px
+    }
+
+    .hours-grid--single .hour-time {
+      font-size: 2rem;
+      font-family: 'Cinzel Decorative', serif;
+      color: #7a5c1e;
+      letter-spacing: 2px;
+      line-height: 1.2
+    }
+
+    .hours-grid--single .hour-time-sub {
+      font-size: .82rem;
+      margin-top: 8px;
+      letter-spacing: 1.5px
+    }
+
+    .hours-grid--single .hour-card.today {
+      background: linear-gradient(135deg, #fffbf0 0%, #fdf3d0 100%);
+      box-shadow: 0 10px 48px rgba(206,173,106,.28)
     }
 
     .hour-card {
@@ -1957,6 +2055,27 @@
 
       .hours-grid {
         grid-template-columns: 1fr
+      }
+
+      .hours-grid--single .hour-card {
+        grid-template-columns: 90px 1fr
+      }
+
+      .hours-grid--single .hour-card-icon {
+        width: 90px;
+        font-size: 2rem
+      }
+
+      .hours-grid--single .hour-card-body {
+        padding: 24px 20px 24px 0
+      }
+
+      [dir="rtl"] .hours-grid--single .hour-card-body {
+        padding: 24px 0 24px 20px
+      }
+
+      .hours-grid--single .hour-time {
+        font-size: 1.4rem
       }
 
       .form-row {

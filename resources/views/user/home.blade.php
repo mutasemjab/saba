@@ -147,15 +147,14 @@
                 <div class="videos-slider-track" id="videosTrack">
                     @if ($videos->isNotEmpty())
                         @foreach ($videos as $video)
-                            <div class="video-card"
-                                @if ($video->video_url)
-                                    @php
-                                        $vUrl = \Str::startsWith($video->video_url, 'http')
-                                            ? $video->video_url
-                                            : '/assets/admin/uploads/' . $video->video_url;
-                                    @endphp
-                                    onclick="openVideo('{{ $vUrl }}')"
-                                @endif>
+                            @php
+                                $vUrl = $video->video_url
+                                    ? (\Str::startsWith($video->video_url, 'http')
+                                        ? $video->video_url
+                                        : '/assets/admin/uploads/' . $video->video_url)
+                                    : '';
+                            @endphp
+                            <div class="video-card" data-video="{{ $vUrl }}">
                                 <div class="video-thumb">
                                     <img src="{{ asset('assets/admin/uploads/' . $video->thumbnail) }}"
                                         alt="{{ $locale == 'ar' ? $video->title_ar : ($locale == 'fr' ? $video->title_fr : $video->title_en) }}"
@@ -536,48 +535,29 @@
         window.addEventListener('resize', function() { videoGoTo(videoIdx); });
         window.addEventListener('load',   function() { videoGoTo(0); });
 
-        // slider swipe + card tap fix
+        // slider swipe
         (function() {
-            var track = document.getElementById('videosTrack'), sx = 0, sy = 0;
+            var track = document.getElementById('videosTrack'), sx = 0;
             if (!track) return;
-            track.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, {passive:true});
+            track.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; }, {passive:true});
             track.addEventListener('touchend',   function(e){
                 var diff = sx - e.changedTouches[0].clientX;
                 if (Math.abs(diff) > 40) videoSlide(diff > 0 ? 1 : -1);
             });
         })();
 
-        // Mobile tap fix: fire openVideo on short tap on video cards
-        (function() {
-            var tapX, tapY;
-            document.querySelectorAll('#videosTrack .video-card').forEach(function(card) {
-                card.addEventListener('touchstart', function(e) {
-                    tapX = e.touches[0].clientX;
-                    tapY = e.touches[0].clientY;
-                }, {passive: true});
-                card.addEventListener('touchend', function(e) {
-                    var dx = Math.abs(e.changedTouches[0].clientX - tapX);
-                    var dy = Math.abs(e.changedTouches[0].clientY - tapY);
-                    if (dx < 12 && dy < 12) {
-                        var attr = card.getAttribute('onclick');
-                        if (attr) {
-                            var m = attr.match(/openVideo\('([^']+)'\)/);
-                            if (m) { e.preventDefault(); openVideo(m[1]); }
-                        }
-                    }
-                });
-            });
-        })();
-
         // ── Video modal ─────────────────────────────────────────────
-        var modalUrls  = [];   // filled when videos are opened
-        var modalIdx   = 0;
+        var modalUrls = [];
+        var modalIdx  = 0;
 
-        // Collect all video URLs from cards on page load
+        // Collect URLs from data-video + bind click listeners
         window.addEventListener('load', function() {
-            document.querySelectorAll('#videosTrack .video-card[onclick]').forEach(function(card) {
-                var m = card.getAttribute('onclick').match(/openVideo\('([^']+)'\)/);
-                if (m) modalUrls.push(m[1]);
+            document.querySelectorAll('#videosTrack .video-card[data-video]').forEach(function(card) {
+                var url = card.getAttribute('data-video');
+                if (url) {
+                    modalUrls.push(url);
+                    card.addEventListener('click', function() { openVideo(url); });
+                }
             });
             buildModalDots();
         });

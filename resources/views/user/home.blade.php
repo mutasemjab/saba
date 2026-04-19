@@ -201,29 +201,16 @@
     </section>
 
     {{-- Video Modal --}}
-    <div id="videoModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:9000;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
-
-        {{-- Close --}}
-        <button onclick="closeVideo()" style="position:absolute;top:18px;right:22px;background:none;border:1px solid rgba(206,173,106,.4);color:var(--gold);font-size:1.4rem;width:38px;height:38px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;border-radius:2px;">✕</button>
-
-        {{-- Prev --}}
-        <button id="modalPrev" onclick="modalNav(-1)" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);background:rgba(255,251,240,.1);border:1.5px solid rgba(206,173,106,.5);color:var(--gold);width:46px;height:46px;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;z-index:10;">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-
-        {{-- Next --}}
-        <button id="modalNext" onclick="modalNav(1)" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:rgba(255,251,240,.1);border:1.5px solid rgba(206,173,106,.5);color:var(--gold);width:46px;height:46px;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;z-index:10;">
-            <i class="fas fa-chevron-right"></i>
-        </button>
-
-        <iframe id="videoFrame" width="900" height="506" frameborder="0" allowfullscreen
-            allow="autoplay; encrypted-media; picture-in-picture"
-            style="max-width:88vw;max-height:75vh;border:1px solid rgba(206,173,106,.25);display:none;"></iframe>
-        <video id="videoPlayer" width="900" height="506" controls playsinline webkit-playsinline
-            style="max-width:88vw;max-height:75vh;border:1px solid rgba(206,173,106,.25);display:none;"></video>
-
-        {{-- Dots --}}
-        <div id="modalDots" style="display:flex;gap:8px;margin-top:4px;"></div>
+    <div id="videoModal" class="vmodal">
+        <button class="vmodal-close" onclick="closeVideo()">✕</button>
+        <button id="modalPrev" class="vmodal-nav vmodal-prev" onclick="modalNav(-1)"><i class="fas fa-chevron-left"></i></button>
+        <button id="modalNext" class="vmodal-nav vmodal-next" onclick="modalNav(1)"><i class="fas fa-chevron-right"></i></button>
+        <div class="vmodal-body">
+            <iframe id="videoFrame" class="vmodal-frame" frameborder="0" allowfullscreen
+                allow="autoplay; encrypted-media; picture-in-picture"></iframe>
+            <video id="videoPlayer" class="vmodal-player" controls playsinline webkit-playsinline x-webkit-airplay="allow"></video>
+        </div>
+        <div id="modalDots" class="vmodal-dots"></div>
     </div>
 
     {{-- ══════════════════════════════════════════════════════════════
@@ -603,13 +590,14 @@
             var frame   = document.getElementById('videoFrame');
             var player  = document.getElementById('videoPlayer');
             if (videoId) {
-                frame.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&modestbranding=1';
-                frame.style.display  = 'block';
-                player.style.display = 'none';
                 player.pause(); player.src = '';
+                player.classList.add('hidden');
+                frame.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&modestbranding=1';
+                frame.classList.remove('hidden');
             } else {
-                frame.src = ''; frame.style.display = 'none';
-                player.style.display = 'block';
+                frame.src = '';
+                frame.classList.add('hidden');
+                player.classList.remove('hidden');
                 player.src = url;
                 var p = player.play();
                 if (p && typeof p.catch === 'function') p.catch(function() {});
@@ -619,10 +607,9 @@
         function openVideo(url) {
             var idx = modalUrls.indexOf(url);
             if (idx !== -1) modalIdx = idx;
-            // Show modal BEFORE play() — iOS WebKit refuses to play hidden elements
-            document.getElementById('videoModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
             updateModalDots();
+            document.getElementById('videoModal').classList.add('open');
+            document.body.style.overflow = 'hidden';
             loadVideoInModal(url);
         }
 
@@ -635,27 +622,24 @@
         function modalNav(dir) { modalGoTo(modalIdx + dir); }
 
         function closeVideo() {
-            document.getElementById('videoFrame').src = '';
-            document.getElementById('videoModal').style.display = 'none';
             var player = document.getElementById('videoPlayer');
             player.pause(); player.src = '';
+            document.getElementById('videoFrame').src = '';
+            document.getElementById('videoModal').classList.remove('open');
             document.body.style.overflow = '';
         }
 
-        // backdrop click closes
         document.getElementById('videoModal').addEventListener('click', function(e) {
             if (e.target === this) closeVideo();
         });
 
-        // keyboard: arrows + Escape
         document.addEventListener('keydown', function(e) {
-            if (document.getElementById('videoModal').style.display !== 'flex') return;
-            if (e.key === 'ArrowRight' || e.key === 'ArrowDown')  modalNav(1);
-            if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')    modalNav(-1);
+            if (!document.getElementById('videoModal').classList.contains('open')) return;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') modalNav(1);
+            if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   modalNav(-1);
             if (e.key === 'Escape') closeVideo();
         });
 
-        // modal swipe on mobile
         (function() {
             var modal = document.getElementById('videoModal'), sx = 0;
             modal.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; }, {passive:true});

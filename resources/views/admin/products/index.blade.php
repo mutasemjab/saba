@@ -28,6 +28,7 @@
                         <th>{{ __('messages.category') }}</th>
                         <th width="90">{{ __('messages.price') }}</th>
                         <th width="90">{{ __('messages.featured') }}</th>
+                        <th width="100" class="text-center">Active</th>
                         <th width="160">{{ __('messages.actions') }}</th>
                     </tr>
                 </thead>
@@ -77,6 +78,15 @@
                             @endif
                         </td>
 
+
+                        <td class="text-center">
+                            <form action="{{ route('products.toggleActive', $item->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-sm {{ $item->is_active ? 'btn-success' : 'btn-secondary' }}">
+                                    {{ $item->is_active ? 'Active' : 'Inactive' }}
+                                </button>
+                            </form>
+                        </td>
 
                         <td class="text-center">
                             <a href="{{ route('products.edit', $item->id) }}"

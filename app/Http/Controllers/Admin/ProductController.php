@@ -13,7 +13,7 @@ class ProductController extends Controller
     {
         $this->middleware('permission:product-table')->only('index');
         $this->middleware('permission:product-add')->only(['create', 'store']);
-        $this->middleware('permission:product-edit')->only(['edit', 'update']);
+        $this->middleware('permission:product-edit')->only(['edit', 'update', 'toggleActive']);
         $this->middleware('permission:product-delete')->only('destroy');
     }
 
@@ -56,6 +56,7 @@ class ProductController extends Controller
             'description_fr' => $request->description_fr ?: $request->description_en,
             'photo'          => $fileName,
             'is_featured'    => $request->is_featured ?? 2,
+            'is_active'      => $request->boolean('is_active', true),
             'category_id'    => $request->category_id,
             'price'          => $request->price,
             'price_unit_ar'  => $request->price_unit_ar ?? 'درهم',
@@ -94,6 +95,7 @@ class ProductController extends Controller
         );
 
         $data['is_featured']    = $request->is_featured ?? 2;
+        $data['is_active']      = $request->boolean('is_active', true);
         $data['price_unit_ar']  = $request->price_unit_ar ?? 'درهم';
         $data['price_unit_en']  = $request->price_unit_en ?? 'MAD';
         $data['price_unit_fr']  = $request->price_unit_fr ?? 'MAD';
@@ -107,6 +109,12 @@ class ProductController extends Controller
         $product->update($data);
 
         return redirect()->route('products.index')->with('success', 'تم التحديث بنجاح');
+    }
+
+    public function toggleActive(Product $product)
+    {
+        $product->update(['is_active' => !$product->is_active]);
+        return back()->with('success', 'تم تحديث الحالة');
     }
 
     public function destroy(Product $product)

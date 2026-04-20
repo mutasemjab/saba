@@ -27,6 +27,14 @@
                     <input type="text" name="name_fr" class="form-control" value="{{ $category->name_fr }}" placeholder="Optionnel">
                 </div>
 
+                <div class="form-group mt-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" name="is_active" id="is_active" value="1"
+                            {{ $category->is_active ? 'checked' : '' }}>
+                        <label class="form-check-label" for="is_active">Active (visible on site)</label>
+                    </div>
+                </div>
+
                 <button class="btn btn-primary mt-3">{{ __('messages.update') }}</button>
             </form>
 

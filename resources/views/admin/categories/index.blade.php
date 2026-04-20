@@ -14,6 +14,7 @@
             <tr>
                 <th>#</th>
                 <th>{{ __('messages.category') }}</th>
+                <th width="110" class="text-center">Active</th>
                 <th width="150">{{ __('messages.actions') }}</th>
             </tr>
         </thead>
@@ -23,6 +24,14 @@
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ app()->getLocale() == 'ar' ? $item->name_ar : $item->name_en }}</td>
+                <td class="text-center">
+                    <form action="{{ route('categories.toggleActive', $item->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-sm {{ $item->is_active ? 'btn-success' : 'btn-secondary' }}">
+                            {{ $item->is_active ? 'Active' : 'Inactive' }}
+                        </button>
+                    </form>
+                </td>
                 <td>
                     <a href="{{ route('categories.edit', $item->id) }}" class="btn btn-sm btn-warning">{{ __('messages.edit') }}</a>
                     <form action="{{ route('categories.destroy', $item->id) }}" method="POST" style="display:inline-block">

@@ -11,8 +11,18 @@ class Category extends Model
 
     protected $guarded = [];
 
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function activeProducts()
+    {
+        return $this->hasMany(Product::class)->where('is_active', true);
     }
 }

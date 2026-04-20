@@ -66,7 +66,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('pages', PageController::class);
         Route::resource('abouts', AboutController::class);
         Route::resource('categories', CategoryController::class);
+        Route::post('categories/{category}/toggle-active', [CategoryController::class, 'toggleActive'])->name('categories.toggleActive');
+
         Route::resource('products', ProductController::class);
+        Route::post('products/{product}/toggle-active', [ProductController::class, 'toggleActive'])->name('products.toggleActive');
         Route::resource('product-options', ProductOptionController::class);
     });
 });

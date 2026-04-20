@@ -11,13 +11,13 @@ class HomeController extends Controller
     /** GET /api/v1/user/categories */
     public function categories()
     {
-        $data = Category::withCount('products')
+        $data = Category::active()->withCount('activeProducts')
             ->orderBy('id', 'desc')->get()
             ->map(fn($c) => [
                 'id'             => $c->id,
                 'name_ar'        => $c->name_ar,
                 'name_en'        => $c->name_en,
-                'products_count' => $c->products_count,
+                'products_count' => $c->active_products_count,
             ]);
 
         return response()->json(['status' => true, 'data' => $data]);
@@ -26,7 +26,7 @@ class HomeController extends Controller
     /** GET /api/v1/user/products */
     public function allProducts()
     {
-        $data = Product::with(['category', 'options'])
+        $data = Product::active()->with(['category', 'options'])
             ->orderBy('category_id')
             ->get()
             ->map(fn($p) => $this->format($p));
@@ -37,7 +37,7 @@ class HomeController extends Controller
     /** GET /api/v1/user/products/{categoryId} */
     public function productsByCategory($categoryId)
     {
-        $data = Product::with(['category', 'options'])
+        $data = Product::active()->with(['category', 'options'])
             ->where('category_id', $categoryId)
             ->get()
             ->map(fn($p) => $this->format($p));

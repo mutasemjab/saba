@@ -17,6 +17,7 @@
         <thead>
             <tr>
                 <th>#</th>
+                <th>{{ __('messages.product') }}</th>
                 <th>{{ __('messages.name') }}</th>
                 <th>{{ __('messages.price') }}</th>
                 <th>{{ __('messages.actions') }}</th>
@@ -26,6 +27,15 @@
             @foreach($items as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
+                    <td>
+                        @if($item->product)
+                            <span class="badge bg-secondary">
+                                {{ app()->getLocale() == 'ar' ? $item->product->name_ar : $item->product->name_en }}
+                            </span>
+                        @else
+                            <span class="text-muted">—</span>
+                        @endif
+                    </td>
                     <td>{{ app()->getLocale() == 'ar' ? $item->name_ar : $item->name_en }}</td>
                     <td>{{ $item->price }}</td>
                     <td>

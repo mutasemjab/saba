@@ -17,7 +17,7 @@ class ProductOptionController extends Controller
 
     public function create()
     {
-        $products = Product::pluck('name_en', 'id');
+        $products = Product::orderBy('name_ar')->get()->mapWithKeys(fn($p) => [$p->id => $p->name_ar . ' — ' . $p->name_en]);
         return view('admin.product_options.create', compact('products'));
     }
 
@@ -47,7 +47,7 @@ class ProductOptionController extends Controller
     public function edit($id)
     {
         $item = ProductOption::findOrFail($id);
-        $products = Product::pluck('name_en', 'id');
+        $products = Product::orderBy('name_ar')->get()->mapWithKeys(fn($p) => [$p->id => $p->name_ar . ' — ' . $p->name_en]);
 
         return view('admin.product_options.edit', compact('item', 'products'));
     }

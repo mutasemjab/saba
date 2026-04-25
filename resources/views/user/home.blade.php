@@ -248,7 +248,10 @@
                                 {{ $locale == 'ar' ? $wh->day_ar : ($locale == 'fr' ? $wh->day_fr : $wh->day_en) }}
                             </div>
                             @if ($wh->open_time && $wh->close_time)
-                                <div class="hour-time">{{ $wh->open_time }} – {{ $wh->close_time }}</div>
+                               <div class="hour-time">
+                                    {{ \Carbon\Carbon::parse($wh->open_time)->format('H:i') }} – 
+                                    {{ \Carbon\Carbon::parse($wh->close_time)->format('H:i') }}
+                                </div>
                             @else
                                 <div class="hour-time">
                                     {{ $locale == 'ar' ? 'أوقات خاصة' : ($locale == 'fr' ? 'Heures spéciales' : 'Special Hours') }}
@@ -329,7 +332,7 @@
                     <div class="about-corner br"></div>
                 </div>
                 <div class="about-accent-box">
-                    <div class="about-accent-num">{{ $locale == 'ar' ? '١٢+' : '12+' }}</div>
+                    <div class="about-accent-num">{{ '12+' }}</div>
                     <div class="about-accent-text">{{ __('front.years_excellence') }}</div>
                 </div>
             </div>

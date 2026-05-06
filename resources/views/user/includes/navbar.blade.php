@@ -23,6 +23,8 @@
         <li><a href="{{ route('home') }}#contact">{{ __('front.contact') }}</a></li>
         <li><a class="nav-lang" hreflang="{{ $target }}" href="{{ $targetUrl }}">{{ $targetName }}</a></li>
     </ul>
+    {{-- Mobile-only lang button (shown next to hamburger) --}}
+    <a class="nav-mobile-lang" hreflang="{{ $target }}" href="{{ $targetUrl }}">{{ $targetName }}</a>
     {{-- Mobile hamburger --}}
     <button class="nav-hamburger" id="navHamburger" aria-label="Menu" onclick="toggleDrawer()">
         <span></span><span></span><span></span>

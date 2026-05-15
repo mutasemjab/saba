@@ -84,6 +84,7 @@ class SettingController extends Controller
             'twitter' => $request->twitter,
             'instagram' => $request->instagram,
             'facebook' => $request->facebook,
+            'whatsapp_number' => $request->whatsapp_number,
             'google_map' => $request->google_map,
             'updated_at' => now(),
         ];

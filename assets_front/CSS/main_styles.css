@@ -110,6 +110,75 @@
       right: auto
     }
 
+    /* ── LANGUAGE DROPDOWN ── */
+    .lang-dropdown-wrap {
+      position: relative
+    }
+
+    .lang-dropdown-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Tajawal', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      line-height: 1
+    }
+
+    .lang-chevron {
+      transition: transform .25s;
+      flex-shrink: 0
+    }
+
+    .lang-dropdown-btn[aria-expanded="true"] .lang-chevron {
+      transform: rotate(180deg)
+    }
+
+    .lang-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      min-width: 130px;
+      background: rgba(4, 20, 13, .97);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(206, 173, 106, .3);
+      list-style: none;
+      padding: 4px 0;
+      z-index: 9999;
+      box-shadow: 0 8px 24px rgba(0,0,0,.4)
+    }
+
+    [dir="ltr"] .lang-dropdown-menu {
+      right: auto;
+      left: 0
+    }
+
+    .lang-dropdown-menu.open {
+      display: block
+    }
+
+    .lang-dropdown-menu li a {
+      display: block;
+      padding: 9px 16px;
+      color: var(--cream);
+      text-decoration: none;
+      font-size: .85rem;
+      font-family: 'Tajawal', sans-serif;
+      transition: color .2s, background .2s;
+      white-space: nowrap
+    }
+
+    .lang-dropdown-menu li a:hover {
+      color: var(--gold);
+      background: rgba(206, 173, 106, .08)
+    }
+
+    .lang-dropdown-menu li a::after {
+      display: none !important
+    }
+
     .nav-lang {
       border: 1px solid rgba(206, 173, 106, .4) !important;
       color: var(--gold) !important;
@@ -127,7 +196,8 @@
     }
 
     .nav-mobile-lang {
-      display: none
+      display: none;
+      position: relative
     }
 
     /* ── HAMBURGER ── */
@@ -267,8 +337,28 @@
       color: var(--gold) !important;
       padding: 8px 14px !important;
       font-size: .82rem !important;
-      display: inline-block !important;
+      width: 100% !important;
+      text-align: start !important;
       border-bottom: 1px solid rgba(206,173,106,.4) !important
+    }
+
+    .drawer-lang-menu {
+      position: static !important;
+      box-shadow: none !important;
+      border: none !important;
+      border-top: 1px solid rgba(206,173,106,.1) !important;
+      padding: 0 !important;
+      background: rgba(206,173,106,.04) !important
+    }
+
+    .drawer-lang-menu li a {
+      padding-right: 28px !important;
+      border-bottom: 1px solid rgba(206,173,106,.05) !important
+    }
+
+    [dir="ltr"] .drawer-lang-menu li a {
+      padding-right: 16px !important;
+      padding-left: 28px !important
     }
 
     /* HERO */
@@ -2091,12 +2181,15 @@
       }
 
       .nav-mobile-lang {
-        display: inline-block;
+        display: flex;
+        align-items: center
+      }
+
+      .nav-mobile-lang .lang-dropdown-btn {
         border: 1px solid rgba(206, 173, 106, .45);
         color: var(--gold);
         padding: 5px 12px;
         font-size: .8rem;
-        text-decoration: none;
         font-family: 'Tajawal', sans-serif;
         line-height: 1;
         white-space: nowrap

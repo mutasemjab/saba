@@ -73,6 +73,14 @@
                 @enderror
             </div>
             <div class="mb-3">
+                <label for="whatsapp_number" class="form-label">{{ __('messages.whatsapp_number') }}</label>
+                <input type="text" class="form-control @error('whatsapp_number') is-invalid @enderror" 
+                       id="whatsapp_number" name="whatsapp_number" value="{{ old('whatsapp_number', $setting->whatsapp_number) }}" required>
+                @error('whatsapp_number')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="mb-3">
                 <label for="google_map" class="form-label">{{ __('messages.google_map') }}</label>
                 <textarea class="form-control @error('google_map') is-invalid @enderror" 
                           id="google_map" name="google_map" rows="4" required>{{ old('google_map', $setting->google_map) }}</textarea>

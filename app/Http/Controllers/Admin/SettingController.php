@@ -30,7 +30,9 @@ class SettingController extends Controller
         $request->validate([
             'phone' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'address' => 'required|string|max:255',
+            'address_ar' => 'required|string|max:255',
+            'address_en' => 'required|string|max:255',
+            'address_fr' => 'required|string|max:255',
             'google_map' => 'required|string',
             'logo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -40,7 +42,9 @@ class SettingController extends Controller
         DB::table('settings')->insert([
             'phone' => $request->phone,
             'email' => $request->email,
-            'address' => $request->address,
+            'address_ar' => $request->address_ar,
+            'address_en' => $request->address_en,
+            'address_fr' => $request->address_fr,
             'google_map' => $request->google_map,
             'twitter' => $request->twitter ?? null,
             'instagram' => $request->instagram ?? null,
@@ -67,7 +71,9 @@ class SettingController extends Controller
         $request->validate([
             'phone' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'address' => 'required|string|max:255',
+            'address_ar' => 'required|string|max:255',
+            'address_en' => 'required|string|max:255',
+            'address_fr' => 'required|string|max:255',
             'google_map' => 'required|string',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -80,7 +86,9 @@ class SettingController extends Controller
         $updateData = [
             'phone' => $request->phone,
             'email' => $request->email,
-            'address' => $request->address,
+            'address_ar' => $request->address_ar,
+            'address_en' => $request->address_en,
+            'address_fr' => $request->address_fr,
             'twitter' => $request->twitter,
             'instagram' => $request->instagram,
             'facebook' => $request->facebook,

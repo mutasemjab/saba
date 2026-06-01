@@ -19,7 +19,7 @@
                             <th>{{ __('messages.logo') }}</th>
                             <th>{{ __('messages.phone') }}</th>
                             <th>{{ __('messages.email') }}</th>
-                            <th>{{ __('messages.address') }}</th>
+                            <th>{{ __('messages.address') }} (AR / EN / FR)</th>
                             <th>{{ __('messages.actions') }}</th>
                         </tr>
                     </thead>
@@ -34,7 +34,10 @@
                             </td>
                             <td>{{ $setting->phone }}</td>
                             <td>{{ $setting->email }}</td>
-                            <td>{{ Str::limit($setting->address, 30) }}</td>
+                            <td>
+                                <div>{{ Str::limit($setting->address_ar, 20) }}</div>
+                                <small class="text-muted">{{ Str::limit($setting->address_en, 20) }}</small>
+                            </td>
                             <td>
                                 <a href="{{ route('settings.edit', $setting->id) }}" class="btn btn-sm btn-warning">
                                     <i class="fas fa-edit"></i> {{ __('messages.edit') }}

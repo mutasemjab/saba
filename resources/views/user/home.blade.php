@@ -384,7 +384,7 @@
                     <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
                     <div>
                         <div class="contact-detail-title">{{ __('front.location') }}</div>
-                        <div class="contact-detail-value">{{ $settingNav->address ?? '' }}</div>
+                        <div class="contact-detail-value">{{ $settingNav->{'address_' . app()->getLocale()} ?? $settingNav->address_ar ?? '' }}</div>
                     </div>
                 </div>
 

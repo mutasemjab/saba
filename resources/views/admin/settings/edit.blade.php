@@ -40,13 +40,37 @@
                 </div>
             </div>
             
-            <div class="mb-3">
-                <label for="address" class="form-label">{{ __('messages.address') }}</label>
-                <input type="text" class="form-control @error('address') is-invalid @enderror" 
-                       id="address" name="address" value="{{ old('address', $setting->address) }}" required>
-                @error('address')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="address_ar" class="form-label">{{ __('messages.address') }} (عربي)</label>
+                        <input type="text" class="form-control @error('address_ar') is-invalid @enderror"
+                               id="address_ar" name="address_ar" value="{{ old('address_ar', $setting->address_ar) }}" required>
+                        @error('address_ar')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="address_en" class="form-label">{{ __('messages.address') }} (English)</label>
+                        <input type="text" class="form-control @error('address_en') is-invalid @enderror"
+                               id="address_en" name="address_en" value="{{ old('address_en', $setting->address_en) }}" required>
+                        @error('address_en')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="address_fr" class="form-label">{{ __('messages.address') }} (Français)</label>
+                        <input type="text" class="form-control @error('address_fr') is-invalid @enderror"
+                               id="address_fr" name="address_fr" value="{{ old('address_fr', $setting->address_fr) }}" required>
+                        @error('address_fr')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
             </div>
               <div class="mb-3">
                 <label for="twitter" class="form-label">{{ __('messages.twitter') }}</label>

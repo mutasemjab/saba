@@ -51,11 +51,12 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      transition: all .4s
+      transition: all .4s;
+      background-color: black;
     }
 
     nav.scrolled {
-      background: rgba(4, 20, 13, .97);
+      background: black;;
       backdrop-filter: blur(20px);
       padding: 10px 60px;
       border-bottom: 1px solid rgba(206, 173, 106, .18);

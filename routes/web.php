@@ -50,6 +50,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
   Route::get('/menu',                [MenuController::class, 'index'])->name('menu');
   Route::get('/product/{id}',        [MenuController::class, 'show'])->name('product.show');
   // Frontend Page Routes
+  Route::get('/contact-us', function () {
+    $setting = \App\Models\Setting::first();
+    return view('user.contact-us', compact('setting'));
+  })->name('front.contact');
+
   Route::get('/terms-and-conditions', function () {
     $page = \App\Models\Page::where('type', 1)->first();
     if (!$page) {

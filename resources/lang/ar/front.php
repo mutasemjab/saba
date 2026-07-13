@@ -101,6 +101,9 @@ return [
     'send'              => 'إرسال',
     'message_sent'      => 'تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.',
     'contact_us'        => 'تواصل معنا',
+    'contact_page_title'      => 'تواصل',
+    'contact_page_title_span' => 'معنا',
+    'contact_page_desc'       => 'يسعدنا تواصلكم معنا في أي وقت',
 
     // ── Footer
     'footer_about'      => 'مطاعم سبأ — وجهتك الأولى للمأكولات اليمنية والخليجية الأصيلة في المغرب.',

@@ -106,6 +106,7 @@ return [
     'contact_page_title'      => 'Get in',
     'contact_page_title_span' => 'Touch',
     'contact_page_desc'       => 'We\'d love to hear from you, anytime',
+    'find_on_map'             => 'Find us on Google Maps',
 
     // ── Footer
     'footer_about'      => 'Sab\'a Restaurants — your top destination for authentic Yemeni & Gulf cuisine in Morocco.',

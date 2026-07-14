@@ -48,7 +48,8 @@
 
     .contact-social-row {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
         gap: 14px;
         margin-bottom: 46px;
         opacity: 0;
@@ -56,10 +57,10 @@
     }
 
     .contact-social-row .social-btn {
-        width: 68px;
-        height: 68px;
-        font-size: 1.7rem;
-        border-radius: 50%;
+        width: 240px;
+        height: 60px;
+        font-size: 1.4rem;
+        border-radius: 8px;
         border: 1px solid rgba(206, 173, 106, .35)
     }
 
@@ -149,9 +150,9 @@
         }
 
         .contact-social-row .social-btn {
-            width: 58px;
-            height: 58px;
-            font-size: 1.4rem
+            width: 200px;
+            height: 54px;
+            font-size: 1.25rem
         }
 
         .contact-quick-row {
@@ -242,7 +243,7 @@
                     <span class="contact-phone-icon"><i class="fas fa-map-marker-alt"></i></span>
                     <span class="contact-phone-text">
                         <span class="contact-phone-label">{{ __('front.location') }}</span>
-                        <span class="contact-phone-value">{{ __('front.open_map') }}</span>
+                        <span class="contact-phone-value">{{ __('front.find_on_map') }}</span>
                     </span>
                 </a>
             @endif

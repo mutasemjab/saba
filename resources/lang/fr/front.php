@@ -104,6 +104,7 @@ return [
     'contact_page_title'      => 'Contactez',
     'contact_page_title_span' => 'nous',
     'contact_page_desc'       => 'Nous serions ravis de vous entendre, à tout moment',
+    'find_on_map'             => 'Retrouvez-nous sur Google Maps',
 
     // ── Footer
     'footer_about'      => 'Restaurants Sab\'a — votre destination privilégiée pour la cuisine yéménite et du Golfe authentique au Maroc.',

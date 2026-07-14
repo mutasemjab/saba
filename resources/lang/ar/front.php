@@ -104,6 +104,7 @@ return [
     'contact_page_title'      => 'تواصل',
     'contact_page_title_span' => 'معنا',
     'contact_page_desc'       => 'يسعدنا تواصلكم معنا في أي وقت',
+    'find_on_map'             => 'جدنا على خرائط جوجل',
 
     // ── Footer
     'footer_about'      => 'مطاعم سبأ — وجهتك الأولى للمأكولات اليمنية والخليجية الأصيلة في المغرب.',

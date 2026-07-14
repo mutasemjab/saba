@@ -54,9 +54,9 @@
     }
 
     .contact-social-row .social-btn {
-        width: 54px;
-        height: 54px;
-        font-size: 1.2rem;
+        width: 68px;
+        height: 68px;
+        font-size: 1.7rem;
         border-radius: 50%;
         border: 1px solid rgba(206, 173, 106, .35)
     }
@@ -83,14 +83,21 @@
         animation: fadeInUp .8s 1.3s forwards
     }
 
+    .contact-quick-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 34px;
+        opacity: 0;
+        animation: fadeInUp .8s 1.45s forwards
+    }
+
     .contact-phone {
         display: inline-flex;
         align-items: center;
         gap: 12px;
         text-decoration: none;
-        color: var(--text-light);
-        opacity: 0;
-        animation: fadeInUp .8s 1.45s forwards
+        color: var(--text-light)
     }
 
     .contact-phone-icon {
@@ -128,8 +135,11 @@
         font-size: 1.15rem;
         font-weight: 700;
         letter-spacing: 1px;
-        direction: ltr;
         display: inline-block
+    }
+
+    .contact-phone-value.is-number {
+        direction: ltr
     }
 
     @media (max-width:480px) {
@@ -138,9 +148,14 @@
         }
 
         .contact-social-row .social-btn {
-            width: 48px;
-            height: 48px;
-            font-size: 1.05rem
+            width: 58px;
+            height: 58px;
+            font-size: 1.4rem
+        }
+
+        .contact-quick-row {
+            flex-direction: column;
+            gap: 22px
         }
     }
 </style>
@@ -210,15 +225,27 @@
         <div class="contact-divider-sm"></div>
 
         
-        <?php if(!empty($settingNav->phone)): ?>
-            <a href="tel:<?php echo e($settingNav->phone); ?>" class="contact-phone">
-                <span class="contact-phone-icon"><i class="fas fa-phone-alt"></i></span>
-                <span class="contact-phone-text">
-                    <span class="contact-phone-label"><?php echo e(__('front.call')); ?></span>
-                    <span class="contact-phone-value"><?php echo e($settingNav->phone); ?></span>
-                </span>
-            </a>
-        <?php endif; ?>
+        <div class="contact-quick-row">
+            <?php if(!empty($settingNav->phone)): ?>
+                <a href="tel:<?php echo e($settingNav->phone); ?>" class="contact-phone">
+                    <span class="contact-phone-icon"><i class="fas fa-phone-alt"></i></span>
+                    <span class="contact-phone-text">
+                        <span class="contact-phone-label"><?php echo e(__('front.call')); ?></span>
+                        <span class="contact-phone-value is-number"><?php echo e($settingNav->phone); ?></span>
+                    </span>
+                </a>
+            <?php endif; ?>
+
+            <?php if(!empty($settingNav->google_map)): ?>
+                <a href="<?php echo e($settingNav->google_map); ?>" target="_blank" rel="noopener" class="contact-phone">
+                    <span class="contact-phone-icon"><i class="fas fa-map-marker-alt"></i></span>
+                    <span class="contact-phone-text">
+                        <span class="contact-phone-label"><?php echo e(__('front.location')); ?></span>
+                        <span class="contact-phone-value"><?php echo e(__('front.open_map')); ?></span>
+                    </span>
+                </a>
+            <?php endif; ?>
+        </div>
     </div>
 </section>
 <?php $__env->stopSection(); ?>

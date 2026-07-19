@@ -50,18 +50,49 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 14px;
+        gap: 16px;
         margin-bottom: 46px;
         opacity: 0;
         animation: fadeInUp .8s 1s forwards
     }
 
-    .contact-social-row .social-btn {
+    .social-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 14px;
         width: 240px;
-        height: 60px;
-        font-size: 1.4rem;
-        border-radius: 8px;
-        border: 1px solid rgba(206, 173, 106, .35)
+        text-decoration: none;
+        color: var(--text-light);
+        transition: transform .3s
+    }
+
+    .social-link:hover {
+        transform: translateY(-2px)
+    }
+
+    .social-link .social-btn {
+        width: 52px;
+        height: 52px;
+        font-size: 1.3rem;
+        border-radius: 50%;
+        border: 1px solid rgba(206, 173, 106, .35);
+        flex-shrink: 0
+    }
+
+    .social-link:hover .social-btn {
+        background: var(--gold);
+        color: var(--dark-brown)
+    }
+
+    .social-link-name {
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: .5px
+    }
+
+    .social-link-name.is-number {
+        direction: ltr
     }
 
     .contact-menu-btn {
@@ -149,10 +180,14 @@
             padding: 140px 18px 70px
         }
 
-        .contact-social-row .social-btn {
-            width: 200px;
-            height: 54px;
-            font-size: 1.25rem
+        .social-link {
+            width: 210px
+        }
+
+        .social-link .social-btn {
+            width: 46px;
+            height: 46px;
+            font-size: 1.15rem
         }
 
         .contact-quick-row {
@@ -206,33 +241,36 @@
         {{-- Social links --}}
         <div class="contact-social-row">
             @if(!empty($settingNav->instagram))
-                <a href="{{ $settingNav->instagram }}" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="{{ $settingNav->instagram }}" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+                    <span class="social-btn"><i class="fab fa-instagram"></i></span>
+                    <span class="social-link-name">Instagram</span>
+                </a>
             @endif
             @if(!empty($settingNav->facebook))
-                <a href="{{ $settingNav->facebook }}" target="_blank" rel="noopener" class="social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="{{ $settingNav->facebook }}" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
+                    <span class="social-btn"><i class="fab fa-facebook-f"></i></span>
+                    <span class="social-link-name">Facebook</span>
+                </a>
             @endif
             @if(!empty($settingNav->twitter))
-                <a href="{{ $settingNav->twitter }}" target="_blank" rel="noopener" class="social-btn" aria-label="X"><i class="fab fa-x-twitter"></i></a>
+                <a href="{{ $settingNav->twitter }}" target="_blank" rel="noopener" class="social-link" aria-label="X">
+                    <span class="social-btn"><i class="fab fa-x-twitter"></i></span>
+                    <span class="social-link-name">X</span>
+                </a>
             @endif
             @if(!empty($settingNav->whatsapp_number))
-                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settingNav->whatsapp_number) }}" target="_blank" rel="noopener" class="social-btn" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settingNav->whatsapp_number) }}" target="_blank" rel="noopener" class="social-link" aria-label="WhatsApp">
+                    <span class="social-btn"><i class="fab fa-whatsapp"></i></span>
+                    <span class="social-link-name is-number">{{ $settingNav->whatsapp_number }}</span>
+                </a>
             @endif
         </div>
-
-        {{-- Menu button --}}
-        <div class="contact-menu-btn">
-            <a href="{{ route('menu') }}" class="btn-primary"><span><i class="fas fa-utensils"></i> {{ __('front.explore_menu') }}</span></a>
-        </div>
-
-        <div class="contact-divider-sm"></div>
-
-        {{-- Phone & Map --}}
+  {{-- Phone & Map --}}
         <div class="contact-quick-row">
             @if(!empty($settingNav->phone))
                 <a href="tel:{{ $settingNav->phone }}" class="contact-phone">
                     <span class="contact-phone-icon"><i class="fas fa-phone-alt"></i></span>
                     <span class="contact-phone-text">
-                        <span class="contact-phone-label">{{ __('front.call') }}</span>
                         <span class="contact-phone-value is-number">{{ $settingNav->phone }}</span>
                     </span>
                 </a>
@@ -242,12 +280,17 @@
                 <a href="{{ $settingNav->google_map }}" target="_blank" rel="noopener" class="contact-phone">
                     <span class="contact-phone-icon"><i class="fas fa-map-marker-alt"></i></span>
                     <span class="contact-phone-text">
-                        <span class="contact-phone-label">{{ __('front.location') }}</span>
                         <span class="contact-phone-value">{{ __('front.find_on_map') }}</span>
                     </span>
                 </a>
             @endif
         </div>
+        {{-- Menu button --}}
+        <div class="contact-menu-btn">
+            <a href="{{ route('menu') }}" class="btn-primary"><span><i class="fas fa-utensils"></i> {{ __('front.explore_menu') }}</span></a>
+        </div>
+
+      
     </div>
 </section>
 @endsection

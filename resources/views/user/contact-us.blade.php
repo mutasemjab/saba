@@ -108,73 +108,6 @@
         padding: 17px 50px
     }
 
-    .contact-divider-sm {
-        width: 70px;
-        height: 1px;
-        background: linear-gradient(to right, transparent, var(--gold-dark), transparent);
-        margin: 0 auto 40px;
-        opacity: 0;
-        animation: fadeInUp .8s 1.3s forwards
-    }
-
-    .contact-quick-row {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 34px;
-        opacity: 0;
-        animation: fadeInUp .8s 1.45s forwards
-    }
-
-    .contact-phone {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        text-decoration: none;
-        color: var(--text-light)
-    }
-
-    .contact-phone-icon {
-        width: 48px;
-        height: 48px;
-        border: 1px solid rgba(206, 173, 106, .4);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--gold);
-        font-size: 1.05rem;
-        transition: all .3s
-    }
-
-    .contact-phone:hover .contact-phone-icon {
-        background: var(--gold);
-        color: var(--dark-brown)
-    }
-
-    .contact-phone-text {
-        text-align: {{ app()->getLocale() == 'ar' ? 'right' : 'left' }}
-    }
-
-    .contact-phone-label {
-        font-size: .65rem;
-        letter-spacing: 3px;
-        color: var(--gold);
-        text-transform: uppercase;
-        margin-bottom: 3px
-    }
-
-    .contact-phone-value {
-        font-size: 1.15rem;
-        font-weight: 700;
-        letter-spacing: 1px;
-        display: inline-block
-    }
-
-    .contact-phone-value.is-number {
-        direction: ltr
-    }
-
     @media (max-width:480px) {
         .contact-page-hero {
             padding: 140px 18px 70px
@@ -188,11 +121,6 @@
             width: 46px;
             height: 46px;
             font-size: 1.15rem
-        }
-
-        .contact-quick-row {
-            flex-direction: column;
-            gap: 22px
         }
     }
 </style>
@@ -266,16 +194,16 @@
             @endif
              {{-- Phone & Map --}}
             @if(!empty($settingNav->phone))
-                <a href="tel:{{ $settingNav->phone }}" class="contact-phone">
+                <a href="tel:{{ $settingNav->phone }}" class="social-link" aria-label="{{ __('front.call') }}">
                     <span class="social-btn"><i class="fas fa-phone-alt"></i></span>
-                        <span class="social-link-name">{{ $settingNav->phone }}</span>
+                    <span class="social-link-name is-number">{{ $settingNav->phone }}</span>
                 </a>
             @endif
 
             @if(!empty($settingNav->google_map))
-                <a href="{{ $settingNav->google_map }}" target="_blank" rel="noopener" class="contact-phone">
+                <a href="{{ $settingNav->google_map }}" target="_blank" rel="noopener" class="social-link" aria-label="{{ __('front.location') }}">
                     <span class="social-btn"><i class="fas fa-map-marker-alt"></i></span>
-                        <span class="social-link-name">{{ __('front.find_on_map') }}</span>
+                    <span class="social-link-name">{{ __('front.find_on_map') }}</span>
                 </a>
             @endif
         </div>

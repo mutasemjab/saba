@@ -106,74 +106,6 @@
         padding: 17px 50px
     }
 
-    .contact-divider-sm {
-        width: 70px;
-        height: 1px;
-        background: linear-gradient(to right, transparent, var(--gold-dark), transparent);
-        margin: 0 auto 40px;
-        opacity: 0;
-        animation: fadeInUp .8s 1.3s forwards
-    }
-
-    .contact-quick-row {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 34px;
-        opacity: 0;
-        animation: fadeInUp .8s 1.45s forwards
-    }
-
-    .contact-phone {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        text-decoration: none;
-        color: var(--text-light)
-    }
-
-    .contact-phone-icon {
-        width: 48px;
-        height: 48px;
-        border: 1px solid rgba(206, 173, 106, .4);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--gold);
-        font-size: 1.05rem;
-        transition: all .3s
-    }
-
-    .contact-phone:hover .contact-phone-icon {
-        background: var(--gold);
-        color: var(--dark-brown)
-    }
-
-    .contact-phone-text {
-        text-align: <?php echo e(app()->getLocale() == 'ar' ? 'right' : 'left'); ?>
-
-    }
-
-    .contact-phone-label {
-        font-size: .65rem;
-        letter-spacing: 3px;
-        color: var(--gold);
-        text-transform: uppercase;
-        margin-bottom: 3px
-    }
-
-    .contact-phone-value {
-        font-size: 1.15rem;
-        font-weight: 700;
-        letter-spacing: 1px;
-        display: inline-block
-    }
-
-    .contact-phone-value.is-number {
-        direction: ltr
-    }
-
     @media (max-width:480px) {
         .contact-page-hero {
             padding: 140px 18px 70px
@@ -187,11 +119,6 @@
             width: 46px;
             height: 46px;
             font-size: 1.15rem
-        }
-
-        .contact-quick-row {
-            flex-direction: column;
-            gap: 22px
         }
     }
 </style>
@@ -242,13 +169,13 @@
             <?php if(!empty($settingNav->instagram)): ?>
                 <a href="<?php echo e($settingNav->instagram); ?>" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
                     <span class="social-btn"><i class="fab fa-instagram"></i></span>
-                    <span class="social-link-name">Instagram</span>
+                    <span class="social-link-name">sabamoroc</span>
                 </a>
             <?php endif; ?>
             <?php if(!empty($settingNav->facebook)): ?>
                 <a href="<?php echo e($settingNav->facebook); ?>" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
                     <span class="social-btn"><i class="fab fa-facebook-f"></i></span>
-                    <span class="social-link-name">Facebook</span>
+                    <span class="social-link-name">Sab'a Restaurants</span>
                 </a>
             <?php endif; ?>
             <?php if(!empty($settingNav->twitter)): ?>
@@ -263,27 +190,22 @@
                     <span class="social-link-name is-number"><?php echo e($settingNav->whatsapp_number); ?></span>
                 </a>
             <?php endif; ?>
-        </div>
-  
-        <div class="contact-quick-row">
+             
             <?php if(!empty($settingNav->phone)): ?>
-                <a href="tel:<?php echo e($settingNav->phone); ?>" class="contact-phone">
-                    <span class="contact-phone-icon"><i class="fas fa-phone-alt"></i></span>
-                    <span class="contact-phone-text">
-                        <span class="contact-phone-value is-number"><?php echo e($settingNav->phone); ?></span>
-                    </span>
+                <a href="tel:<?php echo e($settingNav->phone); ?>" class="social-link" aria-label="<?php echo e(__('front.call')); ?>">
+                    <span class="social-btn"><i class="fas fa-phone-alt"></i></span>
+                    <span class="social-link-name is-number"><?php echo e($settingNav->phone); ?></span>
                 </a>
             <?php endif; ?>
 
             <?php if(!empty($settingNav->google_map)): ?>
-                <a href="<?php echo e($settingNav->google_map); ?>" target="_blank" rel="noopener" class="contact-phone">
-                    <span class="contact-phone-icon"><i class="fas fa-map-marker-alt"></i></span>
-                    <span class="contact-phone-text">
-                        <span class="contact-phone-value"><?php echo e(__('front.find_on_map')); ?></span>
-                    </span>
+                <a href="<?php echo e($settingNav->google_map); ?>" target="_blank" rel="noopener" class="social-link" aria-label="<?php echo e(__('front.location')); ?>">
+                    <span class="social-btn"><i class="fas fa-map-marker-alt"></i></span>
+                    <span class="social-link-name"><?php echo e(__('front.find_on_map')); ?></span>
                 </a>
             <?php endif; ?>
         </div>
+ 
         
         <div class="contact-menu-btn">
             <a href="<?php echo e(route('menu')); ?>" class="btn-primary"><span><i class="fas fa-utensils"></i> <?php echo e(__('front.explore_menu')); ?></span></a>

@@ -243,13 +243,13 @@
             @if(!empty($settingNav->instagram))
                 <a href="{{ $settingNav->instagram }}" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
                     <span class="social-btn"><i class="fab fa-instagram"></i></span>
-                    <span class="social-link-name">Instagram</span>
+                    <span class="social-link-name">sabamoroc</span>
                 </a>
             @endif
             @if(!empty($settingNav->facebook))
                 <a href="{{ $settingNav->facebook }}" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
                     <span class="social-btn"><i class="fab fa-facebook-f"></i></span>
-                    <span class="social-link-name">Facebook</span>
+                    <span class="social-link-name">Sab'a Restaurants</span>
                 </a>
             @endif
             @if(!empty($settingNav->twitter))
@@ -264,9 +264,7 @@
                     <span class="social-link-name is-number">{{ $settingNav->whatsapp_number }}</span>
                 </a>
             @endif
-        </div>
-  {{-- Phone & Map --}}
-        <div class="contact-quick-row">
+             {{-- Phone & Map --}}
             @if(!empty($settingNav->phone))
                 <a href="tel:{{ $settingNav->phone }}" class="contact-phone">
                     <span class="contact-phone-icon"><i class="fas fa-phone-alt"></i></span>
@@ -285,6 +283,7 @@
                 </a>
             @endif
         </div>
+ 
         {{-- Menu button --}}
         <div class="contact-menu-btn">
             <a href="{{ route('menu') }}" class="btn-primary"><span><i class="fas fa-utensils"></i> {{ __('front.explore_menu') }}</span></a>

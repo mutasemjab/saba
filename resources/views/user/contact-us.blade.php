@@ -267,19 +267,15 @@
              {{-- Phone & Map --}}
             @if(!empty($settingNav->phone))
                 <a href="tel:{{ $settingNav->phone }}" class="contact-phone">
-                    <span class="contact-phone-icon"><i class="fas fa-phone-alt"></i></span>
-                    <span class="contact-phone-text">
-                        <span class="contact-phone-value is-number">{{ $settingNav->phone }}</span>
-                    </span>
+                    <span class="social-btn"><i class="fas fa-phone-alt"></i></span>
+                        <span class="social-link-name">{{ $settingNav->phone }}</span>
                 </a>
             @endif
 
             @if(!empty($settingNav->google_map))
                 <a href="{{ $settingNav->google_map }}" target="_blank" rel="noopener" class="contact-phone">
-                    <span class="contact-phone-icon"><i class="fas fa-map-marker-alt"></i></span>
-                    <span class="contact-phone-text">
-                        <span class="contact-phone-value">{{ __('front.find_on_map') }}</span>
-                    </span>
+                    <span class="social-btn"><i class="fas fa-map-marker-alt"></i></span>
+                        <span class="social-link-name">{{ __('front.find_on_map') }}</span>
                 </a>
             @endif
         </div>

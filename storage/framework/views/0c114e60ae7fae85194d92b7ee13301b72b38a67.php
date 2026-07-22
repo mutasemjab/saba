@@ -59,22 +59,35 @@
         align-items: center;
         justify-content: flex-start;
         gap: 14px;
-        width: 240px;
+        width: 270px;
+        padding: 9px 20px 9px 9px;
+        background: rgba(206, 173, 106, .05);
+        border: 1px solid rgba(206, 173, 106, .22);
+        border-radius: 14px;
+        backdrop-filter: blur(6px);
         text-decoration: none;
         color: var(--text-light);
-        transition: transform .3s
+        transition: all .3s
+    }
+
+    [dir="rtl"] .social-link {
+        padding: 9px 9px 9px 20px
     }
 
     .social-link:hover {
-        transform: translateY(-2px)
+        transform: translateY(-2px);
+        background: rgba(206, 173, 106, .12);
+        border-color: rgba(206, 173, 106, .5);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .35)
     }
 
     .social-link .social-btn {
-        width: 52px;
-        height: 52px;
-        font-size: 1.3rem;
+        width: 46px;
+        height: 46px;
+        font-size: 1.2rem;
         border-radius: 50%;
         border: 1px solid rgba(206, 173, 106, .35);
+        background: rgba(0, 0, 0, .15);
         flex-shrink: 0
     }
 
@@ -84,9 +97,12 @@
     }
 
     .social-link-name {
-        font-size: 1rem;
+        font-size: .95rem;
         font-weight: 600;
-        letter-spacing: .5px
+        letter-spacing: .5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap
     }
 
     .social-link-name.is-number {
@@ -112,13 +128,18 @@
         }
 
         .social-link {
-            width: 210px
+            width: 230px;
+            padding: 7px 16px 7px 7px
+        }
+
+        [dir="rtl"] .social-link {
+            padding: 7px 7px 7px 16px
         }
 
         .social-link .social-btn {
-            width: 46px;
-            height: 46px;
-            font-size: 1.15rem
+            width: 40px;
+            height: 40px;
+            font-size: 1.05rem
         }
     }
 </style>
